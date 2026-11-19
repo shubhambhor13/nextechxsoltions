@@ -1,0 +1,38 @@
+# Hostinger Apache / LiteSpeed Web Server Configuration for Vite + React SPA
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # 1. Do not rewrite if requested resource physically exists as a file or directory
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # 2. Support direct PHP scripts if hosted alongside frontend (e.g., api/contact.php)
+  RewriteCond %{REQUEST_FILENAME}\.php -f
+  RewriteRule ^(.*)$ $1.php [L]
+
+  # 3. Route all other requests to index.html for React client-side routing (HTML5 History API)
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+# Security: Prevent directory listing
+Options -Indexes
+
+# Security: Deny direct access to sensitive config, database, and environment files
+<FilesMatch "\.(db|sqlite|sqlite3|env|ini|log|sh|bat)$">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
+
+# Static Asset Caching for high performance
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 month"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/webp "access plus 1 month"
+  ExpiresByType video/mp4 "access plus 1 month"
+</IfModule>

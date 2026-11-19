@@ -10,6 +10,12 @@ DirectoryIndex index.php
     RewriteRule ^data/ - [F,L]
     RewriteRule ^includes/ - [F,L]
 
+    # API Endpoint Aliases for Frontend Compatibility
+    RewriteRule ^api/careers/apply/?$ api/apply_career.php [L,QSA]
+    RewriteRule ^api/quotation/?$ api/quote.php [L,QSA]
+    RewriteRule ^api/training/register/?$ api/apply.php [L,QSA]
+    RewriteRule ^api/ai/chat/?$ api/chat.php [L,QSA]
+
     # Clean URL support: /about -> about.php, /services -> services.php
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME}\.php -f

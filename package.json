@@ -2,10 +2,14 @@
   "name": "nexttechx-solutions-website",
   "version": "1.0.0",
   "private": true,
+  "workspaces": [
+    "frontend"
+  ],
   "scripts": {
-    "dev": "npm --prefix frontend run dev",
+    "install:frontend": "npm --prefix frontend install",
+    "prebuild": "npm --prefix frontend install",
     "build": "npm --prefix frontend run build",
+    "dev": "npm --prefix frontend run dev",
     "preview": "npm --prefix frontend run preview"
   }
 }
-

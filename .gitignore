@@ -1,0 +1,51 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+*/node_modules/
+.pnp
+.pnp.js
+
+# Build Outputs (Compiled Vite files)
+dist/
+# Note: Keep frontend/dist if desired, but Vite builds it dynamically on Hostinger
+.vite/
+frontend/.vite/
+
+# Environment Variables & Secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+
+# Python Cache & Virtual Environments
+__pycache__/
+*/__pycache__/
+*/**/__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+
+# Logs & Temporary Files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+backend/uploads/email_logs/*.eml
+uploads/email_logs/*.eml
+
+# User Uploads (Resumes & Documents)
+backend/uploads/resumes/*
+php/uploads/resumes/*
+uploads/resumes/*
+!backend/uploads/resumes/.gitkeep
+!php/uploads/resumes/.gitkeep
+
+# System & OS Files
+.DS_Store
+Thumbs.db
+Desktop.ini
