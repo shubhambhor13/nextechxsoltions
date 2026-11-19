@@ -27,7 +27,7 @@ function get_db() {
         }
         $db_dir = dirname(DB_PATH);
         if (!is_dir($db_dir)) {
-            mkdir($db_dir, 0777, true);
+            mkdir($db_dir, 0755, true);
         }
         try {
             $pdo = new PDO('sqlite:' . DB_PATH);
@@ -101,7 +101,7 @@ function get_db() {
 function save_record_fallback($table, $data) {
     $db_dir = dirname(DB_PATH);
     if (!is_dir($db_dir)) {
-        mkdir($db_dir, 0777, true);
+        mkdir($db_dir, 0755, true);
     }
     $file = $db_dir . '/fallback_' . preg_replace('/[^a-zA-Z0-9_-]/', '', $table) . '.json';
     $records = file_exists($file) ? json_decode(file_get_contents($file), true) : [];
