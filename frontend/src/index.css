@@ -1,0 +1,175 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-size: 17px;
+    scroll-behavior: smooth;
+    overflow-x: clip;
+  }
+
+  @media (min-width: 1024px) {
+    html {
+      font-size: 18px;
+    }
+  }
+
+  body {
+    background-color: #ffffff;
+    color: #0f172a;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    overflow-x: clip;
+    max-width: 100vw;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Manrope', 'Inter', system-ui, -apple-system, sans-serif;
+    letter-spacing: -0.025em;
+    font-weight: 800;
+  }
+}
+
+/* Arbitrary micro font overrides to ensure universal readability */
+.text-\[10px\] {
+  font-size: 0.825rem !important;
+  line-height: 1.25rem !important;
+}
+.text-\[11px\] {
+  font-size: 0.875rem !important;
+  line-height: 1.35rem !important;
+}
+.text-\[12px\] {
+  font-size: 0.925rem !important;
+  line-height: 1.4rem !important;
+}
+.text-\[13px\] {
+  font-size: 0.975rem !important;
+  line-height: 1.45rem !important;
+}
+
+/* Clean Corporate Patterns */
+.bg-grid-corporate {
+  background-image: 
+    linear-gradient(to right, rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+  background-size: 3rem 3rem;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 70%, transparent 100%);
+}
+
+/* Corporate Cards & Panels */
+.corporate-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.corporate-card:hover {
+  border-color: #93c5fd;
+  box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.08), 0 8px 10px -6px rgba(37, 99, 235, 0.04);
+  transform: translateY(-2px);
+}
+
+/* Subtle Text Gradient */
+.text-gradient-blue {
+  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 50%, #4f46e5 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Infinite Smooth Auto-Scrolling Marquee with GPU Acceleration */
+@keyframes marquee {
+  0% { transform: translate3d(0%, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes marquee-reverse {
+  0% { transform: translate3d(-50%, 0, 0); }
+  100% { transform: translate3d(0%, 0, 0); }
+}
+
+.animate-marquee {
+  display: flex !important;
+  width: max-content !important;
+  animation: marquee 68s linear infinite !important;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.animate-marquee-fast {
+  display: flex !important;
+  width: max-content !important;
+  animation: marquee 50s linear infinite !important;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.animate-marquee-slow {
+  display: flex !important;
+  width: max-content !important;
+  animation: marquee 90s linear infinite !important;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.animate-marquee-reverse {
+  display: flex !important;
+  width: max-content !important;
+  animation: marquee-reverse 68s linear infinite !important;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Pause marquee whenever cursor hovers on any box or inside the track */
+.animate-marquee:hover, 
+.animate-marquee-fast:hover,
+.animate-marquee-slow:hover,
+.animate-marquee-reverse:hover,
+.animate-marquee:has(*:hover),
+.animate-marquee-fast:has(*:hover),
+.animate-marquee-slow:has(*:hover),
+.animate-marquee-reverse:has(*:hover),
+.group\/track:hover .animate-marquee,
+.group\/track:hover .animate-marquee-fast,
+.group\/track:hover .animate-marquee-slow,
+.group\/track:hover .animate-marquee-reverse {
+  animation-play-state: paused !important;
+}
+
+/* Subtle Divider */
+.corporate-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, #e2e8f0 30%, #e2e8f0 70%, transparent 100%);
+}
+
+/* Custom Scrollbar - Light Corporate */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2563eb;
+}
+
+/* Accessibility: respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee,
+  .animate-marquee-reverse {
+    animation: none !important;
+  }
+}
