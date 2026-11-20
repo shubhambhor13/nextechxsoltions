@@ -1,6 +1,6 @@
 <?php
 $page_title = "Careers & Internships — Job Vacancies & Technical Tracks";
-$page_desc = "Explore career opportunities, experienced software engineering job vacancies, and interview-based technical internships with NextTechX Solutions. Apply online.";
+$page_desc = "Explore career opportunities, software engineering job vacancies, and interview-based technical internships with NextTechX Solutions. Apply online.";
 require_once __DIR__ . '/includes/header.php';
 
 $job_vacancies = [
@@ -144,7 +144,7 @@ $internship_roles = [
         </h1>
 
         <p class="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed font-normal">
-            Join a forward-thinking software and AI development firm. Whether you are an experienced engineer looking for high-impact vacancies or a student seeking an interview-based production internship, your journey starts here.
+            Join a forward-thinking software and AI development firm. Explore full-time engineering vacancies, early-career associate roles, and interview-based production internships to accelerate your journey.
         </p>
 
         <!-- HR Badges -->
@@ -182,7 +182,7 @@ $internship_roles = [
                 Find Your Opportunity at NextTechX
             </h2>
             <p class="text-sm text-slate-600 font-normal">
-                Select between experienced engineering vacancies or structured interview-based internship roles.
+                Select between full-time engineering vacancies or structured interview-based internship roles.
             </p>
 
             <!-- Filter Buttons -->
@@ -209,7 +209,7 @@ $internship_roles = [
                 </div>
                 <div>
                     <h3 class="text-xl font-extrabold text-slate-900 font-heading">Current Job Vacancies (Full-Time Engineering)</h3>
-                    <p class="text-xs text-slate-500">Experienced engineering roles across frontend, backend microservices, AI systems, and cloud infrastructure.</p>
+                    <p class="text-xs text-slate-500">Full-time engineering and associate roles across frontend, backend microservices, AI systems, and cloud infrastructure.</p>
                 </div>
             </div>
 

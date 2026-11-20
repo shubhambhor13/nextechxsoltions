@@ -195,7 +195,7 @@ export default function AboutUs({ onOpenQuote, onOpenConsultation }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               whileHover={{ y: -4 }}
-              className="p-8 sm:p-10 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-blue-300 transition-all duration-300 space-y-4 text-left relative overflow-hidden group"
+              className="p-5 sm:p-10 rounded-2xl sm:rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-blue-300 transition-all duration-300 space-y-4 text-left relative overflow-hidden group"
             >
               <div className="h-2 w-full bg-gradient-to-r from-blue-600 to-cyan-500 absolute top-0 left-0" />
               <div className="w-14 h-14 rounded-2xl bg-blue-50 text-blue-600 border border-blue-100 flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
@@ -212,7 +212,7 @@ export default function AboutUs({ onOpenQuote, onOpenConsultation }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               whileHover={{ y: -4 }}
-              className="p-8 sm:p-10 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-indigo-300 transition-all duration-300 space-y-4 text-left relative overflow-hidden group"
+              className="p-5 sm:p-10 rounded-2xl sm:rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-indigo-300 transition-all duration-300 space-y-4 text-left relative overflow-hidden group"
             >
               <div className="h-2 w-full bg-gradient-to-r from-indigo-600 to-purple-500 absolute top-0 left-0" />
               <div className="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 border border-indigo-100 flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
@@ -344,7 +344,7 @@ export default function AboutUs({ onOpenQuote, onOpenConsultation }) {
       {/* 5. CONNECT WITH US ONLINE */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="p-8 sm:p-12 rounded-3xl bg-slate-50 border border-slate-200/90 shadow-sm space-y-8">
+          <div className="p-4 sm:p-8 lg:p-12 rounded-2xl sm:rounded-3xl bg-slate-50 border border-slate-200/90 shadow-sm space-y-6 sm:space-y-8">
             <div className="text-center max-w-2xl mx-auto space-y-2">
               <span className="text-xs uppercase font-extrabold tracking-wider text-blue-600 font-heading">
                 Online-First Operation

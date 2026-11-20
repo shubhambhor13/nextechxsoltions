@@ -151,7 +151,7 @@ export default function PublishedResearchMarquee({ onOpenQuote }) {
           {[...publishedPapers, ...publishedPapers, ...publishedPapers].map((paper, idx) => (
             <div
               key={idx}
-              className="w-[380px] sm:w-[440px] p-6 sm:p-7 rounded-2xl bg-white border border-slate-200 hover:border-blue-400 hover:shadow-xl transition-all duration-300 flex flex-col justify-between shrink-0 shadow-sm group/card text-left space-y-4 cursor-pointer"
+              className="w-[285px] sm:w-[380px] lg:w-[440px] p-4 sm:p-7 rounded-2xl bg-white border border-slate-200 hover:border-blue-400 hover:shadow-xl transition-all duration-300 flex flex-col justify-between shrink-0 shadow-sm group/card text-left space-y-3.5 sm:space-y-4 cursor-pointer"
             >
               <div className="space-y-3.5">
                 <div className="flex items-center justify-between gap-2">

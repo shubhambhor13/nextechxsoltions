@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import Navbar from './components/Navbar';
@@ -8,21 +8,33 @@ import QuotationModal from './components/QuotationModal';
 import ConsultationModal from './components/ConsultationModal';
 import StudentRegisterModal from './components/StudentRegisterModal';
 
-// Pages
-import Home from './pages/Home';
-import AboutUs from './pages/AboutUs';
-import Services from './pages/Services';
-import AIAutomation from './pages/AIAutomation';
-import ITServices from './pages/ITServices';
-import ResearchPublication from './pages/ResearchPublication';
-import Internship from './pages/Internship';
-import Careers from './pages/Careers';
-import Portfolio from './pages/Portfolio';
-import Industries from './pages/Industries';
-import HowWeWork from './pages/HowWeWork';
-import FAQs from './pages/FAQs';
-import ContactUs from './pages/ContactUs';
-import AdminDashboard from './pages/AdminDashboard';
+// Code-split route pages with React.lazy for instant mobile loading & optimal bundle chunking
+const Home = lazy(() => import('./pages/Home'));
+const AboutUs = lazy(() => import('./pages/AboutUs'));
+const Services = lazy(() => import('./pages/Services'));
+const AIAutomation = lazy(() => import('./pages/AIAutomation'));
+const ITServices = lazy(() => import('./pages/ITServices'));
+const ResearchPublication = lazy(() => import('./pages/ResearchPublication'));
+const Internship = lazy(() => import('./pages/Internship'));
+const Careers = lazy(() => import('./pages/Careers'));
+const Portfolio = lazy(() => import('./pages/Portfolio'));
+const Industries = lazy(() => import('./pages/Industries'));
+const HowWeWork = lazy(() => import('./pages/HowWeWork'));
+const FAQs = lazy(() => import('./pages/FAQs'));
+const ContactUs = lazy(() => import('./pages/ContactUs'));
+const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
+
+// Ultra-lightweight Route Loading Skeleton
+function PageLoading() {
+  return (
+    <div className="min-h-[55vh] flex items-center justify-center py-20 bg-white" aria-label="Loading page">
+      <div className="flex flex-col items-center gap-3">
+        <div className="w-9 h-9 border-3 border-blue-600/20 border-t-blue-600 rounded-full animate-spin" />
+        <span className="text-xs font-semibold text-slate-500 font-mono tracking-wider uppercase">Loading NextTechX...</span>
+      </div>
+    </div>
+  );
+}
 
 // Helper component to scroll window to top on route change or to hash element with fixed header offset
 function ScrollToTop() {
@@ -69,7 +81,8 @@ function AnimatedRoutes({
         exit={{ opacity: 0, y: -8 }}
         transition={{ duration: 0.2, ease: "easeOut" }}
       >
-        <Routes location={location} key={location.pathname}>
+        <Suspense fallback={<PageLoading />}>
+          <Routes location={location} key={location.pathname}>
           {/* 1. Home (Single-Page Landing with all core sections) */}
           <Route 
             path="/" 
@@ -283,6 +296,7 @@ function AnimatedRoutes({
             } 
           />
         </Routes>
+        </Suspense>
       </motion.div>
     </AnimatePresence>
   );

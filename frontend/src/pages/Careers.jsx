@@ -342,7 +342,7 @@ export default function Careers({ onOpenQuote, onOpenConsultation }) {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed font-normal"
           >
-            Join a forward-thinking software and AI development firm. Whether you are an experienced engineer looking for high-impact vacancies or a student seeking an interview-based production internship, your journey starts here.
+            Join a forward-thinking software and AI development firm. Explore full-time engineering vacancies, early-career associate roles, and interview-based production internships to accelerate your professional journey.
           </motion.p>
 
           {/* Direct HR Contact Badge */}
@@ -418,7 +418,7 @@ export default function Careers({ onOpenQuote, onOpenConsultation }) {
               Find Your Opportunity at NextTechX
             </h2>
             <p className="text-sm text-slate-600 font-normal">
-              Select between experienced engineering vacancies or structured interview-based internship roles.
+              Select between full-time engineering vacancies or structured interview-based internship roles.
             </p>
 
             {/* Filter Tabs */}
@@ -470,7 +470,7 @@ export default function Careers({ onOpenQuote, onOpenConsultation }) {
                     Current Job Vacancies (Full-Time Engineering)
                   </h3>
                   <p className="text-xs text-slate-500">
-                    Experienced engineering roles across frontend, backend microservices, AI systems, and cloud infrastructure.
+                    Full-time engineering and associate roles across frontend, backend microservices, AI systems, and cloud infrastructure.
                   </p>
                 </div>
               </div>
@@ -652,17 +652,17 @@ export default function Careers({ onOpenQuote, onOpenConsultation }) {
       </section>
 
       {/* 3. CAREER APPLICATION FORM SECTION */}
-      <section id="apply-form" ref={formRef} className="py-20 lg:py-28 bg-slate-50/70 border-t border-slate-200 scroll-mt-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="apply-form" ref={formRef} className="py-12 sm:py-20 lg:py-28 bg-slate-50/70 border-t border-slate-200 scroll-mt-20">
+        <div className="max-w-4xl mx-auto px-3 sm:px-6 lg:px-8">
           
-          <div className="p-8 sm:p-12 rounded-3xl bg-white border border-slate-200/90 shadow-xl space-y-8 text-left">
+          <div className="p-4 sm:p-8 lg:p-12 rounded-2xl sm:rounded-3xl bg-white border border-slate-200/90 shadow-xl space-y-6 sm:space-y-8 text-left">
             
-            <div className="text-center space-y-2 border-b border-slate-200 pb-6">
-              <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 text-xs font-bold font-heading">
+            <div className="text-center space-y-2 border-b border-slate-200 pb-5 sm:pb-6">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 text-[11px] sm:text-xs font-bold font-heading">
                 <Send className="w-3.5 h-3.5" />
                 <span>NextTechX Talent Application Portal</span>
               </div>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 font-heading">
+              <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 font-heading">
                 Career & Internship Application Form
               </h2>
               <p className="text-xs sm:text-sm text-slate-600 font-normal max-w-xl mx-auto">
@@ -890,7 +890,7 @@ export default function Careers({ onOpenQuote, onOpenConsultation }) {
                             <FileText className="w-5 h-5" />
                           </div>
                           <div>
-                            <div className="text-xs sm:text-sm font-bold text-slate-900 max-w-[260px] sm:max-w-md truncate">
+                            <div className="text-xs sm:text-sm font-bold text-slate-900 max-w-[140px] xs:max-w-[200px] sm:max-w-md truncate">
                               {resumeFile.name}
                             </div>
                             <div className="text-[11px] text-emerald-700 font-semibold font-mono">

@@ -118,7 +118,7 @@ export default function ContactUs({ onOpenQuote, onOpenConsultation }) {
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="lg:col-span-7 p-8 sm:p-12 rounded-3xl bg-white border border-slate-200/90 shadow-xl space-y-6 text-left relative overflow-hidden"
+              className="lg:col-span-7 p-4 sm:p-8 lg:p-12 rounded-2xl sm:rounded-3xl bg-white border border-slate-200/90 shadow-xl space-y-6 text-left relative overflow-hidden"
             >
               {/* Top Accent Stripe */}
               <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500" />
@@ -261,7 +261,7 @@ export default function ContactUs({ onOpenQuote, onOpenConsultation }) {
               className="lg:col-span-5 space-y-6 text-left"
             >
               {/* Instant Communication Card */}
-              <div className="p-7 rounded-3xl bg-white border border-slate-200/90 space-y-5 shadow-lg">
+              <div className="p-4 sm:p-7 rounded-2xl sm:rounded-3xl bg-white border border-slate-200/90 space-y-4 sm:space-y-5 shadow-lg">
                 <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                   <h3 className="text-base font-bold text-slate-900 flex items-center gap-2 font-heading">
                     <Sparkles className="w-4 h-4 text-blue-600" />
@@ -353,7 +353,7 @@ export default function ContactUs({ onOpenQuote, onOpenConsultation }) {
               </div>
 
               {/* Connect With Us Online */}
-              <div className="p-7 rounded-3xl bg-slate-50/70 border border-slate-200/90 space-y-4 shadow-sm text-xs">
+              <div className="p-4 sm:p-7 rounded-2xl sm:rounded-3xl bg-slate-50/70 border border-slate-200/90 space-y-4 shadow-sm text-xs">
                 <h3 className="font-bold text-slate-900 flex items-center gap-2 text-sm font-heading">
                   <Globe2 className="w-4 h-4 text-blue-600" />
                   <span>Connect With Us Online</span>

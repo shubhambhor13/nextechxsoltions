@@ -1,20 +1,26 @@
 # NextTechX Solutions - Apache Web Server Configuration
 Options -Indexes
-DirectoryIndex index.php
+DirectoryIndex index.php index.html
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteBase /
 
-    # Block direct HTTP access to data folder (contains SQLite DB)
+    # Block direct HTTP access to data folder (contains SQLite DB) and internal includes
     RewriteRule ^data/ - [F,L]
     RewriteRule ^includes/ - [F,L]
 
     # API Endpoint Aliases for Frontend Compatibility
     RewriteRule ^api/careers/apply/?$ api/apply_career.php [L,QSA]
+    RewriteRule ^api/careers/vacancies/?$ api/apply_career.php?action=vacancies [L,QSA]
+    RewriteRule ^api/careers/applications/?$ api/apply_career.php?action=applications [L,QSA]
     RewriteRule ^api/quotation/?$ api/quote.php [L,QSA]
     RewriteRule ^api/training/register/?$ api/apply.php [L,QSA]
+    RewriteRule ^api/training/courses/?$ api/apply.php?action=courses [L,QSA]
     RewriteRule ^api/ai/chat/?$ api/chat.php [L,QSA]
+    RewriteRule ^api/chat/?$ api/chat.php [L,QSA]
+    RewriteRule ^api/consultation/?$ api/consultation.php [L,QSA]
+    RewriteRule ^api/contact/?$ api/contact.php [L,QSA]
 
     # Clean URL support: /about -> about.php, /services -> services.php
     RewriteCond %{REQUEST_FILENAME} !-d
@@ -35,8 +41,24 @@ DirectoryIndex index.php
     ExpiresByType image/jpeg "access plus 1 month"
     ExpiresByType image/gif "access plus 1 month"
     ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/webp "access plus 1 month"
     ExpiresByType image/svg+xml "access plus 1 month"
     ExpiresByType video/mp4 "access plus 1 month"
     ExpiresByType text/css "access plus 1 week"
     ExpiresByType application/javascript "access plus 1 week"
+</IfModule>
+
+# Enable Gzip / Deflate Compression
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript
+    AddOutputFilterByType DEFLATE application/json
+    AddOutputFilterByType DEFLATE image/svg+xml
 </IfModule>

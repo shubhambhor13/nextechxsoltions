@@ -35,8 +35,8 @@ export default function TechMarquee() {
     <div className="py-7 relative overflow-hidden select-none border-y border-slate-200/80 bg-slate-50/70">
       
       {/* Side gradient masks for smooth fade in/out on white/light grey */}
-      <div className="absolute top-0 bottom-0 left-0 w-20 sm:w-36 bg-gradient-to-r from-slate-50 to-transparent z-10 pointer-events-none" />
-      <div className="absolute top-0 bottom-0 right-0 w-20 sm:w-36 bg-gradient-to-l from-slate-50 to-transparent z-10 pointer-events-none" />
+      <div className="absolute top-0 bottom-0 left-0 w-8 sm:w-28 bg-gradient-to-r from-slate-50 to-transparent z-10 pointer-events-none" />
+      <div className="absolute top-0 bottom-0 right-0 w-8 sm:w-28 bg-gradient-to-l from-slate-50 to-transparent z-10 pointer-events-none" />
 
       {/* Single clean continuously auto-scrolling rail */}
       <div className="relative flex overflow-hidden w-full group/track">

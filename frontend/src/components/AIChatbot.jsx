@@ -116,15 +116,15 @@ export default function AIChatbot({ onOpenQuote, onOpenConsultation, onOpenRegis
   return (
     <>
       {/* Floating Trigger Button */}
-      <div className="fixed bottom-6 right-6 z-40">
+      <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40">
         {!isOpen && (
           <button
             onClick={() => setIsOpen(true)}
-            className="group relative flex items-center gap-2.5 px-4 py-3 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-lg shadow-blue-500/25 active:scale-95 transition-all duration-200"
+            className="group relative flex items-center gap-2 px-3 py-2.5 sm:px-4 sm:py-3 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-lg shadow-blue-500/25 active:scale-95 transition-all duration-200"
             aria-label="Open AI Assistant"
           >
-            <span className="relative flex items-center justify-center w-6 h-6 rounded-full bg-white/20 text-white">
-              <Bot className="w-4 h-4" />
+            <span className="relative flex items-center justify-center w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-white/20 text-white">
+              <Bot className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </span>
             <span className="relative text-xs tracking-wide hidden sm:inline">Ask AI Assistant</span>
             <span className="relative flex h-2 w-2 rounded-full bg-emerald-300"></span>
@@ -132,9 +132,9 @@ export default function AIChatbot({ onOpenQuote, onOpenConsultation, onOpenRegis
         )}
       </div>
 
-      {/* Floating Chat Modal */}
+      {/* Floating Chat Modal (Fully responsive with inset-x-3 on mobile to prevent overflow) */}
       {isOpen && (
-        <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 w-[92vw] sm:w-[400px] h-[540px] max-h-[85vh] bg-white border border-slate-200 rounded-2xl shadow-2xl flex flex-col overflow-hidden z-50 animate-in fade-in slide-in-from-bottom-4 duration-200">
+        <div className="fixed inset-x-3 bottom-3 sm:inset-x-auto sm:right-6 sm:bottom-6 sm:w-[400px] h-[520px] max-h-[85vh] bg-white border border-slate-200 rounded-2xl shadow-2xl flex flex-col overflow-hidden z-50 animate-in fade-in slide-in-from-bottom-4 duration-200">
           
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 bg-slate-50 border-b border-slate-200">

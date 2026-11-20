@@ -40,10 +40,10 @@ export default function Logo({
   const currentBadgeSize = badgeSizeClasses[size] || badgeSizeClasses.md;
   const currentTextSize = textSizes[size] || textSizes.md;
 
-  // Use the new NextTechX emblem badge
+  // Use the optimized NextTechX emblem badge
   const badgeSrc = isDark 
-    ? '/images/nexttechx-badge-dark.png' 
-    : '/images/nexttechx-badge.png';
+    ? '/images/nexttechx-badge-dark.webp' 
+    : '/images/nexttechx-badge.webp';
 
   return (
     <div className={`inline-flex items-center gap-2 sm:gap-2.5 select-none transition-transform duration-200 group-hover:scale-[1.02] ${className}`}>
@@ -54,11 +54,13 @@ export default function Logo({
         className={`${currentBadgeSize} object-contain shrink-0 drop-shadow-sm rounded-full`}
         loading="eager"
         decoding="async"
+        width="40"
+        height="40"
       />
 
       {/* Brand Typography */}
       {showText && (
-        <div className="text-left flex flex-col justify-center">
+        <div className="text-left flex flex-col justify-center min-w-0">
           <div className={`flex items-center font-heading font-black tracking-tight leading-none whitespace-nowrap ${currentTextSize.brand}`}>
             <span className={isDark ? 'text-white' : 'text-slate-900'}>
               NextTech
@@ -72,7 +74,7 @@ export default function Logo({
           </div>
 
           {showTagline && (
-            <p className={`whitespace-nowrap tracking-wider font-bold uppercase font-heading mt-0.5 ${currentTextSize.tagline} ${isDark ? 'text-cyan-400/90' : 'text-slate-500'}`}>
+            <p className={`whitespace-nowrap tracking-wider font-bold uppercase font-heading mt-0.5 hidden sm:block ${currentTextSize.tagline} ${isDark ? 'text-cyan-400/90' : 'text-slate-500'}`}>
               {siteConfig.tagline}
             </p>
           )}

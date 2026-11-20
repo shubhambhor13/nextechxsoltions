@@ -226,9 +226,9 @@ export default function Home({ onOpenQuote, onOpenConsultation, onOpenRegister }
       {/* ============================================================ */}
       <section 
         id="hero" 
-        className="relative pt-12 sm:pt-20 pb-20 lg:pb-28 overflow-hidden bg-[#060c1d] border-b border-blue-950/80 text-white"
+        className="relative pt-6 sm:pt-16 pb-16 lg:pb-28 overflow-hidden bg-[#060c1d] border-b border-blue-950/80 text-white"
       >
-        {/* 1. Premium Animated Video Background with Seamless Loop & Fallback (Layer 0) */}
+        {/* 1. Premium Animated Video Background with Seamless Loop & Mobile-First Source Ordering (Layer 0) */}
         <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-0">
           <video
             ref={videoRef}
@@ -236,15 +236,16 @@ export default function Home({ onOpenQuote, onOpenConsultation, onOpenRegister }
             loop
             muted
             playsInline
-            preload="auto"
-            poster="/images/hero-video-poster.jpg"
+            preload="metadata"
+            poster="/images/hero-video-poster.webp"
             className="w-full h-full object-cover object-center scale-105 transform will-change-transform opacity-60 mix-blend-screen transition-opacity duration-1000"
           >
-            <source src="/videos/hero-ai-network.mp4" type="video/mp4" />
+            {/* Mobile Video First for 4G/5G mobile bandwidth efficiency */}
             <source src="/videos/hero-ai-network-mobile.mp4" type="video/mp4" media="(max-width: 768px)" />
-            {/* Fallback Static Image */}
+            <source src="/videos/hero-ai-network.mp4" type="video/mp4" />
+            {/* Fallback Static WebP Image */}
             <img 
-              src="/images/hero-video-poster.jpg" 
+              src="/images/hero-video-poster.webp" 
               alt="AI Technology & Neural Network" 
               className="w-full h-full object-cover object-center opacity-45" 
             />
@@ -252,13 +253,13 @@ export default function Home({ onOpenQuote, onOpenConsultation, onOpenRegister }
         </div>
 
         {/* 2. Dark Navy Multi-Layer Gradient Overlays for Crystal-Clear Text Readability (Layer 1) */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#060c1d]/85 via-[#071330]/65 to-[#0b1c44]/90 pointer-events-none z-10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#060c1d]/90 via-[#071330]/75 to-[#0b1c44]/95 pointer-events-none z-10" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_35%_40%,rgba(6,12,29,0.3)_0%,rgba(6,12,29,0.85)_80%)] pointer-events-none z-10" />
 
-        {/* 3. Glowing Ambient Volumetric Accents (Layer 1) */}
-        <div className="absolute top-0 right-0 w-[650px] h-[550px] bg-gradient-to-bl from-cyan-500/20 via-blue-600/15 to-transparent rounded-full blur-[120px] pointer-events-none z-10 animate-pulse-slow" />
-        <div className="absolute top-1/3 -left-32 w-[550px] h-[550px] bg-gradient-to-tr from-indigo-600/20 via-blue-700/15 to-transparent rounded-full blur-[130px] pointer-events-none z-10" />
-        <div className="absolute bottom-0 right-1/4 w-[450px] h-[300px] bg-blue-500/10 rounded-full blur-[100px] pointer-events-none z-10" />
+        {/* 3. Glowing Ambient Volumetric Accents (Hidden on mobile to eliminate GPU rasterization lag) */}
+        <div className="absolute top-0 right-0 w-[650px] h-[550px] bg-gradient-to-bl from-cyan-500/20 via-blue-600/15 to-transparent rounded-full blur-[120px] pointer-events-none z-10 animate-pulse-slow hidden sm:block" />
+        <div className="absolute top-1/3 -left-32 w-[550px] h-[550px] bg-gradient-to-tr from-indigo-600/20 via-blue-700/15 to-transparent rounded-full blur-[130px] pointer-events-none z-10 hidden sm:block" />
+        <div className="absolute bottom-0 right-1/4 w-[450px] h-[300px] bg-blue-500/10 rounded-full blur-[100px] pointer-events-none z-10 hidden sm:block" />
         
         {/* 4. Subtle Futuristic Tech Matrix Grid Overlay (Layer 1) */}
         <div 
@@ -271,59 +272,59 @@ export default function Home({ onOpenQuote, onOpenConsultation, onOpenRegister }
         />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center min-h-[580px]">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center min-h-[480px] sm:min-h-[580px]">
             
             {/* Left Content Column (7 cols) */}
             <motion.div 
               initial={{ opacity: 0, y: 25 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
-              className="lg:col-span-7 space-y-7 text-left"
+              className="lg:col-span-7 space-y-5 sm:space-y-7 text-left"
             >
               
               {/* Eyebrow Badges: Glowing Tech Pills */}
-              <div className="flex flex-wrap items-center gap-3">
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/15 border border-blue-400/35 text-cyan-300 text-xs sm:text-sm font-semibold tracking-wide backdrop-blur-md shadow-[0_0_20px_rgba(59,130,246,0.3)] font-heading">
-                  <Sparkles className="w-4 h-4 text-cyan-400" />
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-blue-500/15 border border-blue-400/35 text-cyan-300 text-[11px] sm:text-sm font-semibold tracking-wide backdrop-blur-md shadow-xs font-heading">
+                  <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400" />
                   <span>Technology & Innovation</span>
                 </div>
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/15 border border-indigo-400/35 text-indigo-200 text-xs sm:text-sm font-semibold tracking-wide backdrop-blur-md shadow-[0_0_20px_rgba(99,102,241,0.25)] font-heading">
-                  <Zap className="w-4 h-4 text-indigo-400" />
+                <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-indigo-500/15 border border-indigo-400/35 text-indigo-200 text-[11px] sm:text-sm font-semibold tracking-wide backdrop-blur-md shadow-xs font-heading">
+                  <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-indigo-400" />
                   <span>AI-Powered Solutions</span>
                 </div>
               </div>
 
               {/* Bold Headline with Electric Cyan/Blue Highlight */}
-              <h1 className="text-4xl sm:text-6xl lg:text-[4rem] font-black text-white tracking-tight leading-[1.08] font-heading">
+              <h1 className="text-2xl xs:text-3xl sm:text-5xl lg:text-5xl xl:text-[4rem] font-black text-white tracking-tight leading-[1.12] sm:leading-[1.08] font-heading">
                 Architecting Tomorrow with{' '}
-                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-400 drop-shadow-[0_0_35px_rgba(6,182,212,0.35)]">
+                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-400 drop-shadow-[0_0_25px_rgba(6,182,212,0.35)] mt-1">
                   Intelligent AI & Advanced IT Solutions
                 </span>
               </h1>
 
               {/* Concise 2-Line Description */}
-              <p className="text-base sm:text-lg lg:text-xl text-slate-300 max-w-xl leading-relaxed font-normal">
+              <p className="text-sm sm:text-lg lg:text-xl text-slate-300 max-w-xl leading-relaxed font-normal">
                 Empowering businesses through intelligent automation, innovative software and next-generation technology solutions.
               </p>
 
               {/* Action Buttons: Explore Services and Contact Us */}
-              <div className="pt-2 flex flex-wrap items-center gap-4">
+              <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
                 <a
                   href="#services"
                   onClick={(e) => scrollToSection(e, 'services')}
-                  className="px-8 py-4 rounded-xl bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold text-base shadow-[0_10px_25px_rgba(37,99,235,0.45)] hover:shadow-[0_15px_35px_rgba(6,182,212,0.5)] transition-all duration-300 flex items-center gap-2.5 active:scale-95 font-heading group"
+                  className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold text-sm sm:text-base shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 active:scale-95 font-heading group"
                 >
                   <span>Explore Services</span>
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
                 </a>
 
                 <a
                   href="#contact"
                   onClick={(e) => scrollToSection(e, 'contact')}
-                  className="px-7 py-4 rounded-xl bg-slate-900/80 hover:bg-slate-800 text-white border border-slate-700/80 hover:border-cyan-400/60 font-bold text-base transition-all duration-300 flex items-center gap-2.5 shadow-sm hover:shadow-[0_0_20px_rgba(6,182,212,0.25)] active:scale-95 font-heading group"
+                  className="w-full sm:w-auto px-6 sm:px-7 py-3.5 sm:py-4 rounded-xl bg-slate-900/80 hover:bg-slate-800 text-white border border-slate-700/80 hover:border-cyan-400/60 font-bold text-sm sm:text-base transition-all duration-300 flex items-center justify-center gap-2 shadow-sm active:scale-95 font-heading group"
                 >
                   <span>Contact Us</span>
-                  <ChevronRight className="w-5 h-5 text-slate-400 group-hover:translate-x-1 group-hover:text-cyan-400 transition-all" />
+                  <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 group-hover:translate-x-1 group-hover:text-cyan-400 transition-all" />
                 </a>
               </div>
 
@@ -521,47 +522,47 @@ export default function Home({ onOpenQuote, onOpenConsultation, onOpenRegister }
             </p>
           </div>
 
-          {/* 4 Colorful Gradient Cards in a 2x2 Grid (Matching Reference Screenshot) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 max-w-5xl mx-auto items-stretch">
+          {/* 4 Colorful Gradient Cards in a 2x2 Grid (Responsive on all viewports) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 max-w-5xl mx-auto items-stretch">
             {services.map((srv) => {
               const Icon = srv.icon;
               return (
                 <Link
                   key={srv.id}
                   to={srv.link}
-                  className={`w-full group rounded-3xl p-8 sm:p-9 border ${srv.borderColor} ${srv.cardGradient} shadow-xl hover:-translate-y-2.5 ${srv.glowColor} transition-all duration-300 flex flex-col justify-between text-left relative overflow-hidden cursor-pointer`}
+                  className={`w-full group rounded-2xl sm:rounded-3xl p-5 sm:p-8 lg:p-9 border ${srv.borderColor} ${srv.cardGradient} shadow-xl hover:-translate-y-2.5 ${srv.glowColor} transition-all duration-300 flex flex-col justify-between text-left relative overflow-hidden cursor-pointer`}
                 >
-                  {/* Top Header Row: Icon + Title + Subtitle + Ribbon (Matching Reference Layout) */}
+                  {/* Top Header Row: Icon + Title + Subtitle + Ribbon */}
                   <div>
-                    <div className="flex items-start justify-between gap-3 mb-6">
-                      <div className="flex items-center gap-4">
-                        <div className="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-xs flex items-center justify-center text-white shrink-0 group-hover:scale-110 transition-transform shadow-xs">
-                          <Icon className="w-7 h-7 stroke-[2.2]" />
+                    <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-5 sm:mb-6">
+                      <div className="flex items-center gap-3.5 sm:gap-4">
+                        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-white/20 backdrop-blur-xs flex items-center justify-center text-white shrink-0 group-hover:scale-110 transition-transform shadow-xs">
+                          <Icon className="w-6 h-6 sm:w-7 sm:h-7 stroke-[2.2]" />
                         </div>
-                        <div>
-                          <h3 className="text-2xl sm:text-3xl font-black text-white font-heading tracking-tight leading-snug">
+                        <div className="min-w-0">
+                          <h3 className="text-xl sm:text-2xl lg:text-3xl font-black text-white font-heading tracking-tight leading-snug">
                             {srv.title}
                           </h3>
-                          <p className="text-sm sm:text-base text-white/90 font-medium leading-tight mt-1">
+                          <p className="text-xs sm:text-sm text-white/90 font-medium leading-tight mt-0.5 sm:mt-1">
                             {srv.subtitle}
                           </p>
                         </div>
                       </div>
                       {srv.badgeRibbon && (
-                        <span className="shrink-0 text-xs font-extrabold uppercase tracking-wider bg-white/20 text-white px-3 py-1 rounded-full border border-white/30 font-heading">
+                        <span className="self-start sm:self-auto shrink-0 text-[10px] sm:text-xs font-extrabold uppercase tracking-wider bg-white/20 text-white px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full border border-white/30 font-heading">
                           {srv.badgeRibbon}
                         </span>
                       )}
                     </div>
 
                     {/* Attractive Feature List with Translucent Circular Checkmarks */}
-                    <div className="space-y-4 mb-8">
+                    <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
                       {srv.features.map((feature, i) => (
-                        <div key={i} className="flex items-center gap-3.5 text-left">
-                          <div className="w-6 h-6 rounded-full bg-white/25 flex items-center justify-center shrink-0 shadow-2xs">
-                            <Check className="w-4 h-4 text-white stroke-[3]" />
+                        <div key={i} className="flex items-start gap-2.5 sm:gap-3.5 text-left">
+                          <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-white/25 flex items-center justify-center shrink-0 shadow-2xs mt-0.5">
+                            <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white stroke-[3]" />
                           </div>
-                          <span className="text-sm sm:text-base font-semibold text-white leading-tight">
+                          <span className="text-xs sm:text-sm lg:text-base font-semibold text-white leading-snug sm:leading-tight">
                             {feature}
                           </span>
                         </div>
@@ -570,10 +571,10 @@ export default function Home({ onOpenQuote, onOpenConsultation, onOpenRegister }
                   </div>
 
                   {/* Full-Width Gradient CTA Button Inside Card */}
-                  <div className={`w-full py-4 px-6 rounded-2xl ${srv.btnGradient} font-black text-sm sm:text-base shadow-lg flex items-center justify-center gap-2.5 group-hover:scale-[1.02] transition-all font-heading tracking-wide`}>
-                    <Sparkles className="w-5 h-5 text-white" />
+                  <div className={`w-full py-3 sm:py-4 px-4 sm:px-6 rounded-xl sm:rounded-2xl ${srv.btnGradient} font-black text-xs sm:text-sm lg:text-base shadow-lg flex items-center justify-center gap-2 group-hover:scale-[1.02] transition-all font-heading tracking-wide`}>
+                    <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                     <span className="text-white font-black">{srv.btnText}</span>
-                    <ArrowRight className="w-5 h-5 text-white group-hover:translate-x-1.5 transition-transform" />
+                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 text-white group-hover:translate-x-1.5 transition-transform" />
                   </div>
                 </Link>
               );
@@ -595,22 +596,22 @@ export default function Home({ onOpenQuote, onOpenConsultation, onOpenRegister }
         id="careers" 
         className="py-24 lg:py-32 bg-gradient-to-b from-[#0B1428] via-[#0F1D3D] to-[#172554] text-white relative overflow-hidden select-none border-b border-blue-900/50"
       >
-        {/* Subtle Ambient Background Gradients for Depth */}
-        <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-blue-600/15 rounded-full blur-[140px] pointer-events-none" />
-        <div className="absolute bottom-0 left-1/4 w-[600px] h-[600px] bg-cyan-600/15 rounded-full blur-[140px] pointer-events-none" />
+        {/* Subtle Ambient Background Gradients for Depth (Optimized for Mobile) */}
+        <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-blue-600/15 rounded-full blur-[140px] pointer-events-none hidden sm:block" />
+        <div className="absolute bottom-0 left-1/4 w-[600px] h-[600px] bg-cyan-600/15 rounded-full blur-[140px] pointer-events-none hidden sm:block" />
         <div className="absolute inset-0 bg-grid-corporate opacity-25 pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 sm:space-y-14 relative z-10">
           
-          <div className="text-center max-w-3xl mx-auto space-y-4">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/20 border border-blue-400/40 text-cyan-300 text-xs font-bold uppercase tracking-wider font-heading shadow-xs">
-              <Sparkles className="w-4 h-4 text-cyan-300" />
+          <div className="text-center max-w-3xl mx-auto space-y-3 sm:space-y-4">
+            <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full bg-blue-500/20 border border-blue-400/40 text-cyan-300 text-[11px] sm:text-xs font-bold uppercase tracking-wider font-heading shadow-xs">
+              <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-300" />
               <span>We Are Hiring • Join NextTechX</span>
             </div>
-            <h2 className="text-3xl sm:text-5xl font-black text-white font-heading tracking-tight leading-tight">
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black text-white font-heading tracking-tight leading-tight">
               Careers & Internship Opportunities
             </h2>
-            <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-sm sm:text-base lg:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
               Full-time engineering vacancies and interview-based technology internships. Work on live production IT systems and modern AI architectures.
             </p>
           </div>
@@ -618,43 +619,43 @@ export default function Home({ onOpenQuote, onOpenConsultation, onOpenRegister }
           {/* Master Clickable Careers Showcase Card */}
           <Link
             to="/careers"
-            className="group block relative w-full rounded-3xl bg-gradient-to-br from-[#0B1428]/95 via-[#0F1D3D]/90 to-[#172554]/95 border-2 border-blue-500/40 hover:border-cyan-400/80 shadow-[0_20px_60px_rgba(11,20,40,0.8)] hover:shadow-[0_25px_70px_rgba(6,182,212,0.25)] p-8 sm:p-12 overflow-hidden text-left cursor-pointer transition-all duration-300"
+            className="group block relative w-full rounded-2xl sm:rounded-3xl bg-gradient-to-br from-[#0B1428]/95 via-[#0F1D3D]/90 to-[#172554]/95 border-2 border-blue-500/40 hover:border-cyan-400/80 shadow-xl hover:shadow-[0_25px_70px_rgba(6,182,212,0.25)] p-5 sm:p-8 lg:p-12 overflow-hidden text-left cursor-pointer transition-all duration-300"
           >
             {/* Top accent gradient bar */}
             <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-blue-500 via-cyan-400 to-indigo-500" />
             
             {/* Decorative background ambient blur */}
-            <div className="absolute -top-24 -right-24 w-80 h-80 bg-cyan-500/15 rounded-full blur-3xl pointer-events-none group-hover:bg-cyan-500/25 transition-colors" />
+            <div className="absolute -top-24 -right-24 w-80 h-80 bg-cyan-500/15 rounded-full blur-3xl pointer-events-none group-hover:bg-cyan-500/25 transition-colors hidden sm:block" />
 
-            <div className="relative z-10 space-y-9">
+            <div className="relative z-10 space-y-6 sm:space-y-9">
               
               {/* Header Badges + Title */}
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-5 border-b border-slate-700/80 pb-7">
-                <div className="space-y-3">
-                  <div className="flex flex-wrap items-center gap-2.5">
-                    <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-blue-600 text-white text-xs font-bold font-heading shadow-xs">
-                      <Sparkles className="w-4 h-4" />
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-5 border-b border-slate-700/80 pb-5 sm:pb-7">
+                <div className="space-y-2.5 sm:space-y-3">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-600 text-white text-[11px] sm:text-xs font-bold font-heading shadow-xs">
+                      <Sparkles className="w-3.5 h-3.5" />
                       <span>Job Vacancies & Internships</span>
                     </span>
-                    <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-xs font-bold font-heading">
-                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-[11px] sm:text-xs font-bold font-heading">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                       <span>Interview-Based Selection</span>
                     </span>
                   </div>
 
-                  <h3 className="text-2xl sm:text-4xl font-black text-white group-hover:text-cyan-300 transition-colors font-heading tracking-tight">
+                  <h3 className="text-xl sm:text-3xl lg:text-4xl font-black text-white group-hover:text-cyan-300 transition-colors font-heading tracking-tight">
                     Shape Your Career with NextTechX Solutions
                   </h3>
-                  <p className="text-base text-slate-300 max-w-2xl leading-relaxed">
+                  <p className="text-xs sm:text-base text-slate-300 max-w-2xl leading-relaxed">
                     Explore available full-time vacancies in Full-Stack, AI/ML, Cloud DevOps, and Data Analytics, or apply for our live client project internships.
                   </p>
                 </div>
 
                 {/* Primary Action Button */}
-                <div className="shrink-0">
-                  <div className="px-7 py-4 rounded-2xl bg-gradient-to-r from-blue-600 via-sky-500 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-black text-base shadow-lg group-hover:shadow-[0_10px_25px_rgba(6,182,212,0.4)] flex items-center gap-2.5 transition-all font-heading">
+                <div className="w-full sm:w-auto shrink-0">
+                  <div className="w-full sm:w-auto px-5 sm:px-7 py-3 sm:py-4 rounded-xl sm:rounded-2xl bg-gradient-to-r from-blue-600 via-sky-500 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-black text-xs sm:text-base shadow-lg group-hover:shadow-[0_10px_25px_rgba(6,182,212,0.4)] flex items-center justify-center gap-2 sm:gap-2.5 transition-all font-heading">
                     <span>Explore Careers & Apply</span>
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1.5 transition-transform" />
+                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1.5 transition-transform" />
                   </div>
                 </div>
               </div>

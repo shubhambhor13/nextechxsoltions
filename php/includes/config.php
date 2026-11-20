@@ -126,7 +126,7 @@ function is_active($page) {
  * Render the official NextTechX logo with circular 3D emblem & tagline
  */
 function render_logo($is_dark = false, $size = 'md', $show_tagline = true) {
-    $badge_src = $is_dark ? 'assets/images/nexttechx-badge-dark.png' : 'assets/images/nexttechx-badge.png';
+    $badge_src = $is_dark ? 'assets/images/nexttechx-badge-dark.webp' : 'assets/images/nexttechx-badge.webp';
     $name_color = $is_dark ? 'text-white' : 'text-slate-900';
     $tagline_color = $is_dark ? 'text-cyan-400/90' : 'text-slate-500';
     

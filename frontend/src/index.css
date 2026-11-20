@@ -4,14 +4,14 @@
 
 @layer base {
   html {
-    font-size: 17px;
+    font-size: 16px;
     scroll-behavior: smooth;
     overflow-x: clip;
   }
 
   @media (min-width: 1024px) {
     html {
-      font-size: 18px;
+      font-size: 16.5px;
     }
   }
 
@@ -19,8 +19,8 @@
     background-color: #ffffff;
     color: #0f172a;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-size: 1.05rem;
-    line-height: 1.7;
+    font-size: 1rem;
+    line-height: 1.65;
     overflow-x: clip;
     max-width: 100vw;
     -webkit-font-smoothing: antialiased;
@@ -34,22 +34,14 @@
   }
 }
 
-/* Arbitrary micro font overrides to ensure universal readability */
-.text-\[10px\] {
-  font-size: 0.825rem !important;
-  line-height: 1.25rem !important;
-}
-.text-\[11px\] {
-  font-size: 0.875rem !important;
-  line-height: 1.35rem !important;
-}
-.text-\[12px\] {
-  font-size: 0.925rem !important;
-  line-height: 1.4rem !important;
-}
-.text-\[13px\] {
-  font-size: 0.975rem !important;
-  line-height: 1.45rem !important;
+/* Accessibility: Universal prefers-reduced-motion respect */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* Clean Corporate Patterns */

@@ -1,0 +1,4 @@
+# Deny all direct web access to database directory
+Order allow,deny
+Deny from all
+Require all denied
