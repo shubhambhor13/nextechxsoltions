@@ -33,6 +33,7 @@ import {
   Lock
 } from 'lucide-react';
 import HeroTechIllustration from '../components/HeroTechIllustration';
+import HeroBackground from '../components/HeroBackground';
 import TechMarquee from '../components/TechMarquee';
 import AutoScrollingProjects from '../components/AutoScrollingProjects';
 import { siteConfig } from '../config/siteConfig';
@@ -208,111 +209,65 @@ export default function Home({ onOpenQuote, onOpenConsultation, onOpenRegister }
     }
   };
 
-  // Autoplay-safe video ref for high cross-browser compatibility
-  const videoRef = useRef(null);
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.defaultMuted = true;
-      videoRef.current.muted = true;
-      videoRef.current.play().catch(() => {});
-    }
-  }, []);
-
   return (
     <div className="bg-white text-slate-800 font-sans">
       
       {/* ============================================================ */}
-      {/* 1. HERO SECTION (Premium International AI & Tech Animated Video Theme) */}
+      {/* 1. HERO SECTION (Futuristic AI & Next-Gen Tech Architecture) */}
       {/* ============================================================ */}
       <section 
         id="hero" 
-        className="relative pt-6 sm:pt-16 pb-16 lg:pb-28 overflow-hidden bg-[#060c1d] border-b border-blue-950/80 text-white"
+        className="relative pt-8 sm:pt-16 lg:pt-20 pb-16 lg:pb-28 overflow-hidden bg-[#030712] border-b border-cyan-950/60 text-white"
       >
-        {/* 1. Premium Animated Video Background with Seamless Loop & Mobile-First Source Ordering (Layer 0) */}
-        <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-0">
-          <video
-            ref={videoRef}
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="metadata"
-            poster="/images/hero-video-poster.webp"
-            className="w-full h-full object-cover object-center scale-105 transform will-change-transform opacity-60 mix-blend-screen transition-opacity duration-1000"
-          >
-            {/* Mobile Video First for 4G/5G mobile bandwidth efficiency */}
-            <source src="/videos/hero-ai-network-mobile.mp4" type="video/mp4" media="(max-width: 768px)" />
-            <source src="/videos/hero-ai-network.mp4" type="video/mp4" />
-            {/* Fallback Static WebP Image */}
-            <img 
-              src="/images/hero-video-poster.webp" 
-              alt="AI Technology & Neural Network" 
-              className="w-full h-full object-cover object-center opacity-45" 
-            />
-          </video>
-        </div>
-
-        {/* 2. Dark Navy Multi-Layer Gradient Overlays for Crystal-Clear Text Readability (Layer 1) */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#060c1d]/90 via-[#071330]/75 to-[#0b1c44]/95 pointer-events-none z-10" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_35%_40%,rgba(6,12,29,0.3)_0%,rgba(6,12,29,0.85)_80%)] pointer-events-none z-10" />
-
-        {/* 3. Glowing Ambient Volumetric Accents (Hidden on mobile to eliminate GPU rasterization lag) */}
-        <div className="absolute top-0 right-0 w-[650px] h-[550px] bg-gradient-to-bl from-cyan-500/20 via-blue-600/15 to-transparent rounded-full blur-[120px] pointer-events-none z-10 animate-pulse-slow hidden sm:block" />
-        <div className="absolute top-1/3 -left-32 w-[550px] h-[550px] bg-gradient-to-tr from-indigo-600/20 via-blue-700/15 to-transparent rounded-full blur-[130px] pointer-events-none z-10 hidden sm:block" />
-        <div className="absolute bottom-0 right-1/4 w-[450px] h-[300px] bg-blue-500/10 rounded-full blur-[100px] pointer-events-none z-10 hidden sm:block" />
-        
-        {/* 4. Subtle Futuristic Tech Matrix Grid Overlay (Layer 1) */}
-        <div 
-          className="absolute inset-0 pointer-events-none z-10 opacity-20"
-          style={{
-            backgroundImage: `radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px), linear-gradient(to right, rgba(59, 130, 246, 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(59, 130, 246, 0.05) 1px, transparent 1px)`,
-            backgroundSize: '24px 24px, 48px 48px, 48px 48px',
-            maskImage: 'radial-gradient(ellipse 85% 75% at 50% 35%, #000 60%, transparent 100%)'
-          }}
-        />
+        {/* Futuristic Multi-Layered Tech Background */}
+        <HeroBackground />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center min-h-[480px] sm:min-h-[580px]">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center min-h-[500px] sm:min-h-[580px]">
             
-            {/* Left Content Column (7 cols) */}
+            {/* Left Content Column (7 cols on lg) */}
             <motion.div 
               initial={{ opacity: 0, y: 25 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
-              className="lg:col-span-7 space-y-5 sm:space-y-7 text-left"
+              className="lg:col-span-7 space-y-5 sm:space-y-6 text-left"
             >
               
               {/* Eyebrow Badges: Glowing Tech Pills */}
-              <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-                <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-blue-500/15 border border-blue-400/35 text-cyan-300 text-[11px] sm:text-sm font-semibold tracking-wide backdrop-blur-md shadow-xs font-heading">
-                  <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400" />
-                  <span>Technology & Innovation</span>
+              <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
+                <div className="inline-flex items-center gap-2 px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-cyan-500/15 border border-cyan-400/40 text-cyan-300 text-[11px] sm:text-xs font-semibold tracking-wide backdrop-blur-md shadow-[0_0_15px_rgba(6,182,212,0.25)] font-heading">
+                  <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 animate-pulse" />
+                  <span>Next-Gen AI & Software Solutions</span>
                 </div>
-                <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-indigo-500/15 border border-indigo-400/35 text-indigo-200 text-[11px] sm:text-sm font-semibold tracking-wide backdrop-blur-md shadow-xs font-heading">
-                  <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-indigo-400" />
-                  <span>AI-Powered Solutions</span>
+                <div className="inline-flex items-center gap-2 px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-indigo-500/15 border border-indigo-400/40 text-indigo-200 text-[11px] sm:text-xs font-semibold tracking-wide backdrop-blur-md shadow-[0_0_15px_rgba(99,102,241,0.25)] font-heading">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.9)]" />
+                  <span>Enterprise Ready</span>
                 </div>
               </div>
 
-              {/* Bold Headline with Electric Cyan/Blue Highlight */}
-              <h1 className="text-2xl xs:text-3xl sm:text-5xl lg:text-5xl xl:text-[4rem] font-black text-white tracking-tight leading-[1.12] sm:leading-[1.08] font-heading">
+              {/* Bold Headline with Radiant Electric Cyan & Violet-Blue Gradient Highlights */}
+              <h1 className="text-3xl xs:text-4xl sm:text-5xl lg:text-5xl xl:text-6xl font-black text-white tracking-tight leading-[1.14] sm:leading-[1.1] font-heading">
                 Architecting Tomorrow with{' '}
-                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-400 drop-shadow-[0_0_25px_rgba(6,182,212,0.35)] mt-1">
-                  Intelligent AI & Advanced IT Solutions
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-300 to-blue-400 drop-shadow-[0_0_25px_rgba(6,182,212,0.45)]">
+                  Intelligent AI
+                </span>{' '}
+                &{' '}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-400 drop-shadow-[0_0_25px_rgba(99,102,241,0.4)]">
+                  Advanced IT Solutions
                 </span>
               </h1>
 
-              {/* Concise 2-Line Description */}
-              <p className="text-sm sm:text-lg lg:text-xl text-slate-300 max-w-xl leading-relaxed font-normal">
-                Empowering businesses through intelligent automation, innovative software and next-generation technology solutions.
+              {/* Clear, High-Impact Professional Subtitle */}
+              <p className="text-base sm:text-lg lg:text-xl text-slate-200/90 max-w-xl leading-relaxed font-normal">
+                Empowering businesses through intelligent automation, innovative software, and next-generation technology solutions engineered for real-world growth.
               </p>
 
               {/* Action Buttons: Explore Services and Contact Us */}
-              <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
+              <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 sm:gap-4">
                 <a
                   href="#services"
                   onClick={(e) => scrollToSection(e, 'services')}
-                  className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold text-sm sm:text-base shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 active:scale-95 font-heading group"
+                  className="w-full sm:w-auto px-7 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:via-blue-500 hover:to-indigo-500 text-white font-bold text-sm sm:text-base shadow-[0_0_25px_rgba(6,182,212,0.35)] hover:shadow-[0_0_35px_rgba(6,182,212,0.55)] transition-all duration-300 flex items-center justify-center gap-2 active:scale-95 font-heading group"
                 >
                   <span>Explore Services</span>
                   <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
@@ -321,37 +276,37 @@ export default function Home({ onOpenQuote, onOpenConsultation, onOpenRegister }
                 <a
                   href="#contact"
                   onClick={(e) => scrollToSection(e, 'contact')}
-                  className="w-full sm:w-auto px-6 sm:px-7 py-3.5 sm:py-4 rounded-xl bg-slate-900/80 hover:bg-slate-800 text-white border border-slate-700/80 hover:border-cyan-400/60 font-bold text-sm sm:text-base transition-all duration-300 flex items-center justify-center gap-2 shadow-sm active:scale-95 font-heading group"
+                  className="w-full sm:w-auto px-7 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-slate-900/80 hover:bg-slate-800/90 text-white border border-cyan-400/40 hover:border-cyan-300 font-bold text-sm sm:text-base backdrop-blur-md transition-all duration-300 flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(0,0,0,0.3)] active:scale-95 font-heading group"
                 >
                   <span>Contact Us</span>
-                  <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 group-hover:translate-x-1 group-hover:text-cyan-400 transition-all" />
+                  <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-slate-300 group-hover:translate-x-1 group-hover:text-cyan-300 transition-all" />
                 </a>
               </div>
 
-              {/* Enterprise Micro Trust Row */}
-              <div className="pt-4 flex flex-wrap items-center gap-6 text-xs text-slate-400 font-medium border-t border-slate-800/80">
+              {/* Enterprise Trust Indicators Row */}
+              <div className="pt-4 flex flex-wrap items-center gap-y-2 gap-x-6 text-xs text-slate-300/90 font-medium border-t border-slate-800/80">
                 <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)]" />
                   <span>99.9% Uptime SLA</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(6,182,212,0.8)]" />
+                  <span className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(6,182,212,0.9)]" />
                   <span>Enterprise AI Architecture</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-indigo-400 shadow-[0_0_8px_rgba(129,140,248,0.8)]" />
+                  <span className="w-2 h-2 rounded-full bg-indigo-400 shadow-[0_0_8px_rgba(129,140,248,0.9)]" />
                   <span>100% NDA & Data Privacy</span>
                 </div>
               </div>
 
             </motion.div>
 
-            {/* Right Technology Visual (5 cols) */}
+            {/* Right Technology Visual (5 cols on lg) */}
             <motion.div 
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
-              className="lg:col-span-5 flex items-center justify-center"
+              className="lg:col-span-5 flex items-center justify-center w-full"
             >
               <HeroTechIllustration />
             </motion.div>

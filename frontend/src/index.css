@@ -54,6 +54,54 @@
   mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 70%, transparent 100%);
 }
 
+/* Futuristic Hero Animations */
+@keyframes heroParticleFloat {
+  0% {
+    transform: translateY(0px) translateX(0px);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translateY(-35px) translateX(12px);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateY(-70px) translateX(0px);
+    opacity: 0;
+  }
+}
+
+@keyframes heroPulseGlow {
+  0%, 100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.75;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes heroRadarSweep {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-hero-particle {
+  animation: heroParticleFloat 8s ease-in-out infinite;
+}
+
+.animate-hero-pulse-glow {
+  animation: heroPulseGlow 5s ease-in-out infinite;
+}
+
+.animate-radar-sweep {
+  animation: heroRadarSweep 16s linear infinite;
+}
+
 /* Corporate Cards & Panels */
 .corporate-card {
   background-color: #ffffff;
