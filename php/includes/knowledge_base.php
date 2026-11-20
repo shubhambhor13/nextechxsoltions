@@ -157,7 +157,17 @@ function get_company_knowledge_base() {
             "Phase 4: QA, Security & Performance Hardening" => "Automated testing, load testing, security audits, signed NDA confidentiality.",
             "Phase 5: Deployment, Training & 24/7 SLA Support" => "Zero-downtime release, user documentation, continuous monitoring."
         ],
+        "privacy_policy" => [
+            "url" => "/privacy-policy",
+            "ip_ownership" => "100% of all custom source code, models, datasets, and technical deliverables belong to the client under signed bilateral NDAs. NextTechX never claims ownership.",
+            "zero_ai_training" => "NextTechX strictly pledges NEVER to feed client code, private databases, or proprietary information into public AI models for training.",
+            "data_monetization" => "NextTechX never sells, rents, brokers, or monetizes client or candidate data.",
+            "security" => "TLS 1.3 in-transit and AES-256 at-rest encryption, aligned with enterprise zero-trust standards.",
+            "internship_resumes" => "Internship resumes are reviewed exclusively by authorized HR (hr@nextechxsolutions.com) and are never shared with external headhunters or marketing lists.",
+            "compliance_email" => "contact@nextechxsolutions.com"
+        ],
         "faqs" => [
+            "Privacy Policy & Data Security" => "Comprehensive Privacy Policy is available at /privacy-policy. It guarantees 100% client IP ownership, zero public AI model training on client assets, zero data reselling, and TLS 1.3 / AES-256 encryption.",
             "Data Protection & IP" => "All client code, data, and intellectual property belong 100% to the client under signed mutual NDAs. We adhere to zero-trust access protocols.",
             "Pricing Model" => "Transparent milestone-based quotations in Indian Rupees (₹) or USD. Pricing depends strictly on project scope and features with no hidden charges.",
             "Internship Eligibility" => "Students and recent graduates pursuing B.Tech, M.Tech, BCA, MCA, or related degree programs with a foundational passion for programming.",

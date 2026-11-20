@@ -22,6 +22,7 @@ const Industries = lazy(() => import('./pages/Industries'));
 const HowWeWork = lazy(() => import('./pages/HowWeWork'));
 const FAQs = lazy(() => import('./pages/FAQs'));
 const ContactUs = lazy(() => import('./pages/ContactUs'));
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
 
 // Ultra-lightweight Route Loading Skeleton
@@ -315,6 +316,21 @@ function AnimatedRoutes({
                 onOpenConsultation={onOpenConsultation}
               />
             } 
+          />
+
+          {/* 10. Privacy Policy */}
+          <Route 
+            path="/privacy-policy" 
+            element={
+              <PrivacyPolicy 
+                onOpenQuote={onOpenQuote}
+                onOpenConsultation={onOpenConsultation}
+              />
+            } 
+          />
+          <Route 
+            path="/privacy" 
+            element={<Navigate to="/privacy-policy" replace />} 
           />
 
           {/* Admin Management Portal */}

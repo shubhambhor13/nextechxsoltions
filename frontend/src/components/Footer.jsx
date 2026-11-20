@@ -275,13 +275,12 @@ export default function Footer({ onOpenQuote }) {
 
           {/* Legal Document Triggers */}
           <div className="flex items-center gap-6">
-            <button 
-              type="button"
-              onClick={() => openLegal('privacy')}
+            <Link 
+              to="/privacy-policy"
               className="hover:text-slate-300 transition-colors underline-offset-4 hover:underline"
             >
               Privacy Policy
-            </button>
+            </Link>
             <button 
               type="button"
               onClick={() => openLegal('terms')}
