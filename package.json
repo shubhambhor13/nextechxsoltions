@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "install:frontend": "cd frontend && npm install",
-    "build": "npm --prefix frontend run build",
+    "build": "cd frontend && npm install && npm run build",
     "build:all": "cd frontend && npm install && npm run build",
-    "dev": "npm --prefix frontend run dev",
-    "preview": "npm --prefix frontend run preview"
+    "install:frontend": "cd frontend && npm install",
+    "dev": "cd frontend && npm run dev",
+    "preview": "cd frontend && npm run preview"
   }
 }
