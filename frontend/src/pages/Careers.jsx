@@ -1,47 +1,38 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useRef } from 'react';
+import { motion } from 'framer-motion';
 import { 
   Briefcase, 
   GraduationCap, 
-  Sparkles, 
-  CheckCircle2, 
-  AlertCircle, 
   Upload, 
   FileText, 
-  Send, 
-  Loader2, 
   X, 
-  Mail, 
-  Phone, 
-  User, 
-  Building, 
-  MapPin, 
-  Clock, 
+  CheckCircle2, 
+  AlertCircle, 
   ArrowRight, 
-  Check, 
-  ShieldCheck, 
-  Layers, 
-  ChevronRight,
+  Mail, 
+  User, 
+  Phone, 
+  Sparkles,
   GitBranch,
-  Code2,
-  Cpu
+  Shield,
+  Clock,
+  MapPin,
+  Info
 } from 'lucide-react';
-import { siteConfig } from '../config/siteConfig';
-import { api } from '../services/api';
 import confetti from 'canvas-confetti';
 import TechMarquee from '../components/TechMarquee';
+import { api } from '../services/api';
 
 export default function Careers({ onOpenQuote, onOpenConsultation }) {
-  const [activeTab, setActiveTab] = useState('all'); // 'all', 'jobs', 'internships'
   const [selectedRole, setSelectedRole] = useState(null);
   
-  // Application Form State
+  // Application Form State (Focused Exclusively on Internship Opportunities)
   const [formData, setFormData] = useState({
     full_name: '',
     email: '',
     phone: '',
-    applying_for: 'Job', // 'Job' or 'Internship'
-    position: 'Full-Stack Software Engineer (React & Python)',
+    applying_for: 'Internship',
+    position: 'AI & Machine Learning Research Intern',
     education: 'B.Tech / B.E (CSE / IT)',
     message: ''
   });
@@ -55,79 +46,7 @@ export default function Careers({ onOpenQuote, onOpenConsultation }) {
   const formRef = useRef(null);
   const fileInputRef = useRef(null);
 
-  // Job Vacancies List (Entry to Mid Level - No Senior Roles)
-  const jobVacancies = [
-    {
-      id: "job-fullstack",
-      title: "Full-Stack Software Engineer (React & Python)",
-      department: "Engineering & Product",
-      type: "Full-Time",
-      workplace: "Remote / Hybrid",
-      experience: "0-2 Years / Early Career",
-      badgeColor: "bg-blue-50 text-blue-700 border-blue-200",
-      accentGradient: "from-blue-600 via-indigo-600 to-cyan-500",
-      desc: "Develop and maintain modern web applications, SaaS client portals, and responsive REST APIs using React 18, Tailwind CSS, Python FastAPI, and PostgreSQL.",
-      skills: ["React 18", "Python FastAPI", "PostgreSQL", "Docker", "Git", "REST APIs"],
-      responsibilities: [
-        "Build modern frontend user interfaces and connect backend endpoints",
-        "Write clean, modular code with active Git version control",
-        "Participate in sprint planning and collaborate directly with engineering mentors"
-      ]
-    },
-    {
-      id: "job-ai-engineer",
-      title: "AI & Workflow Automation Developer",
-      department: "AI Automation Labs",
-      type: "Full-Time",
-      workplace: "100% Remote",
-      experience: "0-2 Years / Early Career",
-      badgeColor: "bg-purple-50 text-purple-700 border-purple-200",
-      accentGradient: "from-purple-600 via-indigo-600 to-pink-500",
-      desc: "Develop practical AI automation workflows, WhatsApp business bots, and Retrieval-Augmented Generation (RAG) tools using Python, LangChain, and APIs.",
-      skills: ["Python", "OpenAI APIs", "LangChain", "FastAPI", "Vector DBs", "Webhooks"],
-      responsibilities: [
-        "Build automated conversational bots and business workflow integrations",
-        "Implement document search and knowledge retrieval pipelines",
-        "Test and monitor AI model prompts, latency, and response quality"
-      ]
-    },
-    {
-      id: "job-devops-cloud",
-      title: "DevOps & Cloud Associate Engineer",
-      department: "Cloud & Infrastructure",
-      type: "Full-Time",
-      workplace: "100% Remote",
-      experience: "0-2 Years / Early Career",
-      badgeColor: "bg-emerald-50 text-emerald-700 border-emerald-200",
-      accentGradient: "from-emerald-600 via-teal-600 to-blue-500",
-      desc: "Configure containerized deployments, manage CI/CD build scripts, server monitoring, and cloud hosting for client web applications.",
-      skills: ["Docker", "Linux", "GitHub Actions", "AWS / VPS", "Nginx", "SSL"],
-      responsibilities: [
-        "Maintain CI/CD deployment pipelines on GitHub Actions",
-        "Monitor server uptime, system logs, and resource utilization",
-        "Assist in configuring domains, SSL certificates, and database backups"
-      ]
-    },
-    {
-      id: "job-bi-analyst",
-      title: "Data Analyst & Business Intelligence Associate",
-      department: "Analytics & Intelligence",
-      type: "Full-Time",
-      workplace: "Remote / Hybrid",
-      experience: "0-2 Years / Early Career",
-      badgeColor: "bg-amber-50 text-amber-700 border-amber-200",
-      accentGradient: "from-amber-600 via-orange-600 to-red-500",
-      desc: "Transform corporate datasets into interactive executive dashboards using Power BI, DAX formulas, SQL queries, and Excel models.",
-      skills: ["Power BI", "SQL", "DAX", "Python Pandas", "Excel Models", "Data Visualization"],
-      responsibilities: [
-        "Design visual KPI reports and interactive executive dashboards",
-        "Write SQL queries to extract, clean, and validate business data",
-        "Document metrics and present weekly performance summaries"
-      ]
-    }
-  ];
-
-  // Internship Opportunities List
+  // Available Internship Opportunities List
   const internshipRoles = [
     {
       id: "intern-aiml",
@@ -198,10 +117,10 @@ export default function Careers({ onOpenQuote, onOpenConsultation }) {
   ];
 
   // When clicking Apply Now on any Card
-  const handleApplyClick = (type, title) => {
+  const handleApplyClick = (title) => {
     setFormData(prev => ({
       ...prev,
-      applying_for: type,
+      applying_for: 'Internship',
       position: title
     }));
     setSelectedRole(title);
@@ -220,9 +139,11 @@ export default function Careers({ onOpenQuote, onOpenConsultation }) {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Check extension
-    const ext = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
-    if (!['.pdf', '.doc', '.docx'].includes(ext)) {
+    // Check file format
+    const fileExt = file.name.split('.').pop().toLowerCase();
+    const validExtensions = ['pdf', 'doc', 'docx'];
+
+    if (!validExtensions.includes(fileExt)) {
       setFileError('Invalid file format. Please upload a PDF, DOC, or DOCX document.');
       setResumeFile(null);
       return;
@@ -239,6 +160,7 @@ export default function Careers({ onOpenQuote, onOpenConsultation }) {
     setResumeFile(file);
   };
 
+  // Remove File
   const handleRemoveFile = () => {
     setResumeFile(null);
     setFileError('');
@@ -264,7 +186,7 @@ export default function Careers({ onOpenQuote, onOpenConsultation }) {
       postData.append('full_name', formData.full_name);
       postData.append('email', formData.email);
       postData.append('phone', formData.phone);
-      postData.append('applying_for', formData.applying_for);
+      postData.append('applying_for', 'Internship');
       postData.append('position', formData.position);
       postData.append('education', formData.education);
       postData.append('message', formData.message);
@@ -281,8 +203,8 @@ export default function Careers({ onOpenQuote, onOpenConsultation }) {
           full_name: '',
           email: '',
           phone: '',
-          applying_for: 'Job',
-          position: 'Full-Stack Software Engineer (React & Python)',
+          applying_for: 'Internship',
+          position: 'AI & Machine Learning Research Intern',
           education: 'B.Tech / B.E (CSE / IT)',
           message: ''
         });
@@ -291,7 +213,8 @@ export default function Careers({ onOpenQuote, onOpenConsultation }) {
       }, 5000);
 
     } catch (err) {
-      setSubmitError(err.message || 'An error occurred while submitting your application. Please try again.');
+      const msg = err.message || 'An error occurred while submitting your application. Please try again.';
+      setSubmitError(msg);
     } finally {
       setSubmitting(false);
     }
@@ -305,14 +228,14 @@ export default function Careers({ onOpenQuote, onOpenConsultation }) {
   };
 
   return (
-    <div className="bg-white text-slate-800">
+    <div className="bg-slate-50 min-h-screen text-slate-800">
       
       {/* 1. HERO SECTION */}
-      <section className="relative pt-16 pb-20 lg:pt-24 lg:pb-28 bg-gradient-to-b from-blue-50/70 via-slate-50/50 to-white border-b border-slate-200/80 overflow-hidden">
-        {/* Glow ambient background elements */}
-        <div className="absolute -top-32 -left-32 w-96 h-96 bg-blue-400/15 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute top-1/2 -right-32 w-96 h-96 bg-indigo-400/15 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute inset-0 bg-grid-corporate opacity-30 pointer-events-none" />
+      <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-gradient-to-b from-blue-50/80 via-white to-slate-50 overflow-hidden border-b border-slate-200/80">
+        
+        {/* Subtle Decorative Gradients */}
+        <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-blue-400/10 rounded-full blur-[120px] pointer-events-none hidden sm:block" />
+        <div className="absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-cyan-400/10 rounded-full blur-[120px] pointer-events-none hidden sm:block" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6 relative z-10">
           <motion.div 
@@ -320,19 +243,19 @@ export default function Careers({ onOpenQuote, onOpenConsultation }) {
             animate={{ opacity: 1, y: 0 }}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-blue-200 text-xs sm:text-sm font-bold text-blue-700 shadow-xs font-heading"
           >
-            <Briefcase className="w-4 h-4 text-blue-600" />
-            <span>Careers & Talent Acquisition • NextTechX Solutions</span>
+            <GraduationCap className="w-4 h-4 text-blue-600" />
+            <span>Careers & Internships â€¢ NextTechX Solutions</span>
           </motion.div>
 
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-tight max-w-4xl mx-auto font-heading"
+            className="text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-tight max-w-4xl mx-auto font-heading"
           >
-            Build the Future of Enterprise IT <br />
+            Launch Your Journey in Advanced Tech <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600">
-              Jobs & Hands-On Internships
+              Technical Internships & Career Growth
             </span>
           </motion.h1>
 
@@ -342,15 +265,23 @@ export default function Careers({ onOpenQuote, onOpenConsultation }) {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed font-normal"
           >
-            Join a forward-thinking software and AI development firm. Explore full-time engineering vacancies, early-career associate roles, and interview-based production internships to accelerate your professional journey.
+            Join a forward-thinking software and AI development firm. Currently, we are offering internship opportunities. Stay connected for future updates.
           </motion.p>
 
+          {/* Official Recruitment Status Notice Banner */}
+          <div className="pt-1 max-w-2xl mx-auto">
+            <div className="p-4 sm:p-5 rounded-2xl bg-blue-50/90 border border-blue-200/90 text-blue-900 flex items-center justify-center gap-3 text-xs sm:text-sm font-semibold shadow-xs">
+              <Info className="w-5 h-5 text-blue-600 flex-shrink-0" />
+              <span>Currently, we are offering internship opportunities. Stay connected for future updates.</span>
+            </div>
+          </div>
+
           {/* Direct HR Contact Badge */}
-          <div className="pt-2 flex items-center justify-center text-xs font-mono text-slate-600">
-            <div className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-blue-50 border border-blue-200 text-blue-700 shadow-xs">
+          <div className="pt-1 flex items-center justify-center text-xs font-mono text-slate-600">
+            <div className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white border border-slate-200 text-slate-700 shadow-xs">
               <Mail className="w-4 h-4 text-blue-600" />
               <span>Direct HR Desk:</span>
-              <a href="mailto:hr@nextechxsolutions.com" className="font-bold underline hover:text-blue-800">
+              <a href="mailto:hr@nextechxsolutions.com" className="font-bold text-blue-600 underline hover:text-blue-800">
                 hr@nextechxsolutions.com
               </a>
             </div>
@@ -359,25 +290,17 @@ export default function Careers({ onOpenQuote, onOpenConsultation }) {
           <div className="pt-3 flex flex-wrap items-center justify-center gap-4">
             <a
               href="#opportunities"
-              onClick={() => setActiveTab('jobs')}
               className="px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-md hover:shadow-lg transition-all flex items-center gap-2 active:scale-95 font-heading"
             >
-              <span>Explore Job Vacancies</span>
-              <ArrowRight className="w-4 h-4" />
-            </a>
-            <a
-              href="#opportunities"
-              onClick={() => setActiveTab('internships')}
-              className="px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-md hover:shadow-lg transition-all flex items-center gap-2 active:scale-95 font-heading"
-            >
               <GraduationCap className="w-4 h-4" />
-              <span>View Internship Roles</span>
+              <span>Explore Internship Opportunities</span>
+              <ArrowRight className="w-4 h-4" />
             </a>
             <a
               href="#apply-form"
               className="px-6 py-3.5 rounded-xl bg-white border border-slate-300 hover:border-blue-500 hover:bg-blue-50/50 text-slate-700 font-bold text-sm shadow-xs transition-all flex items-center gap-2 font-heading"
             >
-              <span>Direct Application Form ↓</span>
+              <span>Direct Application Form â†“</span>
             </a>
           </div>
 
@@ -406,7 +329,7 @@ export default function Careers({ onOpenQuote, onOpenConsultation }) {
       {/* Auto-Scrolling Technologies Marquee */}
       <TechMarquee />
 
-      {/* 2. OPPORTUNITIES TABS & DISPLAY SECTION */}
+      {/* 2. INTERNSHIP OPPORTUNITIES SECTION */}
       <section id="opportunities" className="py-20 lg:py-28 bg-white scroll-mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
           
@@ -415,288 +338,203 @@ export default function Careers({ onOpenQuote, onOpenConsultation }) {
               Current Openings
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight font-heading">
-              Find Your Opportunity at NextTechX
+              Available Internship Opportunities
             </h2>
             <p className="text-sm text-slate-600 font-normal">
-              Select between full-time engineering vacancies or structured interview-based internship roles.
+              Currently, we are offering internship opportunities. Stay connected for future updates.
             </p>
 
-            {/* Filter Tabs */}
-            <div className="pt-4 flex flex-wrap items-center justify-center gap-2">
-              <button
-                onClick={() => setActiveTab('all')}
-                className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all ${
-                  activeTab === 'all'
-                    ? 'bg-slate-900 text-white shadow-md'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                }`}
-              >
-                All Opportunities ({jobVacancies.length + internshipRoles.length})
-              </button>
-              <button
-                onClick={() => setActiveTab('jobs')}
-                className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-1.5 ${
-                  activeTab === 'jobs'
-                    ? 'bg-blue-600 text-white shadow-md'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                }`}
-              >
-                <Briefcase className="w-3.5 h-3.5" />
-                <span>Job Vacancies ({jobVacancies.length})</span>
-              </button>
-              <button
-                onClick={() => setActiveTab('internships')}
-                className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-1.5 ${
-                  activeTab === 'internships'
-                    ? 'bg-emerald-600 text-white shadow-md'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                }`}
-              >
-                <GraduationCap className="w-3.5 h-3.5" />
-                <span>Internships ({internshipRoles.length})</span>
-              </button>
+            <div className="pt-2 flex justify-center">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs sm:text-sm font-semibold">
+                <Sparkles className="w-4 h-4 text-emerald-600" />
+                <span>Active Internship Programs ({internshipRoles.length} Tracks Open)</span>
+              </div>
             </div>
           </motion.div>
 
-          {/* A. JOB VACANCIES CARDS */}
-          {(activeTab === 'all' || activeTab === 'jobs') && (
-            <div className="space-y-6 pt-4">
-              <div className="flex items-center gap-3 border-b border-slate-200 pb-3">
-                <div className="p-2 rounded-lg bg-blue-50 text-blue-600 border border-blue-200">
-                  <Briefcase className="w-4 h-4" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-extrabold text-slate-900 font-heading">
-                    Current Job Vacancies (Full-Time Engineering)
-                  </h3>
-                  <p className="text-xs text-slate-500">
-                    Full-time engineering and associate roles across frontend, backend microservices, AI systems, and cloud infrastructure.
+          {/* INTERNSHIP CARDS GRID */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+            {internshipRoles.map((role) => (
+              <motion.div
+                key={role.id}
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -4 }}
+                className="rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-emerald-400 transition-all duration-300 flex flex-col justify-between overflow-hidden group text-left"
+              >
+                <div className={`h-1.5 w-full bg-gradient-to-r ${role.accentGradient}`} />
+                
+                <div className="p-7 space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span className={`px-3 py-1 rounded-full text-[10px] font-bold border font-heading ${role.badgeColor}`}>
+                      {role.domain}
+                    </span>
+                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1 font-heading">
+                      <Sparkles className="w-3 h-3 text-emerald-600" />
+                      <span>Live Client Project</span>
+                    </span>
+                  </div>
+
+                  <h4 className="text-xl font-bold text-slate-900 group-hover:text-emerald-700 transition-colors font-heading">
+                    {role.title}
+                  </h4>
+
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+                    {role.desc}
                   </p>
-                </div>
-              </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-7">
-                {jobVacancies.map((job) => (
-                  <motion.div
-                    key={job.id}
-                    initial={{ opacity: 0, y: 15 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    whileHover={{ y: -4 }}
-                    className="rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-blue-400 transition-all duration-300 flex flex-col justify-between overflow-hidden group text-left"
+                  {/* Capstone Project */}
+                  <div className="p-3.5 rounded-2xl bg-emerald-50/70 border border-emerald-100 space-y-1">
+                    <div className="text-[11px] font-bold uppercase tracking-wider text-emerald-800 flex items-center gap-1 font-heading">
+                      <GitBranch className="w-3.5 h-3.5 text-emerald-600" />
+                      <span>Assigned Live Module:</span>
+                    </div>
+                    <div className="text-slate-800 text-xs font-semibold leading-relaxed">
+                      {role.liveProject}
+                    </div>
+                  </div>
+
+                  {/* Tech Stack */}
+                  <div>
+                    <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5 font-heading">
+                      Tech Competencies:
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {role.skills.map((sk, sIdx) => (
+                        <span
+                          key={sIdx}
+                          className="px-2.5 py-0.5 rounded-md bg-slate-100 border border-slate-200 text-slate-700 text-xs font-semibold font-mono"
+                        >
+                          {sk}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-6 bg-slate-50/70 border-t border-slate-100">
+                  <button
+                    onClick={() => handleApplyClick(role.title)}
+                    className="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-sm hover:shadow-md transition-all font-heading active:scale-95"
                   >
-                    <div className={`h-1.5 w-full bg-gradient-to-r ${job.accentGradient}`} />
-                    
-                    <div className="p-7 space-y-4">
-                      <div className="flex flex-wrap items-center justify-between gap-2">
-                        <span className={`px-3 py-1 rounded-full text-[10px] font-bold border font-heading ${job.badgeColor}`}>
-                          {job.department}
-                        </span>
-                        <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 font-heading">
-                          <span className="px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700">{job.type}</span>
-                          <span className="px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700">{job.workplace}</span>
-                          <span className="px-2.5 py-0.5 rounded-md bg-blue-50 text-blue-700 border border-blue-200">{job.experience}</span>
-                        </div>
-                      </div>
-
-                      <h4 className="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors font-heading">
-                        {job.title}
-                      </h4>
-
-                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
-                        {job.desc}
-                      </p>
-
-                      {/* Responsibilities list */}
-                      <div className="space-y-1.5 pt-1">
-                        <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 font-heading">
-                          Core Responsibilities:
-                        </div>
-                        {job.responsibilities.map((resp, rIdx) => (
-                          <div key={rIdx} className="flex items-start gap-2 text-xs text-slate-700">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-blue-600 shrink-0 mt-0.5" />
-                            <span>{resp}</span>
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* Tech Stack */}
-                      <div className="pt-2">
-                        <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5 font-heading">
-                          Required Tech Stack:
-                        </div>
-                        <div className="flex flex-wrap gap-1.5">
-                          {job.skills.map((sk, sIdx) => (
-                            <span
-                              key={sIdx}
-                              className="px-2.5 py-0.5 rounded-md bg-slate-100 border border-slate-200 text-slate-700 text-xs font-semibold font-mono"
-                            >
-                              {sk}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="p-6 bg-slate-50/70 border-t border-slate-100 flex items-center justify-between gap-4">
-                      <div className="text-xs text-slate-500">
-                        Direct HR Desk: <strong className="text-slate-700 font-mono">hr@nextechxsolutions.com</strong>
-                      </div>
-                      <button
-                        onClick={() => handleApplyClick('Job', job.title)}
-                        className="py-2.5 px-5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm flex items-center gap-1.5 shadow-sm hover:shadow-md transition-all font-heading active:scale-95"
-                      >
-                        <span>Apply Now</span>
-                        <ArrowRight className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* B. INTERNSHIP OPPORTUNITIES CARDS */}
-          {(activeTab === 'all' || activeTab === 'internships') && (
-            <div className="space-y-6 pt-10">
-              <div className="flex items-center gap-3 border-b border-slate-200 pb-3">
-                <div className="p-2 rounded-lg bg-emerald-50 text-emerald-600 border border-emerald-200">
-                  <GraduationCap className="w-4 h-4" />
+                    <span>Apply Now</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
                 </div>
-                <div>
-                  <h3 className="text-xl font-extrabold text-slate-900 font-heading">
-                    Internship Opportunities (Live Client Projects)
-                  </h3>
-                  <p className="text-xs text-slate-500">
-                    Interview-based technical internships with real codebase contributions and 1-on-1 architect mentorship.
-                  </p>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
-                {internshipRoles.map((role) => (
-                  <motion.div
-                    key={role.id}
-                    initial={{ opacity: 0, y: 15 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    whileHover={{ y: -4 }}
-                    className="rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-emerald-400 transition-all duration-300 flex flex-col justify-between overflow-hidden group text-left"
-                  >
-                    <div className={`h-1.5 w-full bg-gradient-to-r ${role.accentGradient}`} />
-                    
-                    <div className="p-7 space-y-4">
-                      <div className="flex items-center justify-between">
-                        <span className={`px-3 py-1 rounded-full text-[10px] font-bold border font-heading ${role.badgeColor}`}>
-                          {role.domain}
-                        </span>
-                        <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1 font-heading">
-                          <Sparkles className="w-3 h-3 text-emerald-600" />
-                          <span>Live Client Project</span>
-                        </span>
-                      </div>
-
-                      <h4 className="text-xl font-bold text-slate-900 group-hover:text-emerald-700 transition-colors font-heading">
-                        {role.title}
-                      </h4>
-
-                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
-                        {role.desc}
-                      </p>
-
-                      {/* Capstone Project */}
-                      <div className="p-3.5 rounded-2xl bg-emerald-50/70 border border-emerald-100 space-y-1">
-                        <div className="text-[11px] font-bold uppercase tracking-wider text-emerald-800 flex items-center gap-1 font-heading">
-                          <GitBranch className="w-3.5 h-3.5 text-emerald-600" />
-                          <span>Assigned Live Module:</span>
-                        </div>
-                        <div className="text-slate-800 text-xs font-semibold leading-relaxed">
-                          {role.liveProject}
-                        </div>
-                      </div>
-
-                      {/* Tech Stack */}
-                      <div>
-                        <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5 font-heading">
-                          Tech Competencies:
-                        </div>
-                        <div className="flex flex-wrap gap-1.5">
-                          {role.skills.map((sk, sIdx) => (
-                            <span
-                              key={sIdx}
-                              className="px-2.5 py-0.5 rounded-md bg-slate-100 border border-slate-200 text-slate-700 text-xs font-semibold font-mono"
-                            >
-                              {sk}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="p-6 bg-slate-50/70 border-t border-slate-100">
-                      <button
-                        onClick={() => handleApplyClick('Internship', role.title)}
-                        className="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-sm hover:shadow-md transition-all font-heading active:scale-95"
-                      >
-                        <span>Apply Now</span>
-                        <ArrowRight className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          )}
-
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* 3. CAREER APPLICATION FORM SECTION */}
-      <section id="apply-form" ref={formRef} className="py-12 sm:py-20 lg:py-28 bg-slate-50/70 border-t border-slate-200 scroll-mt-20">
-        <div className="max-w-4xl mx-auto px-3 sm:px-6 lg:px-8">
-          
-          <div className="p-4 sm:p-8 lg:p-12 rounded-2xl sm:rounded-3xl bg-white border border-slate-200/90 shadow-xl space-y-6 sm:space-y-8 text-left">
-            
-            <div className="text-center space-y-2 border-b border-slate-200 pb-5 sm:pb-6">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 text-[11px] sm:text-xs font-bold font-heading">
-                <Send className="w-3.5 h-3.5" />
-                <span>NextTechX Talent Application Portal</span>
+      {/* 3. APPLICATION PROCESS STEPS */}
+      <section className="py-20 bg-slate-50 border-t border-b border-slate-200/80">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+          <motion.div {...fadeIn} className="text-center max-w-2xl mx-auto space-y-3">
+            <span className="text-xs uppercase font-extrabold tracking-wider text-blue-600 font-heading">
+              Transparent Selection
+            </span>
+            <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight font-heading">
+              Our 3-Step Selection Process
+            </h2>
+            <p className="text-sm text-slate-600 font-normal">
+              Direct, merit-based candidate onboarding with zero unnecessary delays.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm relative space-y-4">
+              <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 font-extrabold text-xl flex items-center justify-center font-heading">
+                1
               </div>
-              <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 font-heading">
-                Career & Internship Application Form
+              <h3 className="text-lg font-bold text-slate-900 font-heading">Submit Profile & Resume</h3>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+                Fill the online application form below and attach your latest resume (PDF/DOC). Applications are received directly by our HR acquisition team.
+              </p>
+            </div>
+
+            <div className="p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm relative space-y-4">
+              <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 font-extrabold text-xl flex items-center justify-center font-heading">
+                2
+              </div>
+              <h3 className="text-lg font-bold text-slate-900 font-heading">Technical Interview / Assessment</h3>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+                Participate in a 30-minute structured discussion covering your technical interests, coding foundation, and domain alignment with our lead mentors.
+              </p>
+            </div>
+
+            <div className="p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm relative space-y-4">
+              <div className="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 font-extrabold text-xl flex items-center justify-center font-heading">
+                3
+              </div>
+              <h3 className="text-lg font-bold text-slate-900 font-heading">Offer Letter & Team Onboarding</h3>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+                Receive your official NextTechX onboarding credentials, repository access, project milestone schedule, and dedicated technical mentor.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. CAREER & INTERNSHIP APPLICATION FORM SECTION */}
+      <section id="apply-form" ref={formRef} className="py-20 lg:py-28 bg-white scroll-mt-20">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="rounded-3xl bg-slate-50/90 border border-slate-200 shadow-xl p-6 sm:p-10 lg:p-12 space-y-8">
+            <div className="text-center space-y-3">
+              <span className="text-xs uppercase font-extrabold tracking-wider text-emerald-600 font-heading">
+                Direct Submission
+              </span>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight font-heading">
+                Internship Application Form
               </h2>
               <p className="text-xs sm:text-sm text-slate-600 font-normal max-w-xl mx-auto">
                 Submit your profile and attach your resume. All applications are directly reviewed by our HR team at <strong className="text-slate-800">hr@nextechxsolutions.com</strong>.
               </p>
+
+              {/* Status Notice */}
+              <div className="pt-1">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-50 border border-blue-200 text-blue-900 text-xs font-semibold">
+                  <Info className="w-4 h-4 text-blue-600 shrink-0" />
+                  <span>Currently, we are offering internship opportunities. Stay connected for future updates.</span>
+                </div>
+              </div>
             </div>
 
+            {/* Success Notification */}
             {submitSuccess ? (
-              <div className="py-12 text-center space-y-4 animate-in fade-in zoom-in duration-300">
-                <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto border border-emerald-300 shadow-sm">
-                  <CheckCircle2 className="w-9 h-9" />
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="p-8 rounded-2xl bg-emerald-50 border border-emerald-200 text-center space-y-4"
+              >
+                <div className="w-16 h-16 rounded-full bg-emerald-600 text-white flex items-center justify-center mx-auto shadow-md">
+                  <CheckCircle2 className="w-8 h-8" />
                 </div>
-                <h3 className="text-2xl font-bold text-slate-900 font-heading">
-                  Application Transmitted Successfully!
-                </h3>
-                <p className="text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
-                  Thank you, <strong className="text-blue-600">{formData.full_name}</strong>! Your application for <span className="font-semibold text-slate-900">"{formData.position}"</span> and your resume have been successfully transmitted to our recruitment team.
+                <h3 className="text-2xl font-bold text-slate-900 font-heading">Application Transmitted Successfully!</h3>
+                <p className="text-xs sm:text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
+                  Thank you, <strong className="text-slate-800">{formData.full_name}</strong>! Your application for <strong className="text-slate-800">'{formData.position}'</strong> and resume have been securely routed to our HR desk (<strong className="text-slate-800">hr@nextechxsolutions.com</strong>).
                 </p>
-                <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 max-w-md mx-auto text-xs text-emerald-800">
-                  Our HR desk will review your credentials and contact you within 24 to 48 hours via WhatsApp or Email.
+                <p className="text-xs text-slate-500 font-medium">
+                  Our talent acquisition team will review your credentials and contact you within 24 to 48 hours via WhatsApp or Email.
+                </p>
+                <div className="pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setSubmitSuccess(false)}
+                    className="px-6 py-2.5 rounded-xl bg-slate-900 text-white text-xs font-bold hover:bg-slate-800 transition-colors"
+                  >
+                    Submit Another Application
+                  </button>
                 </div>
-                <button
-                  onClick={() => setSubmitSuccess(false)}
-                  className="px-6 py-2.5 rounded-xl bg-slate-900 text-white font-semibold text-xs hover:bg-slate-800 transition-colors"
-                >
-                  Submit Another Application
-                </button>
-              </div>
+              </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
                 
                 {submitError && (
-                  <div className="p-4 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-xs sm:text-sm flex items-center gap-2.5">
-                    <AlertCircle className="w-5 h-5 shrink-0 text-red-600" />
+                  <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center gap-3 text-red-600 text-sm">
+                    <AlertCircle className="w-5 h-5 flex-shrink-0" />
                     <span>{submitError}</span>
                   </div>
                 )}
@@ -738,7 +576,7 @@ export default function Careers({ onOpenQuote, onOpenConsultation }) {
                   </div>
                 </div>
 
-                {/* 2. Phone Number & Applying For (Job or Internship) */}
+                {/* 2. Phone Number & Program Category */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div>
                     <label className="block text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider font-heading">
@@ -761,44 +599,9 @@ export default function Careers({ onOpenQuote, onOpenConsultation }) {
                     <label className="block text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider font-heading">
                       Applying For (Category) *
                     </label>
-                    <div className="grid grid-cols-2 gap-2">
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setFormData({
-                            ...formData,
-                            applying_for: 'Job',
-                            position: jobVacancies[0].title
-                          });
-                        }}
-                        className={`py-3 px-3 rounded-xl border text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
-                          formData.applying_for === 'Job'
-                            ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
-                            : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-50'
-                        }`}
-                      >
-                        <Briefcase className="w-3.5 h-3.5" />
-                        <span>Job Vacancy</span>
-                      </button>
-
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setFormData({
-                            ...formData,
-                            applying_for: 'Internship',
-                            position: internshipRoles[0].title
-                          });
-                        }}
-                        className={`py-3 px-3 rounded-xl border text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
-                          formData.applying_for === 'Internship'
-                            ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm'
-                            : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-50'
-                        }`}
-                      >
-                        <GraduationCap className="w-3.5 h-3.5" />
-                        <span>Internship</span>
-                      </button>
+                    <div className="py-3 px-4 rounded-xl border border-emerald-300 bg-emerald-50/70 text-emerald-800 text-xs sm:text-sm font-bold flex items-center gap-2">
+                      <GraduationCap className="w-4 h-4 text-emerald-600" />
+                      <span>Internship Opportunities</span>
                     </div>
                   </div>
                 </div>
@@ -807,7 +610,7 @@ export default function Careers({ onOpenQuote, onOpenConsultation }) {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div>
                     <label className="block text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider font-heading">
-                      Position / Internship Role *
+                      Target Internship Role *
                     </label>
                     <select
                       required
@@ -815,19 +618,9 @@ export default function Careers({ onOpenQuote, onOpenConsultation }) {
                       onChange={(e) => setFormData({ ...formData, position: e.target.value })}
                       className="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20 transition-all font-medium"
                     >
-                      {formData.applying_for === 'Job' ? (
-                        <optgroup label="Available Job Vacancies">
-                          {jobVacancies.map((job) => (
-                            <option key={job.id} value={job.title}>{job.title}</option>
-                          ))}
-                        </optgroup>
-                      ) : (
-                        <optgroup label="Available Internship Domains">
-                          {internshipRoles.map((role) => (
-                            <option key={role.id} value={role.title}>{role.title}</option>
-                          ))}
-                        </optgroup>
-                      )}
+                      {internshipRoles.map((role) => (
+                        <option key={role.id} value={role.title}>{role.title}</option>
+                      ))}
                     </select>
                   </div>
 
@@ -839,20 +632,20 @@ export default function Careers({ onOpenQuote, onOpenConsultation }) {
                       required
                       value={formData.education}
                       onChange={(e) => setFormData({ ...formData, education: e.target.value })}
-                      className="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20 transition-all"
+                      className="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20 transition-all font-medium"
                     >
                       <option value="B.Tech / B.E (CSE / IT)">B.Tech / B.E (CSE / IT)</option>
-                      <option value="B.Tech / B.E (ECE / Electrical / Other)">B.Tech / B.E (ECE / Other)</option>
-                      <option value="BCA / MCA">BCA / MCA</option>
+                      <option value="B.Tech / B.E (Other Branches)">B.Tech / B.E (Other Branches)</option>
                       <option value="M.Tech / M.E">M.Tech / M.E</option>
-                      <option value="B.Sc / M.Sc Computer Science / IT">B.Sc / M.Sc Computer Science</option>
+                      <option value="MCA / M.Sc (Computer Science / IT)">MCA / M.Sc (Computer Science / IT)</option>
+                      <option value="BCA / B.Sc (IT / Computer Science)">BCA / B.Sc (IT / Computer Science)</option>
                       <option value="Diploma in Engineering">Diploma in Engineering</option>
-                      <option value="Other Degree / Self-Taught Developer">Other Degree / Self-Taught</option>
+                      <option value="Other Degree / Self-Taught">Other Degree / Self-Taught</option>
                     </select>
                   </div>
                 </div>
 
-                {/* 4. Resume Upload (PDF / DOC / DOCX) */}
+                {/* 4. Resume Upload */}
                 <div>
                   <label className="block text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider font-heading">
                     Resume Upload (PDF / DOC / DOCX) *
@@ -894,7 +687,7 @@ export default function Careers({ onOpenQuote, onOpenConsultation }) {
                               {resumeFile.name}
                             </div>
                             <div className="text-[11px] text-emerald-700 font-semibold font-mono">
-                              {(resumeFile.size / 1024).toFixed(1)} KB • Ready to send
+                              {(resumeFile.size / 1024).toFixed(1)} KB â€¢ Ready to send
                             </div>
                           </div>
                         </div>
@@ -928,7 +721,7 @@ export default function Careers({ onOpenQuote, onOpenConsultation }) {
                     rows={3}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    placeholder="Briefly tell us about your experience, notable projects, GitHub/LinkedIn links, or reason for applying..."
+                    placeholder="Briefly describe your programming experience, project repositories, or reasons for applying..."
                     className="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20 transition-all resize-none"
                   />
                 </div>
@@ -938,24 +731,24 @@ export default function Careers({ onOpenQuote, onOpenConsultation }) {
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="w-full py-4 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-bold text-sm shadow-md hover:shadow-lg transition-all disabled:opacity-50 active:scale-98 font-heading"
+                    className="w-full py-4 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-bold text-sm sm:text-base shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 active:scale-98 disabled:opacity-60 font-heading"
                   >
                     {submitting ? (
-                      <span className="flex items-center justify-center gap-2">
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                        <span>Uploading Resume & Transmitting Application...</span>
-                      </span>
+                      <div className="flex items-center gap-2">
+                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        <span>Transmitting Resume & Details...</span>
+                      </div>
                     ) : (
-                      <span className="flex items-center justify-center gap-2">
-                        <Send className="w-4 h-4" />
+                      <>
+                        <Upload className="w-4 h-4" />
                         <span>Submit Application & Resume to HR</span>
-                      </span>
+                      </>
                     )}
                   </button>
 
-                  <div className="pt-3 text-center text-xs text-slate-500 font-mono">
+                  <p className="text-[11px] text-center text-slate-500 mt-3 font-mono">
                     Direct HR Inquiries: <a href="mailto:hr@nextechxsolutions.com" className="text-blue-600 hover:underline font-bold">hr@nextechxsolutions.com</a>
-                  </div>
+                  </p>
                 </div>
 
               </form>

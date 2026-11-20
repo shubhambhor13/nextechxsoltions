@@ -36,9 +36,18 @@ function PageLoading() {
   );
 }
 
-// Helper component to scroll window to top on route change or to hash element with fixed header offset
+// Helper component to ensure every page starts from the top on navigation,
+// while correctly preserving and offsetting anchor links (with sticky navbar clearance)
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
+
+  useEffect(() => {
+    // Disable native browser scroll restoration so navigating to a new route never restores old scroll positions
+    if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+  }, []);
+
   useEffect(() => {
     if (hash) {
       const targetId = hash.replace('#', '');
@@ -49,18 +58,39 @@ function ScrollToTop() {
           const headerOffset = 105;
           const elementPosition = element.getBoundingClientRect().top;
           const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-          window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-        } else if (attempts < 10) {
+          window.scrollTo({ top: Math.max(0, offsetPosition), behavior: 'smooth' });
+        } else if (attempts < 15) {
           attempts++;
-          setTimeout(tryScroll, 100);
+          setTimeout(tryScroll, 70);
         }
       };
-      const timer = setTimeout(tryScroll, 150);
+      const timer = setTimeout(tryScroll, 100);
       return () => clearTimeout(timer);
     } else {
-      window.scrollTo(0, 0);
+      // Instant reset to absolute top (0, 0) across all document scrolling elements
+      const snapToTop = () => {
+        const html = document.documentElement;
+        const originalBehavior = html.style.scrollBehavior;
+        html.style.scrollBehavior = 'auto';
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+        html.style.scrollBehavior = originalBehavior;
+      };
+
+      snapToTop();
+      const raf = requestAnimationFrame(snapToTop);
+      const timer1 = setTimeout(snapToTop, 50);
+      const timer2 = setTimeout(snapToTop, 220); // Fires immediately after page transitions complete
+
+      return () => {
+        cancelAnimationFrame(raf);
+        clearTimeout(timer1);
+        clearTimeout(timer2);
+      };
     }
   }, [pathname, hash]);
+
   return null;
 }
 
@@ -72,6 +102,19 @@ function AnimatedRoutes({
 }) {
   const location = useLocation();
 
+  const handleAnimationComplete = () => {
+    // If route change does not target a specific hash, guarantee top position once animation completes
+    if (!location.hash) {
+      const html = document.documentElement;
+      const originalBehavior = html.style.scrollBehavior;
+      html.style.scrollBehavior = 'auto';
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      html.style.scrollBehavior = originalBehavior;
+    }
+  };
+
   return (
     <AnimatePresence mode="wait">
       <motion.div
@@ -79,7 +122,8 @@ function AnimatedRoutes({
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -8 }}
-        transition={{ duration: 0.2, ease: "easeOut" }}
+        transition={{ duration: 0.18, ease: "easeOut" }}
+        onAnimationComplete={handleAnimationComplete}
       >
         <Suspense fallback={<PageLoading />}>
           <Routes location={location} key={location.pathname}>

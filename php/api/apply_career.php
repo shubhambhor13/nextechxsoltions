@@ -30,46 +30,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         exit;
     }
 
-    // Default GET: Return vacancies list (0-2 years, No senior roles)
+    // Default GET: Return opportunities list (Jobs empty - currently offering internships only)
     echo json_encode([
-        'jobs' => [
-            [
-                'id' => 'job-fullstack',
-                'title' => 'Full-Stack Software Engineer (React & Python)',
-                'department' => 'Engineering & Product',
-                'type' => 'Full-Time',
-                'workplace' => 'Remote / Hybrid',
-                'experience' => '0-2 Years / Early Career',
-                'description' => 'Develop and maintain modern web applications, SaaS client portals, and responsive REST APIs using React 18, Tailwind CSS, Python FastAPI, and PostgreSQL.'
-            ],
-            [
-                'id' => 'job-ai-engineer',
-                'title' => 'AI & Workflow Automation Developer',
-                'department' => 'AI Automation Labs',
-                'type' => 'Full-Time',
-                'workplace' => '100% Remote',
-                'experience' => '0-2 Years / Early Career',
-                'description' => 'Develop practical AI automation workflows, WhatsApp business bots, and Retrieval-Augmented Generation (RAG) tools using Python, LangChain, and APIs.'
-            ],
-            [
-                'id' => 'job-devops-cloud',
-                'title' => 'DevOps & Cloud Associate Engineer',
-                'department' => 'Cloud & Infrastructure',
-                'type' => 'Full-Time',
-                'workplace' => '100% Remote',
-                'experience' => '0-2 Years / Early Career',
-                'description' => 'Configure containerized deployments, manage CI/CD build scripts, server monitoring, and cloud hosting for client web applications.'
-            ],
-            [
-                'id' => 'job-bi-analyst',
-                'title' => 'Data Analyst & Business Intelligence Associate',
-                'department' => 'Analytics & Intelligence',
-                'type' => 'Full-Time',
-                'workplace' => 'Remote / Hybrid',
-                'experience' => '0-2 Years / Early Career',
-                'description' => 'Transform corporate datasets into interactive executive dashboards using Power BI, DAX formulas, SQL queries, and Excel models.'
-            ]
-        ],
+        'notice' => 'Currently, we are offering internship opportunities. Stay connected for future updates.',
+        'jobs' => [],
         'internships' => [
             [
                 'id' => 'intern-aiml',
@@ -88,16 +52,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 'selection' => 'Interview-Based'
             ],
             [
-                'id' => 'intern-bi',
-                'title' => 'Power BI & Data Analytics Intern',
-                'department' => 'Data Science & BI',
+                'id' => 'intern-data',
+                'title' => 'Data Analytics & Power BI Intern',
+                'department' => 'Business Intelligence',
                 'type' => 'Internship',
                 'workplace' => '100% Online Remote',
                 'selection' => 'Interview-Based'
             ],
             [
-                'id' => 'intern-security',
-                'title' => 'Cyber Security & Ethical Defense Intern',
+                'id' => 'intern-python',
+                'title' => 'Python Automation & Workflow Intern',
+                'department' => 'Automation & DevOps',
+                'type' => 'Internship',
+                'workplace' => '100% Online Remote',
+                'selection' => 'Interview-Based'
+            ],
+            [
+                'id' => 'intern-java',
+                'title' => 'Java Enterprise Microservices Intern',
+                'department' => 'Enterprise Systems',
+                'type' => 'Internship',
+                'workplace' => '100% Online Remote',
+                'selection' => 'Interview-Based'
+            ],
+            [
+                'id' => 'intern-cyber',
+                'title' => 'Cyber Security & SOC Defense Intern',
                 'department' => 'Information Security',
                 'type' => 'Internship',
                 'workplace' => '100% Online Remote',
@@ -117,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $full_name = trim($_POST['full_name'] ?? '');
 $email = trim($_POST['email'] ?? '');
 $phone = trim($_POST['phone'] ?? '');
-$applying_for = trim($_POST['applying_for'] ?? 'Job');
+$applying_for = trim($_POST['applying_for'] ?? 'Internship');
 $position = trim($_POST['position'] ?? '');
 $education = trim($_POST['education'] ?? '');
 $message = trim($_POST['message'] ?? '');

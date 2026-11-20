@@ -157,9 +157,9 @@ export default function Navbar({ onOpenQuote, onOpenConsultation }) {
       color: 'text-amber-600 bg-amber-50 border border-amber-200'
     },
     {
-      name: 'Careers & Opportunities',
+      name: 'Careers & Internships',
       path: '/careers',
-      desc: 'Job Vacancies, Engineering Internships & Direct Hiring',
+      desc: 'Technical Internships, Live Projects & Career Growth',
       icon: Briefcase,
       color: 'text-cyan-600 bg-cyan-50 border border-cyan-200'
     }
@@ -206,17 +206,7 @@ export default function Navbar({ onOpenQuote, onOpenConsultation }) {
         navigate('/#services');
       }
     } else if (target === 'careers' || target === 'internship') {
-      if (location.pathname === '/') {
-        const el = document.getElementById('careers') || document.getElementById('internship');
-        if (el) {
-          const headerOffset = 105;
-          const pos = el.getBoundingClientRect().top + window.pageYOffset - headerOffset;
-          window.scrollTo({ top: pos, behavior: 'smooth' });
-          setActiveSection('careers');
-        }
-      } else {
-        navigate('/careers');
-      }
+      navigate('/careers');
     } else if (target === 'contact') {
       if (location.pathname === '/') {
         const el = document.getElementById('contact');

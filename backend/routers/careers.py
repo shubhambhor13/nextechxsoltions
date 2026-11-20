@@ -19,68 +19,9 @@ ALLOWED_EXTENSIONS = {".pdf", ".doc", ".docx"}
 MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024  # 10 MB
 
 # Available Opportunities Data
-JOB_VACANCIES = [
-    {
-        "id": "job-fullstack",
-        "title": "Full-Stack Software Engineer (React & Python)",
-        "department": "Engineering & Product",
-        "type": "Full-Time",
-        "workplace": "Remote / Hybrid",
-        "experience": "0-2 Years / Early Career",
-        "description": "Develop and maintain modern web applications, SaaS client portals, and responsive REST APIs using React 18, Tailwind CSS, Python FastAPI, and PostgreSQL.",
-        "skills": ["React 18", "Python FastAPI", "PostgreSQL", "Docker", "Git", "REST APIs"],
-        "responsibilities": [
-            "Build modern frontend user interfaces and connect backend endpoints",
-            "Write clean, modular code with active Git version control",
-            "Participate in sprint planning and collaborate directly with engineering mentors"
-        ]
-    },
-    {
-        "id": "job-ai-engineer",
-        "title": "AI & Workflow Automation Developer",
-        "department": "AI Automation Labs",
-        "type": "Full-Time",
-        "workplace": "100% Remote",
-        "experience": "0-2 Years / Early Career",
-        "description": "Develop practical AI automation workflows, WhatsApp business bots, and Retrieval-Augmented Generation (RAG) tools using Python, LangChain, and APIs.",
-        "skills": ["Python", "OpenAI APIs", "LangChain", "FastAPI", "Vector DBs", "Webhooks"],
-        "responsibilities": [
-            "Build automated conversational bots and business workflow integrations",
-            "Implement document search and knowledge retrieval pipelines",
-            "Test and monitor AI model prompts, latency, and response quality"
-        ]
-    },
-    {
-        "id": "job-devops-cloud",
-        "title": "DevOps & Cloud Associate Engineer",
-        "department": "Cloud & Infrastructure",
-        "type": "Full-Time",
-        "workplace": "100% Remote",
-        "experience": "0-2 Years / Early Career",
-        "description": "Configure containerized deployments, manage CI/CD build scripts, server monitoring, and cloud hosting for client web applications.",
-        "skills": ["Docker", "Linux", "GitHub Actions", "AWS / VPS", "Nginx", "SSL"],
-        "responsibilities": [
-            "Maintain CI/CD deployment pipelines on GitHub Actions",
-            "Monitor server uptime, system logs, and resource utilization",
-            "Assist in configuring domains, SSL certificates, and database backups"
-        ]
-    },
-    {
-        "id": "job-bi-analyst",
-        "title": "Data Analyst & Business Intelligence Associate",
-        "department": "Analytics & Intelligence",
-        "type": "Full-Time",
-        "workplace": "Remote / Hybrid",
-        "experience": "0-2 Years / Early Career",
-        "description": "Transform corporate datasets into interactive executive dashboards using Power BI, DAX formulas, SQL queries, and Excel models.",
-        "skills": ["Power BI", "SQL", "DAX", "Python Pandas", "Excel Models", "Data Visualization"],
-        "responsibilities": [
-            "Design visual KPI reports and interactive executive dashboards",
-            "Write SQL queries to extract, clean, and validate business data",
-            "Document metrics and present weekly performance summaries"
-        ]
-    }
-]
+# Job Vacancies are currently closed - offering internships only
+JOB_VACANCIES = []
+NOTICE = "Currently, we are offering internship opportunities. Stay connected for future updates."
 
 INTERNSHIP_ROLES = [
     {
@@ -154,6 +95,7 @@ INTERNSHIP_ROLES = [
 @router.get("/vacancies")
 def get_all_vacancies():
     return {
+        "notice": NOTICE,
         "jobs": JOB_VACANCIES,
         "internships": INTERNSHIP_ROLES
     }

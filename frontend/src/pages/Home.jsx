@@ -103,8 +103,8 @@ export default function Home({ onOpenQuote, onOpenConsultation, onOpenRegister }
     },
     {
       id: "careers",
-      title: "Careers & Internships",
-      subtitle: "Full-Time Engineering Vacancies & Project Internships",
+      title: "Internship Opportunities",
+      subtitle: "Hands-On Technical Internships & Real Projects",
       desc: "Work on live IT systems, modern AI applications, and enterprise web software guided by experienced engineering leads and mentors.",
       icon: GraduationCap,
       link: "/careers",
@@ -112,8 +112,8 @@ export default function Home({ onOpenQuote, onOpenConsultation, onOpenRegister }
       glowColor: "hover:shadow-[0_20px_50px_rgba(2,132,199,0.45)]",
       borderColor: "border-cyan-400/30 hover:border-cyan-300",
       btnGradient: "bg-gradient-to-r from-[#0284c7] to-[#0ea5e9] hover:from-[#38bdf8] hover:to-[#0284c7] text-white",
-      btnText: "Explore Careers & Internships",
-      badgeRibbon: "Hiring Now",
+      btnText: "Explore Internship Opportunities",
+      badgeRibbon: "Open Now",
       features: [
         "Hands-On IT & AI Project Mentorship",
         "Work on 100% Real-World Client Systems",
@@ -609,10 +609,10 @@ export default function Home({ onOpenQuote, onOpenConsultation, onOpenRegister }
               <span>We Are Hiring • Join NextTechX</span>
             </div>
             <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black text-white font-heading tracking-tight leading-tight">
-              Careers & Internship Opportunities
+              Technology Internship Opportunities
             </h2>
             <p className="text-sm sm:text-base lg:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
-              Full-time engineering vacancies and interview-based technology internships. Work on live production IT systems and modern AI architectures.
+              Hands-on, interview-based technology internships. Currently, we are offering internship opportunities. Stay connected for future updates.
             </p>
           </div>
 
@@ -635,7 +635,7 @@ export default function Home({ onOpenQuote, onOpenConsultation, onOpenRegister }
                   <div className="flex flex-wrap items-center gap-2">
                     <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-600 text-white text-[11px] sm:text-xs font-bold font-heading shadow-xs">
                       <Sparkles className="w-3.5 h-3.5" />
-                      <span>Job Vacancies & Internships</span>
+                      <span>Active Internship Tracks</span>
                     </span>
                     <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-[11px] sm:text-xs font-bold font-heading">
                       <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
@@ -644,17 +644,17 @@ export default function Home({ onOpenQuote, onOpenConsultation, onOpenRegister }
                   </div>
 
                   <h3 className="text-xl sm:text-3xl lg:text-4xl font-black text-white group-hover:text-cyan-300 transition-colors font-heading tracking-tight">
-                    Shape Your Career with NextTechX Solutions
+                    Build Practical Production Experience with NextTechX
                   </h3>
                   <p className="text-xs sm:text-base text-slate-300 max-w-2xl leading-relaxed">
-                    Explore available full-time vacancies in Full-Stack, AI/ML, Cloud DevOps, and Data Analytics, or apply for our live client project internships.
+                    Currently, we are offering internship opportunities across AI/ML, Full-Stack Web, Cloud DevOps, and Data Analytics. Stay connected for future updates.
                   </p>
                 </div>
 
                 {/* Primary Action Button */}
                 <div className="w-full sm:w-auto shrink-0">
                   <div className="w-full sm:w-auto px-5 sm:px-7 py-3 sm:py-4 rounded-xl sm:rounded-2xl bg-gradient-to-r from-blue-600 via-sky-500 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-black text-xs sm:text-base shadow-lg group-hover:shadow-[0_10px_25px_rgba(6,182,212,0.4)] flex items-center justify-center gap-2 sm:gap-2.5 transition-all font-heading">
-                    <span>Explore Careers & Apply</span>
+                    <span>Explore Internships & Apply</span>
                     <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1.5 transition-transform" />
                   </div>
                 </div>
