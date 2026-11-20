@@ -87,7 +87,8 @@ def generate_smart_fallback(user_text: str) -> dict:
         reply = (
             "📞 **Connect With Our Solutions Team Online**\n\n"
             "We operate as an online-first IT solutions company serving clients globally:\n"
-            "• 📧 **Email**: contact@nexttechxsolutions.com\n"
+            "• 💼 **Client Inquiries**: contact@nextechxsolutions.com\n"
+            "• 🎓 **HR & Internships**: hr@nextechxsolutions.com\n"
             "• 📱 **WhatsApp / Hotline**: +91 93098 35085\n"
             "• 🌐 **Delivery Model**: 100% Online-First Global Remote Delivery\n"
             "• 🗓️ **Book a Free 30-Min Strategy Consultation** or Request a Quotation directly via our website!"

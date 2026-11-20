@@ -141,11 +141,11 @@ export const api = {
   },
 
   // AI Chatbot
-  async sendChatMessage(message, sessionId = 'default-guest') {
+  async sendChatMessage(message, sessionId = 'default-guest', history = []) {
     const res = await fetch(`${BASE_URL}/chat`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message, session_id: sessionId }),
+      body: JSON.stringify({ message, session_id: sessionId, history }),
     });
     return handleResponse(res, 'Failed to communicate with AI');
   },
