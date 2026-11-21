@@ -25,6 +25,10 @@ use PHPMailer\PHPMailer\Exception;
 
 class NextTechXMailer {
 
+    public static $last_password_source = null;
+    public static $last_smtp_debug = [];
+    public static $last_smtp_meta = [];
+
     /**
      * Securely retrieve environment variable with priority:
      * 1. getenv() / getenv('REDIRECT_*')
@@ -34,6 +38,12 @@ class NextTechXMailer {
      * 5. .env file in project hierarchy
      */
     public static function getEnv($key, $default = null) {
+        $set_src = function($src) use ($key) {
+            if ($key === 'SMTP_PASSWORD') {
+                self::$last_password_source = $src;
+            }
+        };
+
         $clean = function($val, $k) {
             if ($val === false || $val === null) return null;
             $val = trim((string)$val);
@@ -52,37 +62,37 @@ class NextTechXMailer {
 
         // 1. Native getenv (direct and Apache REDIRECT_ prefix)
         $v = $clean(getenv($key), $key);
-        if ($v !== null) return $v;
+        if ($v !== null) { $set_src('getenv'); return $v; }
 
         $v = $clean(getenv('REDIRECT_' . $key), $key);
-        if ($v !== null) return $v;
+        if ($v !== null) { $set_src('getenv_REDIRECT'); return $v; }
 
         // 2. Superglobal $_ENV
         if (isset($_ENV[$key])) {
             $v = $clean($_ENV[$key], $key);
-            if ($v !== null) return $v;
+            if ($v !== null) { $set_src('$_ENV'); return $v; }
         }
         if (isset($_ENV['REDIRECT_' . $key])) {
             $v = $clean($_ENV['REDIRECT_' . $key], $key);
-            if ($v !== null) return $v;
+            if ($v !== null) { $set_src('$_ENV_REDIRECT'); return $v; }
         }
 
         // 3. Superglobal $_SERVER (common in FastCGI, PHP-FPM, Hostinger LiteSpeed)
         if (isset($_SERVER[$key])) {
             $v = $clean($_SERVER[$key], $key);
-            if ($v !== null) return $v;
+            if ($v !== null) { $set_src('$_SERVER'); return $v; }
         }
         if (isset($_SERVER['REDIRECT_' . $key])) {
             $v = $clean($_SERVER['REDIRECT_' . $key], $key);
-            if ($v !== null) return $v;
+            if ($v !== null) { $set_src('$_SERVER_REDIRECT'); return $v; }
         }
 
         // 4. Apache getenv if available
         if (function_exists('apache_getenv')) {
             $v = $clean(@apache_getenv($key), $key);
-            if ($v !== null) return $v;
+            if ($v !== null) { $set_src('apache_getenv'); return $v; }
             $v = $clean(@apache_getenv('REDIRECT_' . $key), $key);
-            if ($v !== null) return $v;
+            if ($v !== null) { $set_src('apache_getenv_REDIRECT'); return $v; }
         }
 
         static $env_parsed = false;
@@ -114,6 +124,9 @@ class NextTechXMailer {
                                 $val = $clean($val, $k);
                                 if ($val !== null && !isset($env_cache[$k])) {
                                     $env_cache[$k] = $val;
+                                    if ($k === 'SMTP_PASSWORD') {
+                                        self::$last_password_source = '.env (' . basename($file) . ')';
+                                    }
                                 }
                             }
                         }
@@ -225,6 +238,9 @@ class NextTechXMailer {
             'password_set' => !empty($password),
             'password_length' => strlen($password),
             'password_has_leading_trailing_space' => ($password !== trim($password)),
+            'password_has_dollar_sign' => (strpos($password, '$') !== false),
+            'password_has_quotes' => (strpos($password, '"') !== false || strpos($password, "'") !== false),
+            'password_source' => self::$last_password_source ?? 'unknown',
             'ca_file_used' => $ca_file ? basename($ca_file) : 'system_default'
         ];
 
