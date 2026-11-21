@@ -7,6 +7,7 @@ import AIChatbot from './components/AIChatbot';
 import QuotationModal from './components/QuotationModal';
 import ConsultationModal from './components/ConsultationModal';
 import StudentRegisterModal from './components/StudentRegisterModal';
+import { siteConfig } from './config/siteConfig';
 
 // Code-split route pages with React.lazy for instant mobile loading & optimal bundle chunking
 const Home = lazy(() => import('./pages/Home'));
