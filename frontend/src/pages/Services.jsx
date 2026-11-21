@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
   Bot, 
   Code2, 
+  Cloud,
+  Smartphone,
+  BarChart3,
+  CheckSquare,
   BookOpen, 
   GraduationCap, 
   Sparkles, 
@@ -14,58 +18,142 @@ import {
   Layers,
   Cpu,
   Zap,
-  Globe2,
   CheckCircle2,
   Lock,
   Users,
-  Server,
   FileCheck,
-  ExternalLink
+  ExternalLink,
+  Building2,
+  Database,
+  Scan
 } from 'lucide-react';
 import { siteConfig } from '../config/siteConfig';
 
 export default function Services({ onOpenQuote, onOpenConsultation }) {
+  const [activeCategory, setActiveCategory] = useState('all');
+
+  const categories = [
+    { id: 'all', label: 'All Services', count: 8 },
+    { id: 'ai-data', label: 'AI & Data Solutions', count: 3 },
+    { id: 'software-cloud', label: 'Software & Cloud', count: 3 },
+    { id: 'academic-careers', label: 'Academic & Careers', count: 2 },
+  ];
+
   const serviceCards = [
     {
       id: "ai-automation",
+      category: "ai-data",
       tag: "AI & Autonomous Systems",
-      badgeText: "Enterprise Automation",
-      title: "Intelligent AI Agents, RAG Chatbots & Workflow Automation",
-      desc: "Architect and deploy bespoke conversational AI agents, official WhatsApp Cloud API triggers, autonomous multi-step pipelines (n8n), and intelligent OCR document extraction that eliminate manual operational bottlenecks.",
+      title: "Intelligent AI Agents, RAG Chatbots & n8n Workflow Automation",
+      desc: "Deploy intelligent customer-facing conversational agents with enterprise vector search, official WhatsApp Cloud API triggers, autonomous multi-step pipelines, and smart OCR document processors.",
       icon: Bot,
       link: "/ai-automation",
       exploreText: "Explore AI Practice",
       quoteText: "Get AI Quote",
       features: [
-        "Custom RAG AI Chatbots with Enterprise Context",
-        "Official WhatsApp Business Cloud API Integration",
-        "n8n Multi-Platform Automated Pipelines",
-        "Intelligent OCR for Invoices, Receipts & KYC"
+        "Custom RAG AI Chatbots with Enterprise Vector Memory",
+        "Official WhatsApp Business Cloud API Automated Flows",
+        "n8n Multi-Platform Automated Event Pipelines",
+        "Intelligent OCR Document Extraction (Invoices, KYC, ID)"
       ],
       deliverable: "Fixed Milestone SOW • Production Deployment"
     },
     {
-      id: "it-services",
-      tag: "Software & Cloud Engineering",
-      badgeText: "Full-Stack & Cloud",
-      title: "Enterprise Web Applications, Microservices & Cloud Infrastructure",
-      desc: "From early MVP architectures to high-concurrency production platforms. We engineer ultra-responsive web applications, resilient backend microservices in Python & Node.js, and multi-region cloud infrastructures.",
+      id: "web-software",
+      category: "software-cloud",
+      tag: "Custom Web & SaaS Engineering",
+      title: "Scalable SaaS Platforms, Web Applications & Microservices",
+      desc: "Engineer ultra-responsive web applications in React 18, Next.js, and TypeScript, backed by high-throughput RESTful & GraphQL microservices in Python (FastAPI) and Node.js.",
       icon: Code2,
       link: "/it-services",
-      exploreText: "Explore IT Practice",
+      exploreText: "Explore Web Engineering",
       quoteText: "Get Software Quote",
       features: [
-        "Full-Stack SaaS Platforms & Modern Web Applications",
-        "High-Throughput RESTful & GraphQL Microservices",
-        "Automated Docker CI/CD & AWS Cloud Architecture",
-        "Transparent Milestone-Based Delivery SOWs"
+        "Full-Stack SaaS Platforms & Multi-Tenant Architectures",
+        "High-Concurrency RESTful & GraphQL API Gateways",
+        "Enterprise Admin Portals with Role-Based Access (RBAC)",
+        "Sub-Second Core Web Vitals & WCAG 2.1 Accessibility"
       ],
       deliverable: "Clean Architecture • 100% Code Ownership"
     },
     {
+      id: "cloud-devops",
+      category: "software-cloud",
+      tag: "Cloud Architecture & DevOps",
+      title: "Zero-Downtime AWS/GCP Cloud Architecture & Docker CI/CD",
+      desc: "Automated Terraform infrastructure-as-code, Docker containerization, Kubernetes cluster orchestration, and resilient multi-region cloud configurations engineered for 99.99% uptime.",
+      icon: Cloud,
+      link: "/it-services",
+      exploreText: "Explore Cloud DevOps",
+      quoteText: "Request Cloud Proposal",
+      features: [
+        "Kubernetes (EKS / GKE) Container Microservice Orchestration",
+        "Automated GitHub Actions / GitLab CI/CD Delivery Pipelines",
+        "Cloud Cost Auditing & Infrastructure Optimization (25-45% Savings)",
+        "Disaster Recovery, Automated Backups & 24/7 Monitoring"
+      ],
+      deliverable: "99.99% Uptime Architecture • Infrastructure as Code"
+    },
+    {
+      id: "mobile-apps",
+      category: "software-cloud",
+      tag: "Mobile Engineering",
+      title: "Native-Performance iOS & Android Enterprise Applications",
+      desc: "Modern mobile applications built with React Native and Flutter, featuring seamless offline-first local synchronization, biometric authentication, and enterprise device integrations.",
+      icon: Smartphone,
+      link: "/it-services",
+      exploreText: "Explore Mobile Apps",
+      quoteText: "Request Mobile Quote",
+      features: [
+        "Single Unified Cross-Platform Codebase for iOS & Android",
+        "Offline-First Sync with SQLite & WatermelonDB",
+        "Biometric Auth, Hardware Device Integration & Push Triggers",
+        "App Store & Google Play Production Deployment & Maintenance"
+      ],
+      deliverable: "Cross-Platform Store Release • Offline-First Sync"
+    },
+    {
+      id: "data-bi",
+      category: "ai-data",
+      tag: "Data & Business Intelligence",
+      title: "Modern Data Warehousing, ETL Pipelines & Power BI Telemetry",
+      desc: "Transform raw transactional records into high-performance analytical warehouses. Build automated ETL pipelines and interactive Power BI dashboards that give leadership crystal-clear clarity.",
+      icon: BarChart3,
+      link: "/it-services",
+      exploreText: "Explore Data Analytics",
+      quoteText: "Request Data Proposal",
+      features: [
+        "High-Volume ETL/ELT Pipelines with Python & Apache Spark",
+        "Snowflake, BigQuery & PostgreSQL TimescaleDB Modeling",
+        "Interactive Power BI Executive Dashboards with Row-Level Security",
+        "Automated KPI Alerts, Anomaly Detection & Financial Reporting"
+      ],
+      deliverable: "Single Source of Truth • Real-Time Dashboards"
+    },
+    {
+      id: "data-annotation",
+      category: "ai-data",
+      tag: "AI & Machine Learning Data",
+      title: "Professional Data Annotation & Labeling Solutions",
+      desc: "Professional data annotation and labeling solutions for AI and Machine Learning projects. High-precision human-in-the-loop annotation pipelines ensuring enterprise-grade ground-truth datasets for production models.",
+      icon: CheckSquare,
+      link: "/contact",
+      exploreText: "Inquire Data Solutions",
+      quoteText: "Get Annotation Quote",
+      features: [
+        "Image Annotation (Polygons, Keypoints & Polylines)",
+        "Text Annotation & Named Entity Recognition (NER)",
+        "Video Annotation & Multi-Frame Object Tracking",
+        "Structured Data Labeling & Metadata Tagging",
+        "Multi-Class & Multi-Label Image Classification",
+        "Object Detection and Precise Bounding Boxes"
+      ],
+      deliverable: "Multi-Format (JSON, YOLO, COCO) • 99%+ Quality SLA"
+    },
+    {
       id: "research-publication",
+      category: "academic-careers",
       tag: "Academic & Doctoral Advisory",
-      badgeText: "Indexed Publishing",
       title: "Research Paper Structuring, Writing & Global Indexed Publication",
       desc: "End-to-end guidance for university faculty, PhD scholars, and students to structure novel academic manuscripts and navigate peer-reviewed indexed submissions in Scopus, IEEE Xplore, and Springer Nature.",
       icon: BookOpen,
@@ -75,23 +163,23 @@ export default function Services({ onOpenQuote, onOpenConsultation }) {
       features: [
         "Scopus (Q1/Q2), IEEE Xplore & Springer Guidance",
         "Mathematical Modeling & Algorithmic Design",
-        "Turnitin Similarity Verification (< 10% Strict)",
-        "Camera-Ready Formatting & Rebuttal Assistance"
+        "Turnitin Similarity Verification (< 10% Strict Threshold)",
+        "Camera-Ready Formatting & Comprehensive Rebuttal Support"
       ],
       deliverable: "Peer-Reviewed Target • Full Confidentiality"
     },
     {
       id: "careers",
+      category: "academic-careers",
       tag: "Careers & Internships",
-      badgeText: "Talent & Mentorship",
-      title: "Engineering Vacancies & Hands-On Production Internships",
-      desc: "Structured interview-based production internships and early-career vacancies. Work directly on live client systems, contribute to production codebases, and earn verified credentials under senior mentorship.",
+      title: "Job Vacancies & Hands-On Production Internship Programs",
+      desc: "Explore full-time engineering vacancies and structured interview-based production internships. Work on live enterprise client systems and build verified production experience under engineering mentorship.",
       icon: GraduationCap,
       link: "/careers",
       exploreText: "Explore Opportunities",
       quoteText: "Apply Now",
       features: [
-        "Current Job Vacancies (0-2 Yrs Experience Tracks)",
+        "Current Job Vacancies (0-2 Yrs Early Career Tracks)",
         "6 Specialized Technical Internship Tracks",
         "Live Production Project Experience",
         "Verified Experience Letters & HR Credentials"
@@ -99,6 +187,10 @@ export default function Services({ onOpenQuote, onOpenConsultation }) {
       deliverable: "Online-First Delivery • Verified Credentials"
     }
   ];
+
+  const filteredCards = activeCategory === 'all' 
+    ? serviceCards 
+    : serviceCards.filter(c => c.category === activeCategory);
 
   const whyChooseUsPillars = [
     {
@@ -126,10 +218,10 @@ export default function Services({ onOpenQuote, onOpenConsultation }) {
   return (
     <div className="bg-white text-slate-800 font-sans selection:bg-blue-600/10 selection:text-blue-700">
       
-      {/* 1. Hero Section: Clean White Background, Navy Typography, Tech Visual */}
-      <section className="relative pt-12 pb-16 lg:pt-16 lg:pb-24 bg-white border-b border-slate-200/80 overflow-hidden">
+      {/* 1. Hero Section: Clean White Background, Navy Typography, Corporate Architecture Blueprint */}
+      <section className="relative pt-12 pb-16 lg:pt-16 lg:pb-20 bg-white border-b border-slate-200/80 overflow-hidden">
         {/* Subtle grid background */}
-        <div className="absolute inset-0 bg-grid-corporate opacity-40 pointer-events-none" />
+        <div className="absolute inset-0 bg-grid-corporate opacity-35 pointer-events-none" />
         <div className="absolute -top-32 right-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl pointer-events-none" />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -152,8 +244,8 @@ export default function Services({ onOpenQuote, onOpenConsultation }) {
                 transition={{ duration: 0.4, delay: 0.1 }}
                 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-[1.15] font-heading"
               >
-                Engineering Solutions <br />
-                <span className="text-blue-600">Built for Enterprise Scale.</span>
+                Full-Lifecycle Digital Engineering & <br />
+                <span className="text-blue-600">Advanced Technology Services.</span>
               </motion.h1>
 
               <motion.p
@@ -162,7 +254,7 @@ export default function Services({ onOpenQuote, onOpenConsultation }) {
                 transition={{ duration: 0.4, delay: 0.2 }}
                 className="text-base sm:text-lg text-slate-600 max-w-2xl leading-relaxed"
               >
-                From autonomous AI agents and cloud microservices to indexed academic publications and structured internships. Delivered with clear milestone scopes, transparent pricing, and dedicated engineering oversight.
+                From custom software engineering and enterprise cloud architecture to autonomous AI agents, machine learning data annotation, and indexed academic publications. Delivered with structured milestone clarity and institutional accountability.
               </motion.p>
 
               {/* Key Assurance Indicators */}
@@ -210,7 +302,7 @@ export default function Services({ onOpenQuote, onOpenConsultation }) {
               </motion.div>
             </div>
 
-            {/* Right Column: Attractive Technology Visual (Corporate Architecture Blueprint) */}
+            {/* Right Column: Technology Visual (Architecture Blueprint) */}
             <div className="lg:col-span-5">
               <motion.div
                 initial={{ opacity: 0, scale: 0.96 }}
@@ -219,94 +311,86 @@ export default function Services({ onOpenQuote, onOpenConsultation }) {
                 className="bg-slate-50/90 rounded-2xl p-6 sm:p-7 border border-slate-200/90 shadow-sm relative"
               >
                 {/* Visual Header */}
-                <div className="flex items-center justify-between pb-5 border-b border-slate-200/80 mb-5">
+                <div className="flex items-center justify-between pb-4 border-b border-slate-200/80 mb-4">
                   <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-red-400/80" />
-                    <div className="w-3 h-3 rounded-full bg-amber-400/80" />
-                    <div className="w-3 h-3 rounded-full bg-emerald-400/80" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-red-400" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-amber-400" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
                     <span className="ml-2 text-xs font-mono font-bold text-slate-700 uppercase tracking-wider">
-                      Technical Architecture Blueprint
+                      Engineering Capability Matrix
                     </span>
                   </div>
-                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[11px] font-mono font-medium">
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[11px] font-mono font-medium">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                    <span>Production Ready</span>
+                    <span>8 Practices Active</span>
                   </div>
                 </div>
 
-                {/* Architecture Layers */}
-                <div className="space-y-3">
+                {/* Capability Matrix Rows */}
+                <div className="space-y-2.5">
                   
-                  {/* Layer 1 */}
-                  <div className="p-3.5 rounded-xl bg-white border border-slate-200/80 flex items-start gap-3 shadow-2xs">
-                    <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 mt-0.5">
-                      <Bot className="w-4 h-4" />
-                    </div>
-                    <div className="text-left flex-1 min-w-0">
-                      <div className="flex items-center justify-between">
-                        <h4 className="text-xs font-bold text-slate-900 font-heading">AI & Workflow Layer</h4>
-                        <span className="text-[10px] font-mono text-blue-700 bg-blue-50 px-1.5 py-0.5 rounded">RAG • Agents</span>
+                  {/* Item 1 */}
+                  <div className="p-3 rounded-xl bg-white border border-slate-200/80 flex items-center justify-between shadow-2xs">
+                    <div className="flex items-center gap-3">
+                      <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                        <Bot className="w-3.5 h-3.5" />
                       </div>
-                      <p className="text-[11px] text-slate-500 mt-0.5 truncate">
-                        Autonomous n8n pipelines, WhatsApp Cloud API, Vector DBs
-                      </p>
+                      <div className="text-left">
+                        <h4 className="text-xs font-bold text-slate-900 font-heading">AI & Workflow Automation</h4>
+                        <p className="text-[11px] text-slate-500">Autonomous Agents • WhatsApp API • n8n</p>
+                      </div>
                     </div>
+                    <span className="text-[10px] font-mono text-blue-700 bg-blue-50 px-2 py-0.5 rounded font-medium">Enterprise</span>
                   </div>
 
-                  {/* Layer 2 */}
-                  <div className="p-3.5 rounded-xl bg-white border border-slate-200/80 flex items-start gap-3 shadow-2xs">
-                    <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 mt-0.5">
-                      <Code2 className="w-4 h-4" />
-                    </div>
-                    <div className="text-left flex-1 min-w-0">
-                      <div className="flex items-center justify-between">
-                        <h4 className="text-xs font-bold text-slate-900 font-heading">Cloud & Microservices</h4>
-                        <span className="text-[10px] font-mono text-blue-700 bg-blue-50 px-1.5 py-0.5 rounded">React • Node • Py</span>
+                  {/* Item 2 */}
+                  <div className="p-3 rounded-xl bg-white border border-slate-200/80 flex items-center justify-between shadow-2xs">
+                    <div className="flex items-center gap-3">
+                      <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                        <CheckSquare className="w-3.5 h-3.5" />
                       </div>
-                      <p className="text-[11px] text-slate-500 mt-0.5 truncate">
-                        RESTful & GraphQL microservices, Docker CI/CD, AWS Cloud
-                      </p>
+                      <div className="text-left">
+                        <h4 className="text-xs font-bold text-slate-900 font-heading">Data Annotation Services</h4>
+                        <p className="text-[11px] text-slate-500">Image, Text, Video & Bounding Boxes</p>
+                      </div>
                     </div>
+                    <span className="text-[10px] font-mono text-blue-700 bg-blue-50 px-2 py-0.5 rounded font-medium">99%+ SLA</span>
                   </div>
 
-                  {/* Layer 3 */}
-                  <div className="p-3.5 rounded-xl bg-white border border-slate-200/80 flex items-start gap-3 shadow-2xs">
-                    <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 mt-0.5">
-                      <BookOpen className="w-4 h-4" />
-                    </div>
-                    <div className="text-left flex-1 min-w-0">
-                      <div className="flex items-center justify-between">
-                        <h4 className="text-xs font-bold text-slate-900 font-heading">Academic & Research Core</h4>
-                        <span className="text-[10px] font-mono text-blue-700 bg-blue-50 px-1.5 py-0.5 rounded">Scopus • IEEE</span>
+                  {/* Item 3 */}
+                  <div className="p-3 rounded-xl bg-white border border-slate-200/80 flex items-center justify-between shadow-2xs">
+                    <div className="flex items-center gap-3">
+                      <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                        <Code2 className="w-3.5 h-3.5" />
                       </div>
-                      <p className="text-[11px] text-slate-500 mt-0.5 truncate">
-                        Mathematical modeling, algorithms, Turnitin &lt;10% verification
-                      </p>
+                      <div className="text-left">
+                        <h4 className="text-xs font-bold text-slate-900 font-heading">Web, Cloud & Mobile</h4>
+                        <p className="text-[11px] text-slate-500">React, Python, AWS Docker & Microservices</p>
+                      </div>
                     </div>
+                    <span className="text-[10px] font-mono text-blue-700 bg-blue-50 px-2 py-0.5 rounded font-medium">Full-Stack</span>
                   </div>
 
-                  {/* Layer 4 */}
-                  <div className="p-3.5 rounded-xl bg-white border border-slate-200/80 flex items-start gap-3 shadow-2xs">
-                    <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 mt-0.5">
-                      <GraduationCap className="w-4 h-4" />
-                    </div>
-                    <div className="text-left flex-1 min-w-0">
-                      <div className="flex items-center justify-between">
-                        <h4 className="text-xs font-bold text-slate-900 font-heading">Engineering Talent Lab</h4>
-                        <span className="text-[10px] font-mono text-blue-700 bg-blue-50 px-1.5 py-0.5 rounded">Live Projects</span>
+                  {/* Item 4 */}
+                  <div className="p-3 rounded-xl bg-white border border-slate-200/80 flex items-center justify-between shadow-2xs">
+                    <div className="flex items-center gap-3">
+                      <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                        <BookOpen className="w-3.5 h-3.5" />
                       </div>
-                      <p className="text-[11px] text-slate-500 mt-0.5 truncate">
-                        Production internships across 6 specialized technology tracks
-                      </p>
+                      <div className="text-left">
+                        <h4 className="text-xs font-bold text-slate-900 font-heading">Research & Internships</h4>
+                        <p className="text-[11px] text-slate-500">Scopus/IEEE Publications & Engineering Talent</p>
+                      </div>
                     </div>
+                    <span className="text-[10px] font-mono text-blue-700 bg-blue-50 px-2 py-0.5 rounded font-medium">Verified</span>
                   </div>
 
                 </div>
 
                 {/* Blueprint Footer */}
-                <div className="mt-5 pt-4 border-t border-slate-200/80 flex items-center justify-between text-[11px] text-slate-500 font-mono">
-                  <span>Governance: ISO-Aligned</span>
-                  <span className="text-blue-600 font-medium">Bilateral NDA Covered</span>
+                <div className="mt-4 pt-3.5 border-t border-slate-200/80 flex items-center justify-between text-[11px] text-slate-500 font-mono">
+                  <span>Delivery: Online-First Global</span>
+                  <span className="text-blue-600 font-medium">Bilateral NDA Protected</span>
                 </div>
               </motion.div>
             </div>
@@ -315,26 +399,43 @@ export default function Services({ onOpenQuote, onOpenConsultation }) {
         </div>
       </section>
 
-      {/* 2. Services Grid: 2x2 Equal-Height Card Layout */}
+      {/* 2. Services Grid Section: Category Filters + 2-Column Equal-Height Cards */}
       <section className="py-16 lg:py-24 bg-slate-50/60 border-b border-slate-200/80">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
           
-          {/* Section Heading */}
+          {/* Section Header */}
           <div className="text-center max-w-3xl mx-auto space-y-3">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/80 text-blue-800 text-xs font-semibold uppercase tracking-wider font-mono">
-              <span>Core Service Catalog</span>
+              <span>Complete Service Catalog</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight font-heading">
-              Specialized Technology Practices
+              Our Core Technical Practices
             </h2>
             <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-              Every practice is led by senior engineering architects with transparent delivery scopes, verifiable technical milestones, and comprehensive code handover.
+              Every practice is delivered with structured milestone scopes, verifiable technical deliverables, and dedicated senior engineering oversight.
             </p>
+
+            {/* Interactive Category Filter Pills */}
+            <div className="pt-4 flex flex-wrap items-center justify-center gap-2">
+              {categories.map((cat) => (
+                <button
+                  key={cat.id}
+                  onClick={() => setActiveCategory(cat.id)}
+                  className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all font-heading ${
+                    activeCategory === cat.id
+                      ? 'bg-blue-600 text-white shadow-xs'
+                      : 'bg-white border border-slate-200 text-slate-600 hover:border-slate-300 hover:bg-slate-50'
+                  }`}
+                >
+                  {cat.label} ({cat.count})
+                </button>
+              ))}
+            </div>
           </div>
 
-          {/* Equal-Height 2x2 Grid */}
+          {/* Equal-Height Grid: 2 Columns on Desktop for Maximum Readability & Polish */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
-            {serviceCards.map((srv, index) => {
+            {filteredCards.map((srv) => {
               const Icon = srv.icon;
               const isCareer = srv.id === 'careers';
 
@@ -343,7 +444,7 @@ export default function Services({ onOpenQuote, onOpenConsultation }) {
                   key={srv.id}
                   className="bg-white rounded-2xl border border-slate-200/90 shadow-2xs hover:shadow-md hover:border-blue-300 transition-all duration-300 p-7 sm:p-8 flex flex-col justify-between h-full text-left"
                 >
-                  {/* Top: Icon + Badge + Title + Description */}
+                  {/* Top Part: Icon, Tag, Title, Description, Offerings */}
                   <div className="space-y-4">
                     <div className="flex items-center justify-between gap-4">
                       <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 border border-blue-100 flex items-center justify-center shrink-0">
@@ -367,9 +468,9 @@ export default function Services({ onOpenQuote, onOpenConsultation }) {
                       <h4 className="text-xs font-bold text-slate-800 uppercase tracking-wider font-mono mb-3">
                         Key Capabilities & Deliverables:
                       </h4>
-                      <ul className="space-y-2.5">
+                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                         {srv.features.map((feat, i) => (
-                          <li key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700">
+                          <li key={i} className="flex items-start gap-2 text-xs sm:text-sm text-slate-700">
                             <div className="w-4 h-4 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 mt-0.5">
                               <Check className="w-3 h-3 stroke-[2.5]" />
                             </div>
@@ -380,10 +481,10 @@ export default function Services({ onOpenQuote, onOpenConsultation }) {
                     </div>
                   </div>
 
-                  {/* Bottom: Milestone info & Action Buttons */}
+                  {/* Bottom Part: Milestone Deliverable Pill & Equal-Height Buttons */}
                   <div className="pt-6 mt-6 border-t border-slate-100 space-y-4">
                     <div className="flex items-center justify-between text-xs font-mono text-slate-500">
-                      <span className="text-slate-400">Standard Framework:</span>
+                      <span className="text-slate-400">Framework:</span>
                       <span className="font-medium text-slate-700">{srv.deliverable}</span>
                     </div>
 
@@ -423,7 +524,7 @@ export default function Services({ onOpenQuote, onOpenConsultation }) {
         </div>
       </section>
 
-      {/* 3. Why Choose Us: Corporate Approach & Engineering Capabilities */}
+      {/* 3. Why Choose Us: Corporate Approach & Engineering Standards */}
       <section className="py-16 lg:py-24 bg-white border-b border-slate-200/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           
