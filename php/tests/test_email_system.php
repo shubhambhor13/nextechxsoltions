@@ -75,7 +75,8 @@ assert_test("Applicant email includes applicant name", strpos($htmlApplicant, 'A
 assert_test("Applicant email includes applied position", strpos($htmlApplicant, 'AI & Machine Learning Research Intern') !== false);
 assert_test("Applicant email includes reference ID", strpos($htmlApplicant, 'NTX-TEST-2026-001') !== false);
 assert_test("Applicant email includes official HR desk email", strpos($htmlApplicant, 'hr@nextechxsolutions.com') !== false);
-assert_test("Applicant email disclaims interview selection confirmation", strpos($htmlApplicant, 'does not constitute an offer of engagement, selection, or interview confirmation') !== false);
+assert_test("Applicant email includes review process text", strpos($htmlApplicant, 'Our recruitment team will review your application') !== false);
+assert_test("Applicant email includes footer website link", strpos($htmlApplicant, 'https://nextechxsolutions.com') !== false);
 
 // ---------------------------------------------------------
 // TEST 4: Company Notification Email Content & Template
