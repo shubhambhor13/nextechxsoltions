@@ -101,19 +101,9 @@ $page_desc = isset($page_desc) ? $page_desc : 'NextTechX Solutions delivers ente
                     <span class="text-slate-400 hidden sm:inline">ISO-Aligned Quality Standards</span>
                 </div>
                 <div class="flex items-center gap-3 sm:gap-4 text-xs font-mono">
-                    <a href="mailto:<?= SITE_EMAIL_CONTACT ?>" class="hover:text-cyan-400 hidden lg:flex items-center gap-1.5 transition-colors">
+                    <a href="mailto:<?= SITE_EMAIL_CONTACT ?>" class="hover:text-cyan-400 flex items-center gap-1.5 transition-colors">
                         <i data-lucide="mail" class="w-3.5 h-3.5 text-cyan-400"></i>
                         <span><?= SITE_EMAIL_CONTACT ?></span>
-                    </a>
-                    <span class="text-slate-700 hidden lg:inline">|</span>
-                    <a href="<?= SITE_WHATSAPP_URL ?>" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-400 flex items-center gap-1.5 transition-colors">
-                        <i data-lucide="message-circle" class="w-3.5 h-3.5 text-emerald-400"></i>
-                        <span>WhatsApp: <?= SITE_PHONE ?></span>
-                    </a>
-                    <span class="text-slate-700">|</span>
-                    <a href="admin.php" class="hover:text-blue-400 flex items-center gap-1 transition-colors">
-                        <i data-lucide="lock" class="w-3.5 h-3.5 text-slate-400"></i>
-                        <span>Portal</span>
                     </a>
                 </div>
             </div>
