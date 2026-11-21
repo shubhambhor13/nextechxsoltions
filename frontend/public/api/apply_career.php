@@ -144,7 +144,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             'applicant_email_sent' => $app_sent,
             'company_email_sent' => $comp_sent,
             'applicant_error' => $res_applicant['error'] ?? null,
-            'company_error' => $res_company['error'] ?? null
+            'applicant_meta' => $res_applicant['meta'] ?? null,
+            'applicant_smtp_dialog' => $res_applicant['smtp_dialog'] ?? null,
+            'company_error' => $res_company['error'] ?? null,
+            'company_meta' => $res_company['meta'] ?? null,
+            'company_smtp_dialog' => $res_company['smtp_dialog'] ?? null
         ]);
         exit;
     }

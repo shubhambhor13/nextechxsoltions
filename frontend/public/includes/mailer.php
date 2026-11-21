@@ -198,8 +198,41 @@ class NextTechXMailer {
         // Sensible default sender from hr@nextechxsolutions.com
         $mail->setFrom($from_email, $from_name);
 
+        // Securely capture SMTP protocol conversation to diagnose server response without leaking secrets
+        self::$last_smtp_debug = [];
+        $smtp_buffer = [];
+        $mail->SMTPDebug = 2;
+        $mail->Debugoutput = function($str, $level) use (&$smtp_buffer, $password, $username) {
+            $line = trim($str);
+            if ($line === '') return;
+            if (!empty($password)) {
+                $line = str_replace($password, '***', $line);
+                $b64 = base64_encode($password);
+                $line = str_replace($b64, '***PASS_B64***', $line);
+            }
+            if (preg_match('/^(CLIENT -> SERVER: )([A-Za-z0-9+\/=]{8,})/i', $line, $m)) {
+                $line = $m[1] . '***AUTH_CREDENTIALS***';
+            }
+            $smtp_buffer[] = $line;
+            self::$last_smtp_debug[] = $line;
+        };
+
+        self::$last_smtp_meta = [
+            'host' => $host,
+            'port' => $port,
+            'encryption' => $mail->SMTPSecure,
+            'username' => $username,
+            'password_set' => !empty($password),
+            'password_length' => strlen($password),
+            'password_has_leading_trailing_space' => ($password !== trim($password)),
+            'ca_file_used' => $ca_file ? basename($ca_file) : 'system_default'
+        ];
+
         return $mail;
     }
+
+    public static $last_smtp_debug = [];
+    public static $last_smtp_meta = [];
 
     /**
      * Log email errors safely (sanitizing sensitive passwords)
@@ -286,11 +319,21 @@ class NextTechXMailer {
         } catch (Exception $e) {
             $err = $e->getMessage() . (!empty($mail->ErrorInfo) ? (' | ' . $mail->ErrorInfo) : '');
             self::logError('applicant_confirmation', $err, $email);
-            return ['success' => false, 'error' => $err];
+            return [
+                'success' => false, 
+                'error' => $err,
+                'meta' => self::$last_smtp_meta,
+                'smtp_dialog' => array_slice(self::$last_smtp_debug, -6)
+            ];
         } catch (\Throwable $t) {
             $err = $t->getMessage() . (!empty($mail->ErrorInfo) ? (' | ' . $mail->ErrorInfo) : '');
             self::logError('applicant_confirmation', $err, $email);
-            return ['success' => false, 'error' => $err];
+            return [
+                'success' => false, 
+                'error' => $err,
+                'meta' => self::$last_smtp_meta,
+                'smtp_dialog' => array_slice(self::$last_smtp_debug, -6)
+            ];
         }
     }
 
@@ -369,11 +412,21 @@ class NextTechXMailer {
         } catch (Exception $e) {
             $err = $e->getMessage() . (!empty($mail->ErrorInfo) ? (' | ' . $mail->ErrorInfo) : '');
             self::logError('company_notification', $err, $company_to);
-            return ['success' => false, 'error' => $err];
+            return [
+                'success' => false, 
+                'error' => $err,
+                'meta' => self::$last_smtp_meta,
+                'smtp_dialog' => array_slice(self::$last_smtp_debug, -6)
+            ];
         } catch (\Throwable $t) {
             $err = $t->getMessage() . (!empty($mail->ErrorInfo) ? (' | ' . $mail->ErrorInfo) : '');
             self::logError('company_notification', $err, $company_to);
-            return ['success' => false, 'error' => $err];
+            return [
+                'success' => false, 
+                'error' => $err,
+                'meta' => self::$last_smtp_meta,
+                'smtp_dialog' => array_slice(self::$last_smtp_debug, -6)
+            ];
         }
     }
 
