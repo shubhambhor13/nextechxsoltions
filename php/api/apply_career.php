@@ -15,6 +15,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/mailer.php';
 
+/**
+ * Ensure career_applications schema is fully migrated
+ */
+function ensure_career_table($db) {
+    if (!$db) return;
+    try {
+        $db->exec("
+            CREATE TABLE IF NOT EXISTS career_applications (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                full_name TEXT NOT NULL,
+                email TEXT NOT NULL,
+                phone TEXT NOT NULL,
+                applying_for TEXT NOT NULL,
+                position TEXT NOT NULL,
+                education TEXT,
+                resume_filename TEXT,
+                resume_filepath TEXT,
+                message TEXT,
+                email_sent INTEGER DEFAULT 0,
+                applicant_email_status TEXT DEFAULT 'pending',
+                company_email_status TEXT DEFAULT 'pending',
+                email_error TEXT,
+                created_at TEXT DEFAULT CURRENT_TIMESTAMP
+            )
+        ");
+        $cols = $db->query("PRAGMA table_info(career_applications)")->fetchAll(PDO::FETCH_COLUMN, 1);
+        if (!in_array('applicant_email_status', $cols)) {
+            $db->exec("ALTER TABLE career_applications ADD COLUMN applicant_email_status TEXT DEFAULT 'pending'");
+        }
+        if (!in_array('company_email_status', $cols)) {
+            $db->exec("ALTER TABLE career_applications ADD COLUMN company_email_status TEXT DEFAULT 'pending'");
+        }
+        if (!in_array('email_error', $cols)) {
+            $db->exec("ALTER TABLE career_applications ADD COLUMN email_error TEXT");
+        }
+    } catch (Exception $e) {}
+}
+
 // Support GET: Return vacancies or applications list
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $action = $_GET['action'] ?? 'vacancies';
@@ -23,11 +61,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if ($action === 'applications') {
         $db = function_exists('get_db') ? get_db() : null;
         if ($db) {
+            ensure_career_table($db);
             try {
                 $stmt = $db->query("SELECT id, full_name, email, phone, applying_for, position, education, resume_filename, email_sent, applicant_email_status, company_email_status, email_error, created_at FROM career_applications ORDER BY id DESC");
                 echo json_encode($stmt->fetchAll());
                 exit;
-            } catch (Exception $e) {}
+            } catch (Exception $e) {
+                try {
+                    $stmt = $db->query("SELECT id, full_name, email, phone, applying_for, position, education, resume_filename, email_sent, applicant_email_status, company_email_status, created_at FROM career_applications ORDER BY id DESC");
+                    echo json_encode($stmt->fetchAll());
+                    exit;
+                } catch (Exception $e2) {}
+            }
         }
         $fallback_file = dirname(DB_PATH) . '/fallback_career_applications.json';
         $apps = file_exists($fallback_file) ? json_decode(file_get_contents($fallback_file), true) : [];
@@ -41,9 +86,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $app = null;
         $db = function_exists('get_db') ? get_db() : null;
         if ($db) {
-            $stmt = $db->prepare("SELECT * FROM career_applications WHERE id = :id");
-            $stmt->execute([':id' => $app_id]);
-            $app = $stmt->fetch();
+            ensure_career_table($db);
+            try {
+                $stmt = $db->prepare("SELECT * FROM career_applications WHERE id = :id");
+                $stmt->execute([':id' => $app_id]);
+                $app = $stmt->fetch();
+            } catch (Exception $e) {}
         }
 
         if (!$app) {
@@ -59,19 +107,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $comp_sent = !empty($res_company['success']);
 
         if ($db) {
-            $update = $db->prepare("UPDATE career_applications SET 
-                applicant_email_status = :app_st,
-                company_email_status = :comp_st,
-                email_sent = :sent,
-                email_error = :err
-                WHERE id = :id");
-            $update->execute([
-                ':app_st' => $app_sent ? 'sent' : 'failed',
-                ':comp_st' => $comp_sent ? 'sent' : 'failed',
-                ':sent' => ($app_sent && $comp_sent) ? 1 : 0,
-                ':err' => ($res_applicant['error'] ?? '') . ' | ' . ($res_company['error'] ?? ''),
-                ':id' => $app_id
-            ]);
+            try {
+                $update = $db->prepare("UPDATE career_applications SET 
+                    applicant_email_status = :app_st,
+                    company_email_status = :comp_st,
+                    email_sent = :sent,
+                    email_error = :err
+                    WHERE id = :id");
+                $update->execute([
+                    ':app_st' => $app_sent ? 'sent' : 'failed',
+                    ':comp_st' => $comp_sent ? 'sent' : 'failed',
+                    ':sent' => ($app_sent && $comp_sent) ? 1 : 0,
+                    ':err' => ($res_applicant['error'] ?? '') . ' | ' . ($res_company['error'] ?? ''),
+                    ':id' => $app_id
+                ]);
+            } catch (Exception $e) {
+                try {
+                    $update = $db->prepare("UPDATE career_applications SET 
+                        applicant_email_status = :app_st,
+                        company_email_status = :comp_st,
+                        email_sent = :sent
+                        WHERE id = :id");
+                    $update->execute([
+                        ':app_st' => $app_sent ? 'sent' : 'failed',
+                        ':comp_st' => $comp_sent ? 'sent' : 'failed',
+                        ':sent' => ($app_sent && $comp_sent) ? 1 : 0,
+                        ':id' => $app_id
+                    ]);
+                } catch (Exception $e2) {}
+            }
         }
 
         echo json_encode([

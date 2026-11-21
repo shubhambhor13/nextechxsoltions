@@ -44,7 +44,7 @@ class NextTechXMailer {
                 $val = substr($val, 1, -1);
             }
             // For Gmail 16-character App Passwords, strip any spaces (e.g., 'abcd efgh ijkl mnop' -> 'abcdefghijklmnop')
-            if ($k === 'SMTP_PASSWORD') {
+            if ($k === 'SMTP_PASSWORD' && strlen($val) === 19 && substr_count($val, ' ') === 3) {
                 $val = str_replace(' ', '', $val);
             }
             return $val;
@@ -97,7 +97,8 @@ class NextTechXMailer {
                 dirname(__DIR__, 2) . '/.env',
                 dirname(__DIR__) . '/data/.env',
                 $doc_root ? $doc_root . '/.env' : null,
-                $doc_root ? $doc_root . '/php/.env' : null
+                $doc_root ? $doc_root . '/php/.env' : null,
+                $doc_root ? dirname($doc_root) . '/.env' : null
             ]);
 
             foreach ($candidates as $file) {
@@ -111,13 +112,12 @@ class NextTechXMailer {
                                 list($k, $val) = explode('=', $line, 2);
                                 $k = trim($k);
                                 $val = $clean($val, $k);
-                                if ($val !== null) {
+                                if ($val !== null && !isset($env_cache[$k])) {
                                     $env_cache[$k] = $val;
                                 }
                             }
                         }
                     }
-                    break;
                 }
             }
         }
@@ -284,11 +284,11 @@ class NextTechXMailer {
             $mail->send();
             return ['success' => true, 'message' => 'Applicant confirmation email sent'];
         } catch (Exception $e) {
-            $err = $e->getMessage();
+            $err = $e->getMessage() . (!empty($mail->ErrorInfo) ? (' | ' . $mail->ErrorInfo) : '');
             self::logError('applicant_confirmation', $err, $email);
             return ['success' => false, 'error' => $err];
         } catch (\Throwable $t) {
-            $err = $t->getMessage();
+            $err = $t->getMessage() . (!empty($mail->ErrorInfo) ? (' | ' . $mail->ErrorInfo) : '');
             self::logError('applicant_confirmation', $err, $email);
             return ['success' => false, 'error' => $err];
         }
@@ -367,11 +367,11 @@ class NextTechXMailer {
             $mail->send();
             return ['success' => true, 'message' => 'Company notification email sent'];
         } catch (Exception $e) {
-            $err = $e->getMessage();
+            $err = $e->getMessage() . (!empty($mail->ErrorInfo) ? (' | ' . $mail->ErrorInfo) : '');
             self::logError('company_notification', $err, $company_to);
             return ['success' => false, 'error' => $err];
         } catch (\Throwable $t) {
-            $err = $t->getMessage();
+            $err = $t->getMessage() . (!empty($mail->ErrorInfo) ? (' | ' . $mail->ErrorInfo) : '');
             self::logError('company_notification', $err, $company_to);
             return ['success' => false, 'error' => $err];
         }
