@@ -15,7 +15,28 @@ define('SITE_PHONE_TEL', '+919309835085');
 define('SITE_WHATSAPP_URL', 'https://wa.me/919309835085?text=Hello%20NextTechX%20Solutions,%20I%20would%20like%20to%20inquire%20about%20your%20services%20and%20programs.');
 define('SITE_LINKEDIN_URL', 'https://www.linkedin.com/company/nextechx-solutions/');
 define('SITE_DELIVERY_MODEL', 'Online-First Global Delivery');
-define('DB_PATH', __DIR__ . '/../data/app.db');
+function get_persistent_db_path() {
+    if (!empty($_SERVER['DOCUMENT_ROOT'])) {
+        $doc_root = rtrim($_SERVER['DOCUMENT_ROOT'], '/\\');
+        $parent = dirname($doc_root);
+        // If parent is outside web root (standard Hostinger /home/u.../domains/...), use persistent storage
+        if (is_dir($parent) && is_writable($parent)) {
+            $persistent_dir = $parent . '/nextechx_persistent_data';
+            if (is_dir($persistent_dir) || @mkdir($persistent_dir, 0755, true)) {
+                $p_db = $persistent_dir . '/app.db';
+                // Copy existing local DB if newly initializing persistent DB
+                $local_db = __DIR__ . '/../data/app.db';
+                if (!file_exists($p_db) && file_exists($local_db)) {
+                    @copy($local_db, $p_db);
+                }
+                return $p_db;
+            }
+        }
+    }
+    return __DIR__ . '/../data/app.db';
+}
+
+define('DB_PATH', get_persistent_db_path());
 
 /**
  * Get PDO SQLite database connection (returns null if pdo_sqlite driver unavailable)
