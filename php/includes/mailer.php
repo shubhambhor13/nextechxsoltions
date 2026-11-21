@@ -287,7 +287,7 @@ class NextTechXMailer {
             return ['success' => false, 'error' => 'Invalid applicant email address'];
         }
 
-        $subject = "Application Received – NexTechX Solutions";
+        $subject = "Thank You for Applying – NEXTECHX SOLUTIONS";
         $submission_date = date('d M Y, h:i A');
 
         // Generate Clean Corporate Responsive HTML Email Template
@@ -302,22 +302,16 @@ class NextTechXMailer {
         ]);
 
         $plainBody = "Dear $full_name,\n\n" .
-            "Thank you for your interest in NEXTECHX SOLUTIONS.\n" .
-            "We have successfully received your application for the $position position.\n\n" .
-            "Our recruitment team will review your application. If your profile matches our requirements, we will contact you regarding the next steps.\n\n" .
-            "For any queries, please feel free to contact our HR team.\n\n" .
-            "Thank you for considering NexTechX Solutions.\n\n" .
+            "Thank you for your interest in NEXTECHX SOLUTIONS.\n\n" .
+            "We are pleased to confirm that we have received your application for the $position position.\n\n" .
+            "Our recruitment team will carefully review your application. If your profile matches our requirements, we will contact you regarding the next steps.\n\n" .
+            "If you have any questions, feel free to reach out to our HR team.\n\n" .
+            "Thank you for considering NEXTECHX SOLUTIONS. We appreciate your interest!\n\n" .
             "Best Regards,\n" .
             "HR Team\n" .
             "NEXTECHX SOLUTIONS\n" .
-            "$hr_email\n\n" .
-            "Application Summary:\n" .
-            "Application Reference ID: $app_id\n" .
-            "Applied Position: $position\n" .
-            "Application Date: $submission_date\n\n" .
-            "NEXTECHX SOLUTIONS\n" .
-            "Website: https://nextechxsolutions.com\n" .
-            "Email: $hr_email";
+            "$hr_email\n" .
+            "https://nextechxsolutions.com";
 
         try {
             $mail = self::createMailer();
@@ -527,14 +521,12 @@ class NextTechXMailer {
     }
 
     /**
-     * Responsive HTML Template for Applicant Confirmation Email
-     * Premium corporate aesthetic: clean white background, navy/black accents, subtle borders
+     * Premium Minimal Corporate HTML Template for Applicant Confirmation Email
+     * Clean white background, navy/black accents, subtle grey dividers, zero unnecessary summary boxes
      */
     private static function buildApplicantEmailHtml($p) {
         $name = $p['full_name'];
         $pos = $p['position'];
-        $appId = $p['app_id'];
-        $submissionDate = $p['date_time'];
         $hrEmail = 'hr@nextechxsolutions.com';
         $websiteUrl = 'https://nextechxsolutions.com';
 
@@ -544,108 +536,80 @@ class NextTechXMailer {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Application Received – NexTechX Solutions</title>
+  <title>Thank You for Applying – NEXTECHX SOLUTIONS</title>
   <style>
     body {
       margin: 0;
       padding: 0;
-      background-color: #f8fafc;
+      background-color: #ffffff;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      color: #1e293b;
+      color: #111827;
       -webkit-font-smoothing: antialiased;
     }
     table {
       border-collapse: collapse;
+      mso-table-lspace: 0pt;
+      mso-table-rspace: 0pt;
+    }
+    td {
+      padding: 0;
     }
     .email-wrapper {
       width: 100%;
-      background-color: #f8fafc;
-      padding: 36px 12px;
+      background-color: #ffffff;
+      padding: 40px 16px;
     }
     .email-container {
-      max-width: 600px;
+      max-width: 580px;
       margin: 0 auto;
       background-color: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 8px;
-      overflow: hidden;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
     }
-    .header-table {
-      width: 100%;
-      padding: 24px 32px 20px 32px;
-      border-bottom: 1px solid #e2e8f0;
+    .header-cell {
+      padding: 28px 36px 22px 36px;
+      border-bottom: 1px solid #e5e7eb;
       background-color: #ffffff;
     }
     .content-cell {
-      padding: 32px 32px 28px 32px;
+      padding: 36px 36px 32px 36px;
       background-color: #ffffff;
     }
-    .summary-box {
-      border: 1px solid #e2e8f0;
-      border-radius: 6px;
-      background-color: #f8fafc;
-      margin: 24px 0;
-      padding: 18px 20px;
-    }
-    .summary-title {
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      color: #64748b;
-      margin-bottom: 12px;
-    }
-    .summary-table {
-      width: 100%;
-      font-size: 13.5px;
-    }
-    .summary-table td {
-      padding: 6px 0;
-      vertical-align: top;
-    }
-    .summary-label {
-      color: #64748b;
-      width: 44%;
-      font-weight: 500;
-    }
-    .summary-value {
-      color: #0f172a;
-      font-weight: 600;
-    }
-    .footer-table {
-      width: 100%;
-      border-top: 1px solid #e2e8f0;
-      padding: 24px 32px;
+    .footer-cell {
+      padding: 22px 36px;
+      border-top: 1px solid #e5e7eb;
       background-color: #ffffff;
     }
     @media only screen and (max-width: 600px) {
-      .header-table, .content-cell, .footer-table {
+      .email-wrapper {
+        padding: 16px 8px !important;
+      }
+      .header-cell, .content-cell, .footer-cell {
         padding-left: 20px !important;
         padding-right: 20px !important;
       }
-      .summary-box {
-        padding: 14px 16px !important;
-      }
-      .summary-label {
-        width: 48% !important;
+      .content-cell {
+        padding-top: 28px !important;
+        padding-bottom: 24px !important;
       }
     }
   </style>
 </head>
-<body>
-  <div class="email-wrapper">
-    <table class="email-container" width="100%" cellpadding="0" cellspacing="0" border="0" align="center">
-      <!-- 1. Header with Logo & Company Name -->
+<body style="margin: 0; padding: 0; background-color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #111827;">
+  <div class="email-wrapper" style="width: 100%; background-color: #ffffff; padding: 40px 16px;">
+    <table class="email-container" width="100%" cellpadding="0" cellspacing="0" border="0" align="center" style="max-width: 580px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 6px;">
+      
+      <!-- 1. Header: Logo & Company Name -->
       <tr>
-        <td class="header-table">
+        <td class="header-cell" style="padding: 28px 36px 22px 36px; border-bottom: 1px solid #e5e7eb; background-color: #ffffff;">
           <table cellpadding="0" cellspacing="0" border="0">
             <tr>
               <td style="vertical-align: middle; padding-right: 12px;">
-                <img src="https://nextechxsolutions.com/favicon.png" width="34" height="34" alt="NEXTECHX SOLUTIONS Logo" style="display: block; border: 0; outline: none; border-radius: 6px;">
+                <img src="https://nextechxsolutions.com/favicon.png" width="32" height="32" alt="NEXTECHX SOLUTIONS Logo" style="display: block; border: 0; outline: none; border-radius: 4px;">
               </td>
               <td style="vertical-align: middle;">
-                <span style="font-size: 17px; font-weight: 800; color: #0f172a; letter-spacing: -0.3px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
-                  NEXTECHX <span style="color: #0284c7;">SOLUTIONS</span>
+                <span style="font-size: 16px; font-weight: 800; color: #0f2b5c; letter-spacing: 0.4px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+                  NEXTECHX SOLUTIONS
                 </span>
               </td>
             </tr>
@@ -655,66 +619,52 @@ class NextTechXMailer {
 
       <!-- 2. Message Body -->
       <tr>
-        <td class="content-cell">
-          <p style="font-size: 15px; color: #1e293b; line-height: 1.6; margin: 0 0 16px 0;">Dear {$name},</p>
-
-          <p style="font-size: 14px; color: #334155; line-height: 1.65; margin: 0 0 14px 0;">
-            Thank you for your interest in <strong>NEXTECHX SOLUTIONS</strong>.
+        <td class="content-cell" style="padding: 36px 36px 32px 36px; background-color: #ffffff;">
+          <p style="font-size: 15px; font-weight: 600; color: #111827; line-height: 1.6; margin: 0 0 18px 0;">
+            Dear {$name},
           </p>
 
-          <p style="font-size: 14px; color: #334155; line-height: 1.65; margin: 0 0 14px 0;">
-            We have successfully received your application for the <strong>{$pos}</strong> position.
+          <p style="font-size: 14.5px; color: #374151; line-height: 1.7; margin: 0 0 16px 0;">
+            Thank you for your interest in <strong style="color: #0f2b5c;">NEXTECHX SOLUTIONS</strong>.
           </p>
 
-          <p style="font-size: 14px; color: #334155; line-height: 1.65; margin: 0 0 14px 0;">
-            Our recruitment team will review your application. If your profile matches our requirements, we will contact you regarding the next steps.
+          <p style="font-size: 14.5px; color: #374151; line-height: 1.7; margin: 0 0 16px 0;">
+            We are pleased to confirm that we have received your application for the <strong style="color: #0f2b5c;">{$pos}</strong> position.
           </p>
 
-          <p style="font-size: 14px; color: #334155; line-height: 1.65; margin: 0 0 14px 0;">
-            For any queries, please feel free to contact our HR team.
+          <p style="font-size: 14.5px; color: #374151; line-height: 1.7; margin: 0 0 16px 0;">
+            Our recruitment team will carefully review your application. If your profile matches our requirements, we will contact you regarding the next steps.
           </p>
 
-          <p style="font-size: 14px; color: #334155; line-height: 1.65; margin: 0 0 24px 0;">
-            Thank you for considering NexTechX Solutions.
+          <p style="font-size: 14.5px; color: #374151; line-height: 1.7; margin: 0 0 16px 0;">
+            If you have any questions, feel free to reach out to our HR team.
           </p>
 
-          <!-- 3. Application Summary -->
-          <div class="summary-box">
-            <div class="summary-title">Application Summary</div>
-            <table class="summary-table" cellpadding="0" cellspacing="0" border="0">
-              <tr>
-                <td class="summary-label">Application Reference ID:</td>
-                <td class="summary-value" style="font-family: SFMono-Regular, Consolas, Monaco, monospace;">{$appId}</td>
-              </tr>
-              <tr>
-                <td class="summary-label">Applied Position:</td>
-                <td class="summary-value">{$pos}</td>
-              </tr>
-              <tr>
-                <td class="summary-label">Application Date:</td>
-                <td class="summary-value">{$submissionDate}</td>
-              </tr>
-            </table>
-          </div>
+          <p style="font-size: 14.5px; color: #374151; line-height: 1.7; margin: 0 0 28px 0;">
+            Thank you for considering NEXTECHX SOLUTIONS. We appreciate your interest!
+          </p>
 
-          <p style="font-size: 14px; color: #1e293b; line-height: 1.65; margin: 24px 0 0 0;">
+          <p style="font-size: 14px; color: #111827; line-height: 1.65; margin: 0;">
             Best Regards,<br>
-            <strong>HR Team</strong><br>
-            NexTechX Solutions <a href="mailto:{$hrEmail}" style="color: #0284c7; text-decoration: none;">{$hrEmail}</a>
+            <strong style="color: #0f2b5c;">HR Team</strong><br>
+            <strong style="color: #0f2b5c;">NEXTECHX SOLUTIONS</strong><br>
+            <a href="mailto:{$hrEmail}" style="color: #0f2b5c; text-decoration: underline;">{$hrEmail}</a><br>
+            <a href="{$websiteUrl}" target="_blank" rel="noopener" style="color: #0f2b5c; text-decoration: underline;">{$websiteUrl}</a>
           </p>
         </td>
       </tr>
 
-      <!-- 4. Professional Email Footer -->
+      <!-- 3. Professional Corporate Footer -->
       <tr>
-        <td class="footer-table">
-          <p style="font-size: 12px; color: #64748b; line-height: 1.65; margin: 0;">
-            <strong style="color: #0f172a; font-size: 13px;">NEXTECHX SOLUTIONS</strong><br>
-            Website: <a href="{$websiteUrl}" target="_blank" rel="noopener" style="color: #0284c7; text-decoration: underline;">{$websiteUrl}</a><br>
-            Email: <a href="mailto:{$hrEmail}" style="color: #0284c7; text-decoration: underline;">{$hrEmail}</a>
+        <td class="footer-cell" style="padding: 22px 36px; border-top: 1px solid #e5e7eb; background-color: #ffffff;">
+          <p style="font-size: 12px; color: #6b7280; line-height: 1.6; margin: 0;">
+            <strong style="color: #0f2b5c; font-size: 12.5px; letter-spacing: 0.3px;">NEXTECHX SOLUTIONS</strong><br>
+            Website: <a href="{$websiteUrl}" target="_blank" rel="noopener" style="color: #0f2b5c; text-decoration: underline;">{$websiteUrl}</a> &nbsp;|&nbsp; 
+            Email: <a href="mailto:{$hrEmail}" style="color: #0f2b5c; text-decoration: underline;">{$hrEmail}</a>
           </p>
         </td>
       </tr>
+
     </table>
   </div>
 </body>
