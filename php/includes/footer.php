@@ -47,14 +47,14 @@
                 <!-- Col 3: Practices -->
                 <div>
                     <h4 class="text-xs font-bold text-slate-200 uppercase tracking-wider mb-4 font-heading">
-                        Enterprise Solutions
+                        Our Services
                     </h4>
                     <ul class="space-y-2.5 text-sm text-slate-400">
-                        <li><a href="ai-automation.php" class="hover:text-cyan-400 transition-colors">AI & Autonomous Agents</a></li>
-                        <li><a href="ai-automation.php" class="hover:text-cyan-400 transition-colors">n8n Workflow Automation</a></li>
-                        <li><a href="it-services.php" class="hover:text-cyan-400 transition-colors">Custom Software Development</a></li>
-                        <li><a href="it-services.php" class="hover:text-cyan-400 transition-colors">Enterprise Cloud & APIs</a></li>
-                        <li><a href="research-publication.php" class="hover:text-cyan-400 transition-colors">Research Paper Publication</a></li>
+                        <li><a href="ai-automation.php" class="hover:text-cyan-400 transition-colors">AI & Automation</a></li>
+                        <li><a href="software-development.php" class="hover:text-cyan-400 transition-colors">Software Development</a></li>
+                        <li><a href="saas-development.php" class="hover:text-cyan-400 transition-colors">SaaS Development</a></li>
+                        <li><a href="data-annotation.php" class="hover:text-cyan-400 transition-colors">Data Annotation</a></li>
+                        <li><a href="bpo-services.php" class="hover:text-cyan-400 transition-colors">BPO Services</a></li>
                     </ul>
                 </div>
 

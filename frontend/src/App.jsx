@@ -13,6 +13,7 @@ import { siteConfig } from './config/siteConfig';
 const Home = lazy(() => import('./pages/Home'));
 const AboutUs = lazy(() => import('./pages/AboutUs'));
 const Services = lazy(() => import('./pages/Services'));
+const ServiceDetail = lazy(() => import('./pages/ServiceDetail'));
 const AIAutomation = lazy(() => import('./pages/AIAutomation'));
 const ITServices = lazy(() => import('./pages/ITServices'));
 const ResearchPublication = lazy(() => import('./pages/ResearchPublication'));
@@ -177,36 +178,7 @@ function AnimatedRoutes({
             } 
           />
 
-          {/* 3. Core Services Dedicated Detail Pages */}
-          <Route 
-            path="/ai-automation" 
-            element={
-              <AIAutomation 
-                onOpenQuote={onOpenQuote}
-                onOpenConsultation={onOpenConsultation}
-              />
-            } 
-          />
-          <Route 
-            path="/it-services" 
-            element={
-              <ITServices 
-                onOpenQuote={onOpenQuote}
-                onOpenConsultation={onOpenConsultation}
-              />
-            } 
-          />
-          <Route 
-            path="/research-publication" 
-            element={
-              <ResearchPublication 
-                onOpenQuote={onOpenQuote}
-                onOpenConsultation={onOpenConsultation}
-              />
-            } 
-          />
-
-          {/* Dedicated Services Overview Page */}
+          {/* 3. Dedicated Services Overview Page */}
           <Route 
             path="/services" 
             element={
@@ -219,6 +191,128 @@ function AnimatedRoutes({
           <Route 
             path="/our-services" 
             element={<Navigate to="/services" replace />} 
+          />
+
+          {/* 5 Core Individual Service Detail Pages */}
+          <Route 
+            path="/services/ai-automation" 
+            element={
+              <ServiceDetail 
+                serviceId="ai-automation"
+                onOpenQuote={onOpenQuote}
+                onOpenConsultation={onOpenConsultation}
+              />
+            } 
+          />
+          <Route 
+            path="/ai-automation" 
+            element={
+              <ServiceDetail 
+                serviceId="ai-automation"
+                onOpenQuote={onOpenQuote}
+                onOpenConsultation={onOpenConsultation}
+              />
+            } 
+          />
+
+          <Route 
+            path="/services/software-development" 
+            element={
+              <ServiceDetail 
+                serviceId="software-development"
+                onOpenQuote={onOpenQuote}
+                onOpenConsultation={onOpenConsultation}
+              />
+            } 
+          />
+          <Route 
+            path="/software-development" 
+            element={
+              <ServiceDetail 
+                serviceId="software-development"
+                onOpenQuote={onOpenQuote}
+                onOpenConsultation={onOpenConsultation}
+              />
+            } 
+          />
+
+          <Route 
+            path="/services/saas-development" 
+            element={
+              <ServiceDetail 
+                serviceId="saas-development"
+                onOpenQuote={onOpenQuote}
+                onOpenConsultation={onOpenConsultation}
+              />
+            } 
+          />
+          <Route 
+            path="/saas-development" 
+            element={
+              <ServiceDetail 
+                serviceId="saas-development"
+                onOpenQuote={onOpenQuote}
+                onOpenConsultation={onOpenConsultation}
+              />
+            } 
+          />
+
+          <Route 
+            path="/services/data-annotation" 
+            element={
+              <ServiceDetail 
+                serviceId="data-annotation"
+                onOpenQuote={onOpenQuote}
+                onOpenConsultation={onOpenConsultation}
+              />
+            } 
+          />
+          <Route 
+            path="/data-annotation" 
+            element={
+              <ServiceDetail 
+                serviceId="data-annotation"
+                onOpenQuote={onOpenQuote}
+                onOpenConsultation={onOpenConsultation}
+              />
+            } 
+          />
+
+          <Route 
+            path="/services/bpo-services" 
+            element={
+              <ServiceDetail 
+                serviceId="bpo-services"
+                onOpenQuote={onOpenQuote}
+                onOpenConsultation={onOpenConsultation}
+              />
+            } 
+          />
+          <Route 
+            path="/bpo-services" 
+            element={
+              <ServiceDetail 
+                serviceId="bpo-services"
+                onOpenQuote={onOpenQuote}
+                onOpenConsultation={onOpenConsultation}
+              />
+            } 
+          />
+
+          <Route 
+            path="/services/:slug" 
+            element={
+              <ServiceDetail 
+                onOpenQuote={onOpenQuote}
+                onOpenConsultation={onOpenConsultation}
+              />
+            } 
+          />
+
+          {/* Legacy IT Services Redirect */}
+          <Route 
+            path="/it-services" 
+            element={<Navigate to="/services/software-development" replace />} 
           />
           <Route 
             path="/about-us" 

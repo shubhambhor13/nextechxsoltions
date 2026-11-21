@@ -108,23 +108,28 @@ export default function Footer({ onOpenQuote }) {
               </h3>
               <ul className="space-y-2.5 text-xs sm:text-sm text-slate-300 font-medium leading-snug">
                 <li>
-                  <Link to="/ai-automation" className="hover:text-blue-400 transition-colors">
-                    AI Automation Solutions
+                  <Link to="/services/ai-automation" className="hover:text-blue-400 transition-colors">
+                    AI & Automation
                   </Link>
                 </li>
                 <li>
-                  <Link to="/it-services" className="hover:text-blue-400 transition-colors">
-                    Software & Web Development
+                  <Link to="/services/software-development" className="hover:text-blue-400 transition-colors">
+                    Software Development
                   </Link>
                 </li>
                 <li>
-                  <Link to="/ai-automation" className="hover:text-blue-400 transition-colors">
-                    n8n Workflow Automation
+                  <Link to="/services/saas-development" className="hover:text-blue-400 transition-colors">
+                    SaaS Development
                   </Link>
                 </li>
                 <li>
-                  <Link to="/it-services" className="hover:text-blue-400 transition-colors">
-                    Cloud Infrastructure & DevOps
+                  <Link to="/services/data-annotation" className="hover:text-blue-400 transition-colors">
+                    Data Annotation
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/services/bpo-services" className="hover:text-blue-400 transition-colors">
+                    BPO Services
                   </Link>
                 </li>
               </ul>

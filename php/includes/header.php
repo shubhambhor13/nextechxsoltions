@@ -134,10 +134,10 @@ $page_desc = isset($page_desc) ? $page_desc : 'NextTechX Solutions delivers ente
 
                     <!-- Services Dropdown -->
                     <div class="relative group" id="servicesDropdown">
-                        <a href="services.php" class="relative px-2 xl:px-3 py-1.5 xl:py-2 rounded-xl text-xs lg:text-[13px] xl:text-[15px] font-semibold transition-all whitespace-nowrap flex items-center gap-1 <?= in_array(basename($_SERVER['PHP_SELF'], '.php'), ['services', 'it-services', 'ai-automation', 'research-publication']) ? 'text-blue-600 bg-blue-50/90 font-bold shadow-xs' : 'text-slate-700 hover:text-blue-600 hover:bg-slate-50' ?>">
+                        <a href="services.php" class="relative px-2 xl:px-3 py-1.5 xl:py-2 rounded-xl text-xs lg:text-[13px] xl:text-[15px] font-semibold transition-all whitespace-nowrap flex items-center gap-1 <?= in_array(basename($_SERVER['PHP_SELF'], '.php'), ['services', 'ai-automation', 'software-development', 'saas-development', 'data-annotation', 'bpo-services']) ? 'text-blue-600 bg-blue-50/90 font-bold shadow-xs' : 'text-slate-700 hover:text-blue-600 hover:bg-slate-50' ?>">
                             <span>Services</span>
                             <i data-lucide="chevron-down" class="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-180 text-slate-400"></i>
-                            <?php if (in_array(basename($_SERVER['PHP_SELF'], '.php'), ['services', 'it-services', 'ai-automation', 'research-publication'])): ?>
+                            <?php if (in_array(basename($_SERVER['PHP_SELF'], '.php'), ['services', 'ai-automation', 'software-development', 'saas-development', 'data-annotation', 'bpo-services'])): ?>
                                 <span class="absolute bottom-0 left-1.5 right-1.5 h-0.5 bg-blue-600 rounded-full"></span>
                             <?php endif; ?>
                         </a>
@@ -145,29 +145,43 @@ $page_desc = isset($page_desc) ? $page_desc : 'NextTechX Solutions delivers ente
                         <!-- Dropdown Menu -->
                         <div class="absolute top-full left-0 mt-1 w-[400px] rounded-2xl bg-white border border-slate-200 shadow-2xl p-2.5 z-50 hidden group-hover:block transition-all">
                             <div class="px-3 py-2 border-b border-slate-100 flex items-center justify-between">
-                                <span class="text-xs font-bold uppercase tracking-wider text-slate-500 font-heading">Core Enterprise Practices</span>
+                                <span class="text-xs font-bold uppercase tracking-wider text-slate-500 font-heading">Core Services</span>
                                 <span class="text-[11px] font-semibold text-blue-600">Explore</span>
                             </div>
                             <div class="py-1.5 space-y-1">
                                 <a href="ai-automation.php" class="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition-colors group/item">
-                                    <div class="p-2 rounded-lg bg-cyan-500/10 text-cyan-600"><i data-lucide="bot" class="w-4 h-4"></i></div>
+                                    <div class="p-2 rounded-lg bg-blue-500/10 text-blue-600"><i data-lucide="bot" class="w-4 h-4"></i></div>
                                     <div>
-                                        <div class="text-sm font-bold text-slate-900 group-hover/item:text-blue-600">AI & Workflow Automation</div>
-                                        <p class="text-xs text-slate-500 line-clamp-1">n8n, autonomous agents, RAG chatbots</p>
+                                        <div class="text-sm font-bold text-slate-900 group-hover/item:text-blue-600">AI & Automation</div>
+                                        <p class="text-xs text-slate-500 line-clamp-1">Autonomous agents, RAG chatbots, workflow pipelines</p>
                                     </div>
                                 </a>
-                                <a href="it-services.php" class="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition-colors group/item">
-                                    <div class="p-2 rounded-lg bg-blue-500/10 text-blue-600"><i data-lucide="code" class="w-4 h-4"></i></div>
+                                <a href="software-development.php" class="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition-colors group/item">
+                                    <div class="p-2 rounded-lg bg-blue-500/10 text-blue-600"><i data-lucide="code-2" class="w-4 h-4"></i></div>
                                     <div>
-                                        <div class="text-sm font-bold text-slate-900 group-hover/item:text-blue-600">IT & Custom Software</div>
-                                        <p class="text-xs text-slate-500 line-clamp-1">Web, mobile, enterprise cloud & APIs</p>
+                                        <div class="text-sm font-bold text-slate-900 group-hover/item:text-blue-600">Software Development</div>
+                                        <p class="text-xs text-slate-500 line-clamp-1">Enterprise web apps, microservices & mobile platforms</p>
                                     </div>
                                 </a>
-                                <a href="research-publication.php" class="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition-colors group/item">
-                                    <div class="p-2 rounded-lg bg-emerald-500/10 text-emerald-600"><i data-lucide="book-open" class="w-4 h-4"></i></div>
+                                <a href="saas-development.php" class="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition-colors group/item">
+                                    <div class="p-2 rounded-lg bg-blue-500/10 text-blue-600"><i data-lucide="layers" class="w-4 h-4"></i></div>
                                     <div>
-                                        <div class="text-sm font-bold text-slate-900 group-hover/item:text-blue-600">Research Paper Publication</div>
-                                        <p class="text-xs text-slate-500 line-clamp-1">IEEE, Scopus, Springer & UGC-CARE advisory</p>
+                                        <div class="text-sm font-bold text-slate-900 group-hover/item:text-blue-600">SaaS Development</div>
+                                        <p class="text-xs text-slate-500 line-clamp-1">Multi-tenant architecture, billing & cloud hosting</p>
+                                    </div>
+                                </a>
+                                <a href="data-annotation.php" class="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition-colors group/item">
+                                    <div class="p-2 rounded-lg bg-blue-500/10 text-blue-600"><i data-lucide="check-square" class="w-4 h-4"></i></div>
+                                    <div>
+                                        <div class="text-sm font-bold text-slate-900 group-hover/item:text-blue-600">Data Annotation</div>
+                                        <p class="text-xs text-slate-500 line-clamp-1">Precision image, text, video & bounding box labeling</p>
+                                    </div>
+                                </a>
+                                <a href="bpo-services.php" class="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition-colors group/item">
+                                    <div class="p-2 rounded-lg bg-blue-500/10 text-blue-600"><i data-lucide="headphones" class="w-4 h-4"></i></div>
+                                    <div>
+                                        <div class="text-sm font-bold text-slate-900 group-hover/item:text-blue-600">BPO Services</div>
+                                        <p class="text-xs text-slate-500 line-clamp-1">Multichannel customer support & back-office operations</p>
                                     </div>
                                 </a>
                             </div>
@@ -242,9 +256,11 @@ $page_desc = isset($page_desc) ? $page_desc : 'NextTechX Solutions delivers ente
                 <a href="index.php" class="block px-4 py-3 rounded-xl text-base font-semibold <?= is_active('home') ? 'text-blue-600 bg-blue-50 font-bold' : 'text-slate-800 hover:bg-slate-50' ?>">Home</a>
                 <a href="about.php" class="block px-4 py-3 rounded-xl text-base font-semibold <?= is_active('about') ? 'text-blue-600 bg-blue-50 font-bold' : 'text-slate-800 hover:bg-slate-50' ?>">About Us</a>
                 <a href="services.php" class="block px-4 py-3 rounded-xl text-base font-semibold <?= is_active('services') ? 'text-blue-600 bg-blue-50 font-bold' : 'text-slate-800 hover:bg-slate-50' ?>">Services Overview</a>
-                <a href="ai-automation.php" class="block px-6 py-2 rounded-xl text-sm font-medium text-slate-600 hover:text-blue-600">↳ AI & Workflow Automation</a>
-                <a href="it-services.php" class="block px-6 py-2 rounded-xl text-sm font-medium text-slate-600 hover:text-blue-600">↳ IT & Software Solutions</a>
-                <a href="research-publication.php" class="block px-6 py-2 rounded-xl text-sm font-medium text-slate-600 hover:text-blue-600">↳ Research Paper Publication</a>
+                <a href="ai-automation.php" class="block px-6 py-2 rounded-xl text-sm font-medium text-slate-600 hover:text-blue-600">↳ AI & Automation</a>
+                <a href="software-development.php" class="block px-6 py-2 rounded-xl text-sm font-medium text-slate-600 hover:text-blue-600">↳ Software Development</a>
+                <a href="saas-development.php" class="block px-6 py-2 rounded-xl text-sm font-medium text-slate-600 hover:text-blue-600">↳ SaaS Development</a>
+                <a href="data-annotation.php" class="block px-6 py-2 rounded-xl text-sm font-medium text-slate-600 hover:text-blue-600">↳ Data Annotation</a>
+                <a href="bpo-services.php" class="block px-6 py-2 rounded-xl text-sm font-medium text-slate-600 hover:text-blue-600">↳ BPO Services</a>
                 <a href="portfolio.php" class="block px-4 py-3 rounded-xl text-base font-semibold <?= is_active('portfolio') ? 'text-blue-600 bg-blue-50 font-bold' : 'text-slate-800 hover:bg-slate-50' ?>">Portfolio</a>
                 <a href="industries.php" class="block px-4 py-3 rounded-xl text-base font-semibold <?= is_active('industries') ? 'text-blue-600 bg-blue-50 font-bold' : 'text-slate-800 hover:bg-slate-50' ?>">Industries</a>
                 <a href="how-we-work.php" class="block px-4 py-3 rounded-xl text-base font-semibold <?= is_active('how-we-work') ? 'text-blue-600 bg-blue-50 font-bold' : 'text-slate-800 hover:bg-slate-50' ?>">How We Work</a>

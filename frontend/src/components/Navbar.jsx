@@ -17,7 +17,9 @@ import {
   GraduationCap,
   Sparkles,
   ArrowRight,
-  Briefcase
+  Briefcase,
+  CheckSquare,
+  Headphones
 } from 'lucide-react';
 
 export default function Navbar({ onOpenQuote, onOpenConsultation }) {
@@ -134,40 +136,54 @@ export default function Navbar({ onOpenQuote, onOpenConsultation }) {
 
   const serviceSubItems = [
     {
-      name: 'AI Automation Solutions',
-      path: '/ai-automation',
-      desc: 'Autonomous GPT-4o RAG Agents, WhatsApp & n8n Workflows',
+      name: 'AI & Automation',
+      path: '/services/ai-automation',
+      desc: 'Autonomous AI Agents, RAG Chatbots & Workflow Automation',
       icon: Bot,
       color: 'text-blue-600 bg-blue-50 border border-blue-200'
     },
     {
-      name: 'Software & Web Development',
-      path: '/it-services',
-      desc: 'Enterprise Web Applications, Microservices & Cloud DevOps',
+      name: 'Software Development',
+      path: '/services/software-development',
+      desc: 'Custom Web Apps, Microservices & Mobile Engineering',
       icon: Code2,
-      color: 'text-purple-600 bg-purple-50 border border-purple-200'
+      color: 'text-blue-600 bg-blue-50 border border-blue-200'
     },
     {
-      name: 'Research Paper Publication',
-      path: '/research-publication',
-      desc: 'Scopus, IEEE, Springer & UGC-CARE Indexed Advisory',
-      icon: BookOpen,
-      color: 'text-amber-600 bg-amber-50 border border-amber-200'
+      name: 'SaaS Development',
+      path: '/services/saas-development',
+      desc: 'Multi-Tenant Architecture, Billing & Cloud Platforms',
+      icon: Layers,
+      color: 'text-blue-600 bg-blue-50 border border-blue-200'
     },
     {
-      name: 'Careers & Internships',
-      path: '/careers',
-      desc: 'Technical Internships, Live Projects & Career Growth',
-      icon: Briefcase,
-      color: 'text-cyan-600 bg-cyan-50 border border-cyan-200'
+      name: 'Data Annotation',
+      path: '/services/data-annotation',
+      desc: 'Precision Image, Text, Video & Bounding Box Labeling',
+      icon: CheckSquare,
+      color: 'text-blue-600 bg-blue-50 border border-blue-200'
+    },
+    {
+      name: 'BPO Services',
+      path: '/services/bpo-services',
+      desc: 'Customer Support, Back-Office & Process Outsourcing',
+      icon: Headphones,
+      color: 'text-blue-600 bg-blue-50 border border-blue-200'
     }
   ];
 
   const isServicesActiveRoute = [
     '/services',
     '/ai-automation', 
-    '/it-services', 
-    '/research-publication'
+    '/software-development',
+    '/saas-development',
+    '/data-annotation',
+    '/bpo-services',
+    '/services/ai-automation',
+    '/services/software-development',
+    '/services/saas-development',
+    '/services/data-annotation',
+    '/services/bpo-services'
   ].includes(location.pathname);
 
   // Smooth scroll handler that accurately accounts for sticky header height

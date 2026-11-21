@@ -30,7 +30,9 @@ import {
   TrendingUp,
   Cpu,
   Terminal,
-  Lock
+  Lock,
+  CheckSquare,
+  Headphones
 } from 'lucide-react';
 import HeroTechIllustration from '../components/HeroTechIllustration';
 import HeroBackground from '../components/HeroBackground';
@@ -42,84 +44,101 @@ import confetti from 'canvas-confetti';
 
 export default function Home({ onOpenQuote, onOpenConsultation, onOpenRegister }) {
 
-  // 4 Specialized Core Services (with vibrant card gradients matching reference 2x2 design)
+  // Exactly 5 Core Services
   const services = [
     {
       id: "ai-automation",
-      title: "AI Automation Solutions",
-      subtitle: "Smart AI chatbots and automated business workflows",
-      desc: "We build custom AI assistants, WhatsApp chatbots, and automated workflows to save time and reduce business costs.",
+      title: "AI & Automation",
+      subtitle: "Autonomous AI agents and automated business workflows",
+      desc: "Intelligent autonomous agents, conversational AI chatbots, and streamlined workflow automation designed to eliminate manual bottlenecks.",
       icon: Bot,
-      link: "/ai-automation",
+      link: "/services/ai-automation",
       cardGradient: "bg-gradient-to-br from-[#2563EB] via-[#1D4ED8] to-[#1E3A8A]",
       glowColor: "hover:shadow-[0_20px_50px_rgba(37,99,235,0.45)]",
       borderColor: "border-blue-400/30 hover:border-blue-300",
       btnGradient: "bg-gradient-to-r from-[#06b6d4] to-[#0ea5e9] hover:from-[#22d3ee] hover:to-[#38bdf8] text-white",
-      btnText: "Explore AI Automation",
+      btnText: "Explore AI & Automation",
       features: [
-        "Custom AI Chatbots & Smart Assistants",
-        "WhatsApp & CRM Customer Support Bots",
-        "Automated Business Workflows",
-        "Fast Document & Invoice Data Processing"
+        "Custom RAG AI Chatbots with Enterprise Context",
+        "Official WhatsApp Business Cloud API Automated Flows",
+        "Autonomous Multi-Step Event Pipelines (n8n)",
+        "Intelligent OCR Document Extraction (Invoices & KYC)"
       ]
     },
     {
-      id: "it-services",
-      title: "Software & Web Development",
-      subtitle: "Custom websites and web apps built for your business",
-      desc: "Custom web platforms, mobile apps, secure cloud infrastructure, and interactive business dashboards.",
+      id: "software-development",
+      title: "Software Development",
+      subtitle: "Custom web applications and high-performance microservices",
+      desc: "End-to-end custom software engineering built for high reliability, performance, and enterprise scalability across modern platforms.",
       icon: Code2,
-      link: "/it-services",
+      link: "/services/software-development",
       cardGradient: "bg-gradient-to-br from-[#7C3AED] via-[#6D28D9] to-[#4C1D95]",
       glowColor: "hover:shadow-[0_20px_50px_rgba(124,58,237,0.45)]",
       borderColor: "border-purple-400/30 hover:border-purple-300",
       btnGradient: "bg-gradient-to-r from-[#a855f7] to-[#9333ea] hover:from-[#c084fc] hover:to-[#a855f7] text-white",
-      btnText: "Get Your Software Built",
+      btnText: "Explore Software Development",
       features: [
-        "Custom Web & Mobile Applications",
-        "Fast, Secure & Scalable Cloud Systems",
-        "Business Dashboards & Analytics",
-        "High Quality at Transparent & Fair Pricing"
+        "Custom Enterprise Web Applications",
+        "High-Throughput RESTful & GraphQL Microservices",
+        "Cross-Platform iOS & Android Mobile Apps",
+        "Automated CI/CD Pipelines & Cloud Architecture"
       ]
     },
     {
-      id: "research-publication",
-      title: "Research Paper Publication",
-      subtitle: "Complete support to write and publish research papers",
-      desc: "Step-by-step guidance for students, faculty, and PhD scholars to publish papers in top global journals.",
-      icon: BookOpen,
-      link: "/research-publication",
-      cardGradient: "bg-gradient-to-br from-[#EA580C] via-[#DC2626] to-[#991B1B]",
-      glowColor: "hover:shadow-[0_20px_50px_rgba(234,88,12,0.45)]",
-      borderColor: "border-orange-400/30 hover:border-orange-300",
-      btnGradient: "bg-gradient-to-r from-[#f97316] to-[#ea580c] hover:from-[#fb923c] hover:to-[#f97316] text-white",
-      btnText: "Publish Your Research Paper",
-      badgeRibbon: "100+ Papers Published",
-      features: [
-        "100+ Papers Published in Scopus & IEEE",
-        "Topic Selection & Proposal Writing Guidance",
-        "Literature Review & Paper Structuring",
-        "Plagiarism Check & Verification (Turnitin < 10%)"
-      ]
-    },
-    {
-      id: "careers",
-      title: "Internship Opportunities",
-      subtitle: "Hands-On Technical Internships & Real Projects",
-      desc: "Work on live IT systems, modern AI applications, and enterprise web software guided by experienced engineering leads and mentors.",
-      icon: GraduationCap,
-      link: "/careers",
+      id: "saas-development",
+      title: "SaaS Development",
+      subtitle: "Multi-tenant cloud architecture and subscription platforms",
+      desc: "Complete Software-as-a-Service product engineering from multi-tenant cloud architecture to recurring billing and role management.",
+      icon: Layers,
+      link: "/services/saas-development",
       cardGradient: "bg-gradient-to-br from-[#0284C7] via-[#0369A1] to-[#1E3A8A]",
       glowColor: "hover:shadow-[0_20px_50px_rgba(2,132,199,0.45)]",
       borderColor: "border-cyan-400/30 hover:border-cyan-300",
       btnGradient: "bg-gradient-to-r from-[#0284c7] to-[#0ea5e9] hover:from-[#38bdf8] hover:to-[#0284c7] text-white",
-      btnText: "Explore Internship Opportunities",
-      badgeRibbon: "Open Now",
+      btnText: "Explore SaaS Development",
       features: [
-        "Hands-On IT & AI Project Mentorship",
-        "Work on 100% Real-World Client Systems",
-        "Official Certificate & Recommendation Letter",
-        "One-on-One Code Reviews and Guidance"
+        "Multi-Tenant Cloud SaaS Architectures",
+        "Subscription Billing & Payment Gateway Integration",
+        "Role-Based Access Control (RBAC) & Admin Portals",
+        "High-Availability Cloud Hosting (99.9% Uptime)"
+      ]
+    },
+    {
+      id: "data-annotation",
+      title: "Data Annotation",
+      subtitle: "High-precision training datasets for AI and ML models",
+      desc: "Precision data labeling and annotation solutions providing clean, structured ground-truth datasets for computer vision and NLP models.",
+      icon: CheckSquare,
+      link: "/services/data-annotation",
+      cardGradient: "bg-gradient-to-br from-[#0D9488] via-[#0F766E] to-[#115E59]",
+      glowColor: "hover:shadow-[0_20px_50px_rgba(13,148,136,0.45)]",
+      borderColor: "border-teal-400/30 hover:border-teal-300",
+      btnGradient: "bg-gradient-to-r from-[#14b8a6] to-[#0d9488] hover:from-[#2dd4bf] hover:to-[#14b8a6] text-white",
+      btnText: "Explore Data Annotation",
+      features: [
+        "Image Annotation (Polygons, Keypoints & Polylines)",
+        "Text Annotation & NER Entity Tagging",
+        "Video Annotation & Multi-Frame Object Tracking",
+        "Object Detection with 2D & 3D Bounding Boxes"
+      ]
+    },
+    {
+      id: "bpo-services",
+      title: "BPO Services",
+      subtitle: "Dedicated business process outsourcing and customer support",
+      desc: "Professional BPO solutions that streamline day-to-day back-office operations, customer support, and administrative workflows.",
+      icon: Headphones,
+      link: "/services/bpo-services",
+      cardGradient: "bg-gradient-to-br from-[#475569] via-[#334155] to-[#1E293B]",
+      glowColor: "hover:shadow-[0_20px_50px_rgba(71,85,105,0.45)]",
+      borderColor: "border-slate-400/30 hover:border-slate-300",
+      btnGradient: "bg-gradient-to-r from-[#64748b] to-[#475569] hover:from-[#94a3b8] hover:to-[#64748b] text-white",
+      btnText: "Explore BPO Services",
+      features: [
+        "Multichannel Customer Support (Email, Chat & Tickets)",
+        "Accurate Data Entry & Digital Records Verification",
+        "Order Processing & Fulfillment Catalog Management",
+        "SLA-Backed Quality Auditing & Operational Reporting"
       ]
     }
   ];
@@ -473,19 +492,19 @@ export default function Home({ onOpenQuote, onOpenConsultation, onOpenRegister }
               Our Core Services & Capabilities
             </h2>
             <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
-              Explore our core technology practices, engineering pods, and certified publication advisory. Click any card to view detailed specifications, workflows, and inquiry options.
+              Explore our 5 core technology and business practices. Click any card to view detailed specifications, offerings, and engagement options.
             </p>
           </div>
 
-          {/* 4 Colorful Gradient Cards in a 2x2 Grid (Responsive on all viewports) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 max-w-5xl mx-auto items-stretch">
+          {/* 5 Cards Grid */}
+          <div className="flex flex-wrap justify-center gap-6 sm:gap-8 max-w-6xl mx-auto items-stretch">
             {services.map((srv) => {
               const Icon = srv.icon;
               return (
                 <Link
                   key={srv.id}
                   to={srv.link}
-                  className={`w-full group rounded-2xl sm:rounded-3xl p-5 sm:p-8 lg:p-9 border ${srv.borderColor} ${srv.cardGradient} shadow-xl hover:-translate-y-2.5 ${srv.glowColor} transition-all duration-300 flex flex-col justify-between text-left relative overflow-hidden cursor-pointer`}
+                  className={`w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)] group rounded-2xl sm:rounded-3xl p-5 sm:p-7 border ${srv.borderColor} ${srv.cardGradient} shadow-xl hover:-translate-y-2.5 ${srv.glowColor} transition-all duration-300 flex flex-col justify-between text-left relative overflow-hidden cursor-pointer`}
                 >
                   {/* Top Header Row: Icon + Title + Subtitle + Ribbon */}
                   <div>
