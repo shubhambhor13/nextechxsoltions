@@ -13,6 +13,7 @@ define('SITE_EMAIL_GENERAL', 'nextechxsolutions@gmail.com');
 define('SITE_PHONE', '+91 93098 35085');
 define('SITE_PHONE_TEL', '+919309835085');
 define('SITE_WHATSAPP_URL', 'https://wa.me/919309835085?text=Hello%20NextTechX%20Solutions,%20I%20would%20like%20to%20inquire%20about%20your%20services%20and%20programs.');
+define('SITE_LINKEDIN_URL', 'https://www.linkedin.com/company/nextechx-solutions/');
 define('SITE_DELIVERY_MODEL', 'Online-First Global Delivery');
 define('DB_PATH', __DIR__ . '/../data/app.db');
 

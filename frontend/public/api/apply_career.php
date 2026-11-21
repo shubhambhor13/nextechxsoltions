@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $db = function_exists('get_db') ? get_db() : null;
         if ($db) {
             try {
-                $stmt = $db->query("SELECT id, full_name, email, phone, applying_for, position, education, resume_filename, email_sent, applicant_email_status, company_email_status, created_at FROM career_applications ORDER BY id DESC");
+                $stmt = $db->query("SELECT id, full_name, email, phone, applying_for, position, education, resume_filename, email_sent, applicant_email_status, company_email_status, email_error, created_at FROM career_applications ORDER BY id DESC");
                 echo json_encode($stmt->fetchAll());
                 exit;
             } catch (Exception $e) {}
@@ -78,7 +78,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             'success' => true,
             'message' => 'Email retry dispatched.',
             'applicant_email_sent' => $app_sent,
-            'company_email_sent' => $comp_sent
+            'company_email_sent' => $comp_sent,
+            'applicant_error' => $res_applicant['error'] ?? null,
+            'company_error' => $res_company['error'] ?? null
         ]);
         exit;
     }
