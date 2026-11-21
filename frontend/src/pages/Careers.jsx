@@ -516,9 +516,15 @@ export default function Careers({ onOpenQuote, onOpenConsultation }) {
                 <p className="text-xs sm:text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
                   Thank you, <strong className="text-slate-800">{formData.full_name}</strong>! Your application for <strong className="text-slate-800">'{formData.position}'</strong> and resume have been securely routed to our HR desk (<strong className="text-slate-800">hr@nextechxsolutions.com</strong>).
                 </p>
-                <p className="text-xs text-slate-500 font-medium">
-                  Our talent acquisition team will review your credentials and contact you within 24 to 48 hours via WhatsApp or Email.
-                </p>
+                <div className="p-3.5 rounded-xl bg-blue-50/80 border border-blue-200/80 text-xs text-blue-900 max-w-md mx-auto space-y-1">
+                  <p className="font-bold flex items-center justify-center gap-1.5">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-blue-600" />
+                    <span>Confirmation Email Dispatched</span>
+                  </p>
+                  <p className="text-blue-800">
+                    A formal acknowledgement receipt has been sent to your registered email address. Shortlisted candidates will be contacted directly regarding the next evaluation rounds.
+                  </p>
+                </div>
                 <div className="pt-2">
                   <button
                     type="button"

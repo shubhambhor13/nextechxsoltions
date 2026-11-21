@@ -35,8 +35,12 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 *.log
-backend/uploads/email_logs/*.eml
-uploads/email_logs/*.eml
+backend/uploads/email_logs/*
+uploads/email_logs/*
+php/data/email_logs/*
+data/email_logs/*
+composer.phar
+cacert.pem
 
 # User Uploads (Resumes & Documents)
 backend/uploads/resumes/*

@@ -1,5 +1,7 @@
 <?php
-// NextTechX Solutions - Career Applications API
+// NextTechX Solutions - Career & Internship Applications API
+// Enterprise Application Workflow & Automated Multi-Recipient SMTP Notifications
+
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
@@ -11,15 +13,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/mailer.php';
 
-// Support GET: Return vacancies or applications
+// Support GET: Return vacancies or applications list
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $action = $_GET['action'] ?? 'vacancies';
+
+    // 1. Applications List for Authorized Operations
     if ($action === 'applications') {
         $db = function_exists('get_db') ? get_db() : null;
         if ($db) {
             try {
-                $stmt = $db->query("SELECT id, full_name, email, phone, applying_for, position, education, resume_filename, email_sent, created_at FROM career_applications ORDER BY id DESC");
+                $stmt = $db->query("SELECT id, full_name, email, phone, applying_for, position, education, resume_filename, email_sent, applicant_email_status, company_email_status, created_at FROM career_applications ORDER BY id DESC");
                 echo json_encode($stmt->fetchAll());
                 exit;
             } catch (Exception $e) {}
@@ -27,6 +32,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $fallback_file = dirname(DB_PATH) . '/fallback_career_applications.json';
         $apps = file_exists($fallback_file) ? json_decode(file_get_contents($fallback_file), true) : [];
         echo json_encode(is_array($apps) ? $apps : []);
+        exit;
+    }
+
+    // 2. Safe Resend Action (Retry email delivery without duplicating applications)
+    if ($action === 'resend_email' && !empty($_GET['id'])) {
+        $app_id = (int)$_GET['id'];
+        $app = null;
+        $db = function_exists('get_db') ? get_db() : null;
+        if ($db) {
+            $stmt = $db->prepare("SELECT * FROM career_applications WHERE id = :id");
+            $stmt->execute([':id' => $app_id]);
+            $app = $stmt->fetch();
+        }
+
+        if (!$app) {
+            http_response_code(404);
+            echo json_encode(['error' => 'Application record not found for retry.']);
+            exit;
+        }
+
+        $res_applicant = NextTechXMailer::sendApplicantConfirmation($app);
+        $res_company = NextTechXMailer::sendCompanyNotification($app, $app['resume_filepath'] ?? null, $app['resume_filename'] ?? null);
+
+        $app_sent = !empty($res_applicant['success']);
+        $comp_sent = !empty($res_company['success']);
+
+        if ($db) {
+            $update = $db->prepare("UPDATE career_applications SET 
+                applicant_email_status = :app_st,
+                company_email_status = :comp_st,
+                email_sent = :sent,
+                email_error = :err
+                WHERE id = :id");
+            $update->execute([
+                ':app_st' => $app_sent ? 'sent' : 'failed',
+                ':comp_st' => $comp_sent ? 'sent' : 'failed',
+                ':sent' => ($app_sent && $comp_sent) ? 1 : 0,
+                ':err' => ($res_applicant['error'] ?? '') . ' | ' . ($res_company['error'] ?? ''),
+                ':id' => $app_id
+            ]);
+        }
+
+        echo json_encode([
+            'success' => true,
+            'message' => 'Email retry dispatched.',
+            'applicant_email_sent' => $app_sent,
+            'company_email_sent' => $comp_sent
+        ]);
         exit;
     }
 
@@ -94,6 +147,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
+// ---------------------------------------------------------
+// 1. INPUT EXTRACTION & SANITIZATION
+// ---------------------------------------------------------
 $full_name = trim($_POST['full_name'] ?? '');
 $email = trim($_POST['email'] ?? '');
 $phone = trim($_POST['phone'] ?? '');
@@ -102,18 +158,37 @@ $position = trim($_POST['position'] ?? '');
 $education = trim($_POST['education'] ?? '');
 $message = trim($_POST['message'] ?? '');
 
+// ---------------------------------------------------------
+// 2. COMPREHENSIVE BACKEND VALIDATION
+// ---------------------------------------------------------
+
+// Check required textual fields
 if (empty($full_name) || empty($email) || empty($phone) || empty($position) || empty($education)) {
     http_response_code(400);
-    $msg = 'All required fields (Full Name, Email, Phone, Position, Education) must be provided.';
-    echo json_encode(['error' => $msg, 'message' => $msg, 'detail' => $msg]);
+    $msg = 'All required fields (Full Name, Email, Phone, Target Position, Education) must be provided.';
+    echo json_encode(['error' => $msg, 'message' => $msg]);
     exit;
 }
 
+// Validate email syntax & DNS-ready format
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     http_response_code(400);
-    $msg = 'Please provide a valid email address.';
-    echo json_encode(['error' => $msg, 'message' => $msg, 'detail' => $msg]);
+    $msg = 'Please provide a valid email address (e.g., yourname@domain.com).';
+    echo json_encode(['error' => $msg, 'message' => $msg]);
     exit;
+}
+
+// Enforce rule: Job applications only accepted when active job vacancies are published
+if (strcasecmp($applying_for, 'Job') === 0) {
+    http_response_code(400);
+    $msg = 'Currently, NEXTECHX SOLUTIONS is offering internship opportunities only. We are not accepting direct job vacancy applications at this time.';
+    echo json_encode(['error' => $msg, 'message' => $msg]);
+    exit;
+}
+
+// Normalize category to Internship
+if (empty($applying_for) || strcasecmp($applying_for, 'Internship') === 0) {
+    $applying_for = 'Internship';
 }
 
 // Validate file upload
@@ -121,7 +196,7 @@ $file = $_FILES['resume'] ?? null;
 if (!$file || !isset($file['error']) || $file['error'] !== UPLOAD_ERR_OK) {
     http_response_code(400);
     $msg = 'Please attach your resume file (PDF, DOC, or DOCX).';
-    echo json_encode(['error' => $msg, 'message' => $msg, 'detail' => $msg]);
+    echo json_encode(['error' => $msg, 'message' => $msg]);
     exit;
 }
 
@@ -132,95 +207,51 @@ $allowed_extensions = ['pdf', 'doc', 'docx'];
 if (!in_array($file_ext, $allowed_extensions)) {
     http_response_code(400);
     $msg = "Invalid file format '.$file_ext'. Only PDF, DOC, and DOCX files are allowed.";
-    echo json_encode(['error' => $msg, 'message' => $msg, 'detail' => $msg]);
+    echo json_encode(['error' => $msg, 'message' => $msg]);
     exit;
 }
 
 if ($file['size'] > 10 * 1024 * 1024) {
     http_response_code(400);
     $msg = 'File size exceeds maximum allowed limit of 10 MB.';
-    echo json_encode(['error' => $msg, 'message' => $msg, 'detail' => $msg]);
+    echo json_encode(['error' => $msg, 'message' => $msg]);
     exit;
 }
 
-// Upload directory & storage
+// ---------------------------------------------------------
+// 3. SECURE FILE PERSISTENCE
+// ---------------------------------------------------------
 $upload_dir = __DIR__ . '/../uploads/resumes/';
 if (!is_dir($upload_dir)) {
     @mkdir($upload_dir, 0755, true);
 }
 
 $sanitized_name = preg_replace('/[^a-zA-Z0-9_\-\.]/', '_', $original_filename);
-$stored_filename = date('Ymd_His') . '_' . $sanitized_name;
+$stored_filename = date('Ymd_His') . '_' . substr(md5(uniqid()), 0, 6) . '_' . $sanitized_name;
 $target_filepath = $upload_dir . $stored_filename;
 
 $saved = @move_uploaded_file($file['tmp_name'], $target_filepath);
 if (!$saved) {
-    // Fallback: try temp folder if webroot uploads has permission restriction
-    $fallback_dir = sys_get_temp_dir() . '/nexttechx_resumes/';
-    @mkdir($fallback_dir, 0755, true);
-    $target_filepath = $fallback_dir . $stored_filename;
-    if (is_uploaded_file($file['tmp_name'])) {
-        @copy($file['tmp_name'], $target_filepath);
+    if (file_exists($file['tmp_name'])) {
+        $saved = @copy($file['tmp_name'], $target_filepath);
+    }
+    if (!$saved) {
+        // Fallback: system temp directory if uploads has restrictive file permissions
+        $fallback_dir = sys_get_temp_dir() . '/nexttechx_resumes/';
+        @mkdir($fallback_dir, 0755, true);
+        $target_filepath = $fallback_dir . $stored_filename;
+        if (file_exists($file['tmp_name'])) {
+            @copy($file['tmp_name'], $target_filepath);
+        }
     }
 }
 
-// Read attachment content
-$file_content = '';
-if (file_exists($target_filepath)) {
-    $file_content = @file_get_contents($target_filepath);
-}
+// ---------------------------------------------------------
+// 4. SAVE APPLICATION TO DATABASE FIRST (Zero Data Loss)
+// ---------------------------------------------------------
+$application_id = null;
+$db = function_exists('get_db') ? get_db() : null;
 
-// 1. Send Email with Attachment to nextechxsolutions@gmail.com
-$to = 'nextechxsolutions@gmail.com';
-$hr_email = defined('SITE_EMAIL_HR') ? SITE_EMAIL_HR : 'hr@nextechxsolutions.com';
-$subject = "[$applying_for APPLICATION] $position - $full_name";
-
-$boundary = md5(uniqid(time(), true));
-
-$headers = "From: NextTechX Careers <careers@nextechxsolutions.com>\r\n";
-$headers .= "Reply-To: $email\r\n";
-$headers .= "MIME-Version: 1.0\r\n";
-$headers .= "Content-Type: multipart/mixed; boundary=\"$boundary\"\r\n";
-
-$body = "--$boundary\r\n";
-$body .= "Content-Type: text/html; charset=UTF-8\r\n";
-$body .= "Content-Transfer-Encoding: 7bit\r\n\r\n";
-
-$body .= "<html><body style='font-family: Arial, sans-serif; line-height: 1.6; color: #1e293b;'>";
-$body .= "<div style='max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;'>";
-$body .= "<div style='background: #0f172a; color: #fff; padding: 20px;'>";
-$body .= "<h2 style='margin: 0; color: #38bdf8;'>NextTechX Solutions - Careers & Internships</h2>";
-$body .= "<p style='margin: 5px 0 0; font-size: 14px;'>New $applying_for Application Received</p>";
-$body .= "</div>";
-$body .= "<div style='padding: 20px;'>";
-$body .= "<p><strong>Candidate Name:</strong> " . htmlspecialchars($full_name) . "</p>";
-$body .= "<p><strong>Email Address:</strong> <a href='mailto:" . htmlspecialchars($email) . "'>" . htmlspecialchars($email) . "</a></p>";
-$body .= "<p><strong>Phone Number:</strong> <a href='tel:" . htmlspecialchars($phone) . "'>" . htmlspecialchars($phone) . "</a></p>";
-$body .= "<p><strong>Applying Category:</strong> " . htmlspecialchars($applying_for) . "</p>";
-$body .= "<p><strong>Target Position / Role:</strong> " . htmlspecialchars($position) . "</p>";
-$body .= "<p><strong>Highest Education:</strong> " . htmlspecialchars($education) . "</p>";
-$body .= "<p><strong>Message / Note:</strong><br><blockquote style='background: #f1f5f9; padding: 10px; border-left: 3px solid #0284c7;'>" . nl2br(htmlspecialchars($message ?: 'None provided.')) . "</blockquote></p>";
-$body .= "<p><strong>Attached Resume:</strong> " . htmlspecialchars($original_filename) . "</p>";
-$body .= "</div>";
-$body .= "<div style='background: #f8fafc; padding: 12px 20px; font-size: 12px; color: #64748b; border-top: 1px solid #e2e8f0;'>";
-$body .= "Submitted via NextTechX Careers Portal on " . date('Y-m-d H:i:s') . "<br>Direct HR Desk: $hr_email";
-$body .= "</div>";
-$body .= "</div></body></html>\r\n\r\n";
-
-if (!empty($file_content)) {
-    $encoded_content = chunk_split(base64_encode($file_content));
-    $body .= "--$boundary\r\n";
-    $body .= "Content-Type: application/octet-stream; name=\"$original_filename\"\r\n";
-    $body .= "Content-Description: $original_filename\r\n";
-    $body .= "Content-Disposition: attachment; filename=\"$original_filename\"; size=" . strlen($file_content) . ";\r\n";
-    $body .= "Content-Transfer-Encoding: base64\r\n\r\n";
-    $body .= $encoded_content . "\r\n\r\n";
-}
-$body .= "--$boundary--";
-
-$mail_sent = @mail($to, $subject, $body, $headers);
-
-// 2. Save in database or fallback
 $record = [
     'full_name' => $full_name,
     'email' => $email,
@@ -231,11 +262,13 @@ $record = [
     'message' => $message,
     'resume_filename' => $original_filename,
     'resume_filepath' => $target_filepath,
-    'email_sent' => $mail_sent ? 1 : 0,
+    'email_sent' => 0,
+    'applicant_email_status' => 'pending',
+    'company_email_status' => 'pending',
+    'email_error' => null,
     'created_at' => date('Y-m-d H:i:s')
 ];
 
-$db = function_exists('get_db') ? get_db() : null;
 if ($db) {
     try {
         $db->exec("
@@ -251,12 +284,28 @@ if ($db) {
                 resume_filepath TEXT,
                 message TEXT,
                 email_sent INTEGER DEFAULT 0,
+                applicant_email_status TEXT DEFAULT 'pending',
+                company_email_status TEXT DEFAULT 'pending',
+                email_error TEXT,
                 created_at TEXT DEFAULT CURRENT_TIMESTAMP
             )
         ");
+
+        // Gracefully add any columns if schema is from an earlier iteration
+        $cols = $db->query("PRAGMA table_info(career_applications)")->fetchAll(PDO::FETCH_COLUMN, 1);
+        if (!in_array('applicant_email_status', $cols)) {
+            $db->exec("ALTER TABLE career_applications ADD COLUMN applicant_email_status TEXT DEFAULT 'pending'");
+        }
+        if (!in_array('company_email_status', $cols)) {
+            $db->exec("ALTER TABLE career_applications ADD COLUMN company_email_status TEXT DEFAULT 'pending'");
+        }
+        if (!in_array('email_error', $cols)) {
+            $db->exec("ALTER TABLE career_applications ADD COLUMN email_error TEXT");
+        }
+
         $stmt = $db->prepare("
-            INSERT INTO career_applications (full_name, email, phone, applying_for, position, education, resume_filename, resume_filepath, message, email_sent, created_at)
-            VALUES (:full_name, :email, :phone, :applying_for, :position, :education, :resume_filename, :resume_filepath, :message, :email_sent, datetime('now'))
+            INSERT INTO career_applications (full_name, email, phone, applying_for, position, education, resume_filename, resume_filepath, message, email_sent, applicant_email_status, company_email_status, created_at)
+            VALUES (:full_name, :email, :phone, :applying_for, :position, :education, :resume_filename, :resume_filepath, :message, 0, 'pending', 'pending', datetime('now'))
         ");
         $stmt->execute([
             ':full_name' => $full_name,
@@ -267,9 +316,9 @@ if ($db) {
             ':education' => $education,
             ':resume_filename' => $original_filename,
             ':resume_filepath' => $target_filepath,
-            ':message' => $message,
-            ':email_sent' => $mail_sent ? 1 : 0
+            ':message' => $message
         ]);
+        $application_id = (int) $db->lastInsertId();
     } catch (Exception $e) {
         if (function_exists('save_record_fallback')) {
             save_record_fallback('career_applications', $record);
@@ -281,9 +330,63 @@ if ($db) {
     }
 }
 
+$record['id'] = $application_id ?: ('NTX-' . date('Ymd') . '-' . rand(1000, 9999));
+
+// ---------------------------------------------------------
+// 5. DISPATCH AUTOMATIC SMTP NOTIFICATIONS VIA PHPMAILER
+// ---------------------------------------------------------
+// 5A. Send Applicant Confirmation Email
+$applicant_result = NextTechXMailer::sendApplicantConfirmation($record);
+
+// 5B. Send Company Notification Email (with attached resume)
+$company_result = NextTechXMailer::sendCompanyNotification($record, $target_filepath, $original_filename);
+
+$applicant_sent = !empty($applicant_result['success']);
+$company_sent = !empty($company_result['success']);
+$overall_sent = ($applicant_sent && $company_sent);
+
+$email_errors = [];
+if (!$applicant_sent && !empty($applicant_result['error'])) {
+    $email_errors[] = "Applicant confirmation: " . $applicant_result['error'];
+}
+if (!$company_sent && !empty($company_result['error'])) {
+    $email_errors[] = "Company notification: " . $company_result['error'];
+}
+$combined_error = implode(' | ', $email_errors);
+
+// ---------------------------------------------------------
+// 6. UPDATE DATABASE DELIVERY STATUS
+// ---------------------------------------------------------
+if ($db && $application_id) {
+    try {
+        $update = $db->prepare("
+            UPDATE career_applications SET 
+                applicant_email_status = :app_st,
+                company_email_status = :comp_st,
+                email_sent = :sent,
+                email_error = :err
+            WHERE id = :id
+        ");
+        $update->execute([
+            ':app_st' => $applicant_sent ? 'sent' : 'failed',
+            ':comp_st' => $company_sent ? 'sent' : 'failed',
+            ':sent' => $overall_sent ? 1 : ($applicant_sent || $company_sent ? 1 : 0),
+            ':err' => $combined_error ?: null,
+            ':id' => $application_id
+        ]);
+    } catch (Exception $e) {}
+}
+
+// ---------------------------------------------------------
+// 7. RETURN STRUCTURED SUCCESS RESPONSE TO FRONTEND
+// ---------------------------------------------------------
+http_response_code(200);
 echo json_encode([
     'success' => true,
-    'message' => "Thank you, $full_name! Your $applying_for application for '$position' and resume have been transmitted to nextechxsolutions@gmail.com and our HR desk.",
-    'email_sent' => $mail_sent,
+    'id' => $record['id'],
+    'message' => "Thank you, $full_name! Your $applying_for application for '$position' and resume have been successfully transmitted. A confirmation email has been dispatched to $email.",
+    'applicant_email_sent' => $applicant_sent,
+    'company_email_sent' => $company_sent,
+    'email_sent' => $overall_sent,
     'attachment' => $original_filename
 ]);

@@ -217,7 +217,7 @@ $internship_roles = [
                 </div>
                 <h4 class="text-xl font-bold text-slate-900 font-heading">Application Submitted Successfully!</h4>
                 <p class="text-xs sm:text-sm text-slate-600 max-w-md mx-auto" id="applySuccessMsg">
-                    Your details and resume have been transmitted to our HR desk (<?= SITE_EMAIL_HR ?>). We will review and reach out within 24-48 hours.
+                    Your details and resume have been transmitted to our HR desk (<?= SITE_EMAIL_HR ?>). A confirmation email has been dispatched to your email address.
                 </p>
             </div>
 
@@ -335,6 +335,10 @@ document.getElementById('careerApplicationForm')?.addEventListener('submit', asy
             throw new Error(data.error || data.message || 'Submission failed. Please check your network connection.');
         }
 
+        if (data.message) {
+            const msgEl = document.getElementById('applySuccessMsg');
+            if (msgEl) msgEl.innerText = data.message;
+        }
         succAlert.classList.remove('hidden');
         this.reset();
         this.classList.add('hidden');
