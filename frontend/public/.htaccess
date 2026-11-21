@@ -12,6 +12,9 @@ DirectoryIndex index.html index.php
   RewriteRule ^data/ - [F,L]
   RewriteRule ^includes/ - [F,L]
 
+  # Social Profile Redirects
+  RewriteRule ^linkedin/?$ https://www.linkedin.com/company/nextechx-solutions/ [R=301,L]
+
   # 2. API Endpoint Aliases for Frontend Compatibility
   RewriteRule ^api/careers/apply/?$ api/apply_career.php [L,QSA]
   RewriteRule ^api/careers/vacancies/?$ api/apply_career.php?action=vacancies [L,QSA]

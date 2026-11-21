@@ -95,6 +95,31 @@ function ScrollToTop() {
   return null;
 }
 
+// Helper component for direct external redirects (e.g. /linkedin)
+function ExternalRedirect({ to }) {
+  useEffect(() => {
+    if (typeof window !== 'undefined' && to) {
+      window.location.href = to;
+    }
+  }, [to]);
+
+  return (
+    <div className="min-h-[55vh] flex flex-col items-center justify-center p-6 text-center bg-white" aria-label="Redirecting">
+      <div className="w-9 h-9 border-3 border-blue-600/20 border-t-blue-600 rounded-full animate-spin mb-4" />
+      <h2 className="text-lg font-bold text-slate-900 font-heading">Redirecting to LinkedIn...</h2>
+      <p className="text-xs text-slate-500 mt-1 max-w-sm">
+        Taking you to the official NextTechX Solutions company profile.
+      </p>
+      <a 
+        href={to} 
+        className="mt-4 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-colors inline-block"
+      >
+        Click here if not redirected automatically
+      </a>
+    </div>
+  );
+}
+
 function AnimatedRoutes({
   onOpenQuote,
   onOpenConsultation,
@@ -331,6 +356,16 @@ function AnimatedRoutes({
           <Route 
             path="/privacy" 
             element={<Navigate to="/privacy-policy" replace />} 
+          />
+
+          {/* External Social Redirects */}
+          <Route 
+            path="/linkedin" 
+            element={<ExternalRedirect to={siteConfig.linkedinUrl || "https://www.linkedin.com/company/nextechx-solutions/"} />} 
+          />
+          <Route 
+            path="/linkedin-company" 
+            element={<ExternalRedirect to={siteConfig.linkedinUrl || "https://www.linkedin.com/company/nextechx-solutions/"} />} 
           />
 
           {/* Admin Management Portal */}

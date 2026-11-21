@@ -107,6 +107,11 @@
                         <i data-lucide="message-circle" class="w-3.5 h-3.5 text-emerald-400"></i>
                         <span>WhatsApp Connect</span>
                     </a>
+                    <span>•</span>
+                    <a href="<?= SITE_LINKEDIN_URL ?>" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-400 flex items-center gap-1 transition-colors">
+                        <i data-lucide="linkedin" class="w-3.5 h-3.5 text-blue-400"></i>
+                        <span>LinkedIn</span>
+                    </a>
                 </div>
             </div>
         </div>

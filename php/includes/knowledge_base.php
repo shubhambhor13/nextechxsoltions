@@ -29,6 +29,7 @@ function get_company_knowledge_base() {
             "phone" => "+91 93098 35085",
             "phone_tel" => "+919309835085",
             "whatsapp_url" => "https://wa.me/919309835085?text=Hello%20NextTechX%20Solutions,%20I%20would%20like%20to%20inquire%20about%20your%20services%20and%20programs.",
+            "linkedin_url" => "https://www.linkedin.com/company/nextechx-solutions/",
             "contact_page" => "/#contact"
         ],
         "services" => [

@@ -245,11 +245,12 @@ export default function Footer({ onOpenQuote }) {
           {/* Social Links */}
           <div className="flex items-center gap-3 text-slate-400">
             <a 
-              href="https://linkedin.com" 
+              href={siteConfig.linkedinUrl || "https://www.linkedin.com/company/nextechx-solutions/"} 
               target="_blank" 
-              rel="noreferrer" 
-              className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700/60 hover:bg-slate-700 hover:text-white transition-colors"
-              aria-label="LinkedIn"
+              rel="noopener noreferrer" 
+              className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700/60 hover:bg-blue-600 hover:text-white transition-colors"
+              aria-label="NextTechX Solutions on LinkedIn"
+              title="NextTechX Solutions on LinkedIn"
             >
               <Linkedin className="w-4 h-4" />
             </a>

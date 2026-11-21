@@ -17,6 +17,7 @@ import {
   PhoneCall, 
   Lock, 
   Globe2,
+  Linkedin,
   ChevronRight,
   Zap,
   Check
@@ -288,6 +289,25 @@ export default function ContactUs({ onOpenQuote, onOpenConsultation }) {
                       </div>
                       <div className="text-xs text-slate-500 font-mono">
                         Average response time: &lt; 15 minutes
+                      </div>
+                    </div>
+                  </a>
+
+                  <a
+                    href={siteConfig.linkedinUrl || "https://www.linkedin.com/company/nextechx-solutions/"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-4 rounded-2xl bg-sky-50/70 border border-sky-200 hover:border-sky-400 transition-all flex items-center gap-4 group"
+                  >
+                    <div className="p-3 rounded-xl bg-blue-600 text-white group-hover:scale-105 transition-transform shadow-xs">
+                      <Linkedin className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <div className="text-sm font-bold text-slate-900 group-hover:text-blue-700 transition-colors font-heading">
+                        Connect on LinkedIn
+                      </div>
+                      <div className="text-xs text-slate-500 font-mono">
+                        Official Company Updates & Network
                       </div>
                     </div>
                   </a>
