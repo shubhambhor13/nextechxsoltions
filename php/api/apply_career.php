@@ -143,12 +143,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             'message' => 'Email retry dispatched.',
             'applicant_email_sent' => $app_sent,
             'company_email_sent' => $comp_sent,
-            'applicant_error' => $res_applicant['error'] ?? null,
-            'applicant_meta' => $res_applicant['meta'] ?? null,
-            'applicant_smtp_dialog' => $res_applicant['smtp_dialog'] ?? null,
-            'company_error' => $res_company['error'] ?? null,
-            'company_meta' => $res_company['meta'] ?? null,
-            'company_smtp_dialog' => $res_company['smtp_dialog'] ?? null
+            'applicant_error' => $app_sent ? null : ($res_applicant['error'] ?? 'SMTP dispatch failed'),
+            'company_error' => $comp_sent ? null : ($res_company['error'] ?? 'SMTP dispatch failed')
         ]);
         exit;
     }
