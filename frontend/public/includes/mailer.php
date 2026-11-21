@@ -207,7 +207,7 @@ class NextTechXMailer {
 
         $mail->CharSet = 'UTF-8';
         $mail->Encoding = 'base64';
-        $mail->Timeout = 15;
+        $mail->Timeout = 7;
 
         // Sensible default sender from hr@nextechxsolutions.com
         $mail->setFrom($from_email, $from_name);
@@ -335,34 +335,51 @@ class NextTechXMailer {
             $meta465 = self::$last_smtp_meta;
             $dialog465 = self::$last_smtp_debug;
 
-            // Try port 587 with STARTTLS fallback
-            try {
-                $retryMail = self::createMailer(587, 'tls');
-                $retryMail->addAddress($email, $full_name);
-                $retryMail->addReplyTo($hr_email, 'NEXTECHX SOLUTIONS HR Desk');
-                $retryMail->Subject = $subject;
-                $retryMail->isHTML(true);
-                $retryMail->Body = $htmlBody;
-                $retryMail->AltBody = $plainBody;
+            // Only attempt Port 587 fallback if Port 465 suffered a network/connection failure,
+            // NOT an authentication rejection (since the same credentials on Port 587 will fail identically)
+            $is_auth_error = (stripos($err465, 'authenticate') !== false || stripos($err465, '535') !== false);
+            if (!$is_auth_error) {
+                // Try port 587 with STARTTLS fallback
+                try {
+                    $retryMail = self::createMailer(587, 'tls');
+                    $retryMail->addAddress($email, $full_name);
+                    $retryMail->addReplyTo($hr_email, 'NEXTECHX SOLUTIONS HR Desk');
+                    $retryMail->Subject = $subject;
+                    $retryMail->isHTML(true);
+                    $retryMail->Body = $htmlBody;
+                    $retryMail->AltBody = $plainBody;
 
-                $retryMail->send();
-                return ['success' => true, 'message' => 'Applicant confirmation email sent via Port 587 STARTTLS'];
-            } catch (\Throwable $retryErr) {
-                $err587 = $retryErr->getMessage() . (!empty($retryMail->ErrorInfo) ? (' | ' . $retryMail->ErrorInfo) : '');
-                $meta587 = self::$last_smtp_meta;
-                $dialog587 = self::$last_smtp_debug;
+                    $retryMail->send();
+                    return ['success' => true, 'message' => 'Applicant confirmation email sent via Port 587 STARTTLS'];
+                } catch (\Throwable $retryErr) {
+                    $err587 = $retryErr->getMessage() . (!empty($retryMail->ErrorInfo) ? (' | ' . $retryMail->ErrorInfo) : '');
+                    $meta587 = self::$last_smtp_meta;
+                    $dialog587 = self::$last_smtp_debug;
 
-                self::logError('applicant_confirmation', "Port 465: $err465 | Port 587: $err587", $email);
+                    self::logError('applicant_confirmation', "Port 465: $err465 | Port 587: $err587", $email);
+                    return [
+                        'success' => false,
+                        'error' => "Port 465: $err465 | Port 587: $err587",
+                        'meta' => [
+                            'port_465' => $meta465,
+                            'port_587' => $meta587
+                        ],
+                        'smtp_dialog' => [
+                            'port_465' => array_slice($dialog465, -6),
+                            'port_587' => array_slice($dialog587, -6)
+                        ]
+                    ];
+                }
+            } else {
+                self::logError('applicant_confirmation', "Port 465: $err465", $email);
                 return [
                     'success' => false,
-                    'error' => "Port 465: $err465 | Port 587: $err587",
+                    'error' => "Port 465: $err465",
                     'meta' => [
-                        'port_465' => $meta465,
-                        'port_587' => $meta587
+                        'port_465' => $meta465
                     ],
                     'smtp_dialog' => [
-                        'port_465' => array_slice($dialog465, -6),
-                        'port_587' => array_slice($dialog587, -6)
+                        'port_465' => array_slice($dialog465, -6)
                     ]
                 ];
             }
@@ -446,46 +463,63 @@ class NextTechXMailer {
             $meta465 = self::$last_smtp_meta;
             $dialog465 = self::$last_smtp_debug;
 
-            // Try port 587 with STARTTLS fallback
-            try {
-                $retryMail = self::createMailer(587, 'tls');
-                $retryMail->addAddress($company_to, 'NEXTECHX SOLUTIONS Team');
-                if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                    $retryMail->addReplyTo($email, $full_name);
-                }
-                $retryMail->Subject = $subject;
-                $retryMail->isHTML(true);
-                $retryMail->Body = $htmlBody;
-                $retryMail->AltBody = $plainBody;
-
-                if (!empty($resume_filepath)) {
-                    $real_resume = realpath($resume_filepath) ?: $resume_filepath;
-                    if (file_exists($real_resume) && is_readable($real_resume)) {
-                        try {
-                            $att_name = $resume_filename ?: basename($real_resume);
-                            $retryMail->addAttachment($real_resume, $att_name);
-                        } catch (\Throwable $att_err) {}
+            // Only attempt Port 587 fallback if Port 465 suffered a network/connection failure,
+            // NOT an authentication rejection (since the same credentials on Port 587 will fail identically)
+            $is_auth_error = (stripos($err465, 'authenticate') !== false || stripos($err465, '535') !== false);
+            if (!$is_auth_error) {
+                // Try port 587 with STARTTLS fallback
+                try {
+                    $retryMail = self::createMailer(587, 'tls');
+                    $retryMail->addAddress($company_to, 'NEXTECHX SOLUTIONS Team');
+                    if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                        $retryMail->addReplyTo($email, $full_name);
                     }
+                    $retryMail->Subject = $subject;
+                    $retryMail->isHTML(true);
+                    $retryMail->Body = $htmlBody;
+                    $retryMail->AltBody = $plainBody;
+
+                    if (!empty($resume_filepath)) {
+                        $real_resume = realpath($resume_filepath) ?: $resume_filepath;
+                        if (file_exists($real_resume) && is_readable($real_resume)) {
+                            try {
+                                $att_name = $resume_filename ?: basename($real_resume);
+                                $retryMail->addAttachment($real_resume, $att_name);
+                            } catch (\Throwable $att_err) {}
+                        }
+                    }
+
+                    $retryMail->send();
+                    return ['success' => true, 'message' => 'Company notification email sent via Port 587 STARTTLS'];
+                } catch (\Throwable $retryErr) {
+                    $err587 = $retryErr->getMessage() . (!empty($retryMail->ErrorInfo) ? (' | ' . $retryMail->ErrorInfo) : '');
+                    $meta587 = self::$last_smtp_meta;
+                    $dialog587 = self::$last_smtp_debug;
+
+                    self::logError('company_notification', "Port 465: $err465 | Port 587: $err587", $company_to);
+                    return [
+                        'success' => false,
+                        'error' => "Port 465: $err465 | Port 587: $err587",
+                        'meta' => [
+                            'port_465' => $meta465,
+                            'port_587' => $meta587
+                        ],
+                        'smtp_dialog' => [
+                            'port_465' => array_slice($dialog465, -6),
+                            'port_587' => array_slice($dialog587, -6)
+                        ]
+                    ];
                 }
-
-                $retryMail->send();
-                return ['success' => true, 'message' => 'Company notification email sent via Port 587 STARTTLS'];
-            } catch (\Throwable $retryErr) {
-                $err587 = $retryErr->getMessage() . (!empty($retryMail->ErrorInfo) ? (' | ' . $retryMail->ErrorInfo) : '');
-                $meta587 = self::$last_smtp_meta;
-                $dialog587 = self::$last_smtp_debug;
-
-                self::logError('company_notification', "Port 465: $err465 | Port 587: $err587", $company_to);
+            } else {
+                self::logError('company_notification', "Port 465: $err465", $company_to);
                 return [
                     'success' => false,
-                    'error' => "Port 465: $err465 | Port 587: $err587",
+                    'error' => "Port 465: $err465",
                     'meta' => [
-                        'port_465' => $meta465,
-                        'port_587' => $meta587
+                        'port_465' => $meta465
                     ],
                     'smtp_dialog' => [
-                        'port_465' => array_slice($dialog465, -6),
-                        'port_587' => array_slice($dialog587, -6)
+                        'port_465' => array_slice($dialog465, -6)
                     ]
                 ];
             }

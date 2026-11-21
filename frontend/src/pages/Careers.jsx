@@ -215,7 +215,13 @@ export default function Careers({ onOpenQuote, onOpenConsultation }) {
       }, 5000);
 
     } catch (err) {
-      const msg = err.message || 'An error occurred while submitting your application. Please try again.';
+      const rawMsg = err.message || '';
+      let msg = 'An error occurred while submitting your application. Please try again.';
+      if (rawMsg.includes('Failed to fetch') || rawMsg.includes('NetworkError')) {
+        msg = 'Connection error: Unable to reach the server. Please check your internet connection and try submitting again.';
+      } else if (rawMsg) {
+        msg = rawMsg;
+      }
       setSubmitError(msg);
     } finally {
       setSubmitting(false);
