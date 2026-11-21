@@ -247,9 +247,6 @@ class NextTechXMailer {
         return $mail;
     }
 
-    public static $last_smtp_debug = [];
-    public static $last_smtp_meta = [];
-
     /**
      * Log email errors safely (sanitizing sensitive passwords)
      */
