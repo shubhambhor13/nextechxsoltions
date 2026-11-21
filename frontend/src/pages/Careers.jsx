@@ -41,6 +41,7 @@ export default function Careers({ onOpenQuote, onOpenConsultation }) {
   const [fileError, setFileError] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [emailSentStatus, setEmailSentStatus] = useState(false);
   const [submitError, setSubmitError] = useState('');
 
   const formRef = useRef(null);
@@ -192,8 +193,9 @@ export default function Careers({ onOpenQuote, onOpenConsultation }) {
       postData.append('message', formData.message);
       postData.append('resume', resumeFile);
 
-      await api.applyCareer(postData);
+      const res = await api.applyCareer(postData);
 
+      setEmailSentStatus(Boolean(res && (res.applicant_email_sent || res.email_sent)));
       setSubmitSuccess(true);
       confetti({ particleCount: 110, spread: 80, origin: { y: 0.6 } });
 
@@ -532,6 +534,28 @@ export default function Careers({ onOpenQuote, onOpenConsultation }) {
                     We appreciate your interest in joining our team!
                   </p>
                 </div>
+
+                {emailSentStatus ? (
+                  <div className="p-3.5 rounded-xl bg-blue-50/80 border border-blue-200/80 text-xs text-blue-900 max-w-md mx-auto space-y-1">
+                    <p className="font-bold flex items-center justify-center gap-1.5">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-blue-600" />
+                      <span>Confirmation Email Dispatched</span>
+                    </p>
+                    <p className="text-blue-800">
+                      A formal acknowledgement receipt has been sent to your registered email address. Shortlisted candidates will be contacted directly regarding the next evaluation rounds.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="p-3.5 rounded-xl bg-slate-100/80 border border-slate-200 text-xs text-slate-700 max-w-md mx-auto space-y-1">
+                    <p className="font-bold flex items-center justify-center gap-1.5 text-slate-900">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                      <span>Application & Resume Logged</span>
+                    </p>
+                    <p className="text-slate-600">
+                      Your details and resume are saved in our HR recruitment database.
+                    </p>
+                  </div>
+                )}
                 <div className="pt-2">
                   <button
                     type="button"

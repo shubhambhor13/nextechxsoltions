@@ -27,29 +27,78 @@ class NextTechXMailer {
 
     /**
      * Securely retrieve environment variable with priority:
-     * 1. getenv()
-     * 2. $_ENV
-     * 3. $_SERVER
-     * 4. .env file in project hierarchy
+     * 1. getenv() / getenv('REDIRECT_*')
+     * 2. $_ENV / $_ENV['REDIRECT_*']
+     * 3. $_SERVER / $_SERVER['REDIRECT_*']
+     * 4. apache_getenv()
+     * 5. .env file in project hierarchy
      */
     public static function getEnv($key, $default = null) {
-        $val = getenv($key);
-        if ($val !== false && $val !== '') return $val;
+        $clean = function($val, $k) {
+            if ($val === false || $val === null) return null;
+            $val = trim((string)$val);
+            if ($val === '') return null;
+            // Strip surrounding quotes
+            if ((str_starts_with($val, '"') && str_ends_with($val, '"')) ||
+                (str_starts_with($val, "'") && str_ends_with($val, "'"))) {
+                $val = substr($val, 1, -1);
+            }
+            // For Gmail 16-character App Passwords, strip any spaces (e.g., 'abcd efgh ijkl mnop' -> 'abcdefghijklmnop')
+            if ($k === 'SMTP_PASSWORD') {
+                $val = str_replace(' ', '', $val);
+            }
+            return $val;
+        };
 
-        if (isset($_ENV[$key]) && $_ENV[$key] !== '') return $_ENV[$key];
-        if (isset($_SERVER[$key]) && $_SERVER[$key] !== '') return $_SERVER[$key];
+        // 1. Native getenv (direct and Apache REDIRECT_ prefix)
+        $v = $clean(getenv($key), $key);
+        if ($v !== null) return $v;
+
+        $v = $clean(getenv('REDIRECT_' . $key), $key);
+        if ($v !== null) return $v;
+
+        // 2. Superglobal $_ENV
+        if (isset($_ENV[$key])) {
+            $v = $clean($_ENV[$key], $key);
+            if ($v !== null) return $v;
+        }
+        if (isset($_ENV['REDIRECT_' . $key])) {
+            $v = $clean($_ENV['REDIRECT_' . $key], $key);
+            if ($v !== null) return $v;
+        }
+
+        // 3. Superglobal $_SERVER (common in FastCGI, PHP-FPM, Hostinger LiteSpeed)
+        if (isset($_SERVER[$key])) {
+            $v = $clean($_SERVER[$key], $key);
+            if ($v !== null) return $v;
+        }
+        if (isset($_SERVER['REDIRECT_' . $key])) {
+            $v = $clean($_SERVER['REDIRECT_' . $key], $key);
+            if ($v !== null) return $v;
+        }
+
+        // 4. Apache getenv if available
+        if (function_exists('apache_getenv')) {
+            $v = $clean(@apache_getenv($key), $key);
+            if ($v !== null) return $v;
+            $v = $clean(@apache_getenv('REDIRECT_' . $key), $key);
+            if ($v !== null) return $v;
+        }
 
         static $env_parsed = false;
         static $env_cache = [];
 
         if (!$env_parsed) {
             $env_parsed = true;
-            $candidates = [
+            $doc_root = !empty($_SERVER['DOCUMENT_ROOT']) ? rtrim($_SERVER['DOCUMENT_ROOT'], '/\\') : null;
+            $candidates = array_filter([
                 __DIR__ . '/.env',
                 dirname(__DIR__) . '/.env',
                 dirname(__DIR__, 2) . '/.env',
-                dirname(__DIR__) . '/data/.env'
-            ];
+                dirname(__DIR__) . '/data/.env',
+                $doc_root ? $doc_root . '/.env' : null,
+                $doc_root ? $doc_root . '/php/.env' : null
+            ]);
 
             foreach ($candidates as $file) {
                 if (file_exists($file) && is_readable($file)) {
@@ -59,14 +108,12 @@ class NextTechXMailer {
                             $line = trim($line);
                             if ($line === '' || strpos($line, '#') === 0) continue;
                             if (strpos($line, '=') !== false) {
-                                list($k, $v) = explode('=', $line, 2);
+                                list($k, $val) = explode('=', $line, 2);
                                 $k = trim($k);
-                                $v = trim($v);
-                                if ((str_starts_with($v, '"') && str_ends_with($v, '"')) ||
-                                    (str_starts_with($v, "'") && str_ends_with($v, "'"))) {
-                                    $v = substr($v, 1, -1);
+                                $val = $clean($val, $k);
+                                if ($val !== null) {
+                                    $env_cache[$k] = $val;
                                 }
-                                $env_cache[$k] = $v;
                             }
                         }
                     }
@@ -95,6 +142,11 @@ class NextTechXMailer {
         $from_email = self::getEnv('SMTP_FROM_EMAIL', 'nextechxsolutions@gmail.com');
         $from_name = self::getEnv('SMTP_FROM_NAME', 'NEXTECHX SOLUTIONS');
 
+        // Fail fast with clear actionable error if SMTP_PASSWORD is not provided
+        if (empty($password)) {
+            throw new Exception("SMTP_PASSWORD is not configured. Please set your 16-character Gmail App Password in your server environment variables or .env file.");
+        }
+
         $mail->isSMTP();
         $mail->Host = $host;
         $mail->Port = $port;
@@ -106,6 +158,32 @@ class NextTechXMailer {
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         } else {
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        }
+
+        // Configure CA bundle to guarantee TLS certificate verification succeeds across all servers
+        $ca_candidates = array_filter([
+            dirname(__DIR__) . '/cacert.pem',
+            __DIR__ . '/../cacert.pem',
+            __DIR__ . '/cacert.pem'
+        ]);
+
+        $ca_file = null;
+        foreach ($ca_candidates as $c) {
+            if (file_exists($c) && is_readable($c)) {
+                $ca_file = realpath($c);
+                break;
+            }
+        }
+
+        if ($ca_file) {
+            $mail->SMTPOptions = [
+                'ssl' => [
+                    'verify_peer' => true,
+                    'verify_peer_name' => true,
+                    'allow_self_signed' => false,
+                    'cafile' => $ca_file
+                ]
+            ];
         }
 
         $mail->CharSet = 'UTF-8';
@@ -256,10 +334,17 @@ class NextTechXMailer {
             $mail->Body = $htmlBody;
             $mail->AltBody = $plainBody;
 
-            // Attach Resume if available
-            if ($resume_filepath && file_exists($resume_filepath)) {
-                $att_name = $resume_filename ?: basename($resume_filepath);
-                $mail->addAttachment($resume_filepath, $att_name);
+            // Attach Resume if available (fail-safe so attachment access issues never block notification delivery)
+            if (!empty($resume_filepath)) {
+                $real_resume = realpath($resume_filepath) ?: $resume_filepath;
+                if (file_exists($real_resume) && is_readable($real_resume)) {
+                    try {
+                        $att_name = $resume_filename ?: basename($real_resume);
+                        $mail->addAttachment($real_resume, $att_name);
+                    } catch (\Throwable $att_err) {
+                        self::logError('company_notification_attachment', $att_err->getMessage(), $company_to);
+                    }
+                }
             }
 
             $mail->send();

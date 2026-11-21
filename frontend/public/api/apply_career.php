@@ -388,5 +388,6 @@ echo json_encode([
     'applicant_email_sent' => $applicant_sent,
     'company_email_sent' => $company_sent,
     'email_sent' => $overall_sent,
+    'email_status_detail' => $overall_sent ? 'All confirmation & notification emails dispatched successfully.' : ($applicant_sent ? 'Applicant confirmation dispatched; admin alert pending.' : ($company_sent ? 'Admin alert dispatched; applicant confirmation pending.' : 'Application saved in HR database. Outbound email pending SMTP authorization.')),
     'attachment' => $original_filename
 ]);
