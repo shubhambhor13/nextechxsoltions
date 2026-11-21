@@ -209,7 +209,7 @@ export const api = {
         await new Promise(r => setTimeout(r, 800));
         return {
           success: true,
-          message: `Application submitted successfully! Your application and resume have been forwarded to nextechxsolutions@gmail.com and our HR desk (hr@nextechxsolutions.com).`,
+          message: `Thank you for your interest in NEXTECHX SOLUTIONS. Your application has been received successfully. For any queries, please contact our HR team at hr@nextechxsolutions.com. We appreciate your interest in joining our team!`,
           simulated: true
         };
       }

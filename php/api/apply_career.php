@@ -384,7 +384,7 @@ http_response_code(200);
 echo json_encode([
     'success' => true,
     'id' => $record['id'],
-    'message' => "Thank you, $full_name! Your $applying_for application for '$position' and resume have been successfully transmitted. A confirmation email has been dispatched to $email.",
+    'message' => "Thank you for your interest in NEXTECHX SOLUTIONS. Your application has been received successfully. For any queries, please contact our HR team at " . SITE_EMAIL_HR . ". We appreciate your interest in joining our team!",
     'applicant_email_sent' => $applicant_sent,
     'company_email_sent' => $company_sent,
     'email_sent' => $overall_sent,

@@ -211,14 +211,21 @@ $internship_roles = [
                 </div>
             </div>
 
-            <div id="applySuccessAlert" class="hidden p-6 rounded-2xl bg-emerald-50 border border-emerald-200 text-center space-y-2">
-                <div class="w-12 h-12 rounded-full bg-emerald-600 text-white flex items-center justify-center mx-auto mb-2">
-                    <i data-lucide="check" class="w-6 h-6"></i>
+            <div id="applySuccessAlert" class="hidden p-8 sm:p-10 rounded-2xl bg-emerald-50/90 border border-emerald-200 text-center space-y-4 shadow-sm">
+                <div class="w-16 h-16 rounded-full bg-emerald-600 text-white flex items-center justify-center mx-auto shadow-md">
+                    <i data-lucide="check" class="w-8 h-8"></i>
                 </div>
-                <h4 class="text-xl font-bold text-slate-900 font-heading">Application Submitted Successfully!</h4>
-                <p class="text-xs sm:text-sm text-slate-600 max-w-md mx-auto" id="applySuccessMsg">
-                    Your details and resume have been transmitted to our HR desk (<?= SITE_EMAIL_HR ?>). A confirmation email has been dispatched to your email address.
-                </p>
+                <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 font-heading">Thank You for Applying!</h3>
+                <div class="space-y-3 max-w-lg mx-auto text-slate-700 text-sm sm:text-base leading-relaxed" id="applySuccessMsg">
+                    <p>Thank you for your interest in <strong class="text-slate-900 font-bold">NEXTECHX SOLUTIONS</strong>. Your application has been received successfully.</p>
+                    <p>For any queries, please contact our HR team at <a href="mailto:<?= SITE_EMAIL_HR ?>" class="text-blue-600 hover:text-blue-700 font-bold underline transition-colors"><?= SITE_EMAIL_HR ?></a>.</p>
+                    <p class="font-semibold text-slate-900">We appreciate your interest in joining our team!</p>
+                </div>
+                <div class="pt-2">
+                    <button type="button" onclick="location.reload()" class="px-6 py-2.5 rounded-xl bg-slate-900 text-white text-xs sm:text-sm font-bold hover:bg-slate-800 transition-colors shadow-sm">
+                        Submit Another Application
+                    </button>
+                </div>
             </div>
 
             <div id="applyErrorAlert" class="hidden p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs sm:text-sm"></div>
@@ -335,10 +342,6 @@ document.getElementById('careerApplicationForm')?.addEventListener('submit', asy
             throw new Error(data.error || data.message || 'Submission failed. Please check your network connection.');
         }
 
-        if (data.message) {
-            const msgEl = document.getElementById('applySuccessMsg');
-            if (msgEl) msgEl.innerText = data.message;
-        }
         succAlert.classList.remove('hidden');
         this.reset();
         this.classList.add('hidden');

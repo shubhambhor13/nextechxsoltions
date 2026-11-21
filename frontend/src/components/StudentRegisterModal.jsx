@@ -110,14 +110,30 @@ export default function StudentRegisterModal({ isOpen, onClose, preselectedCours
         {/* Form Body */}
         <div className="p-6">
           {success ? (
-            <div className="py-10 text-center space-y-4">
+            <div className="py-8 text-center space-y-4">
               <div className="w-16 h-16 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-600 flex items-center justify-center mx-auto">
                 <CheckCircle2 className="w-8 h-8" />
               </div>
-              <h4 className="text-xl font-bold text-slate-900">Application Successfully Submitted!</h4>
-              <p className="text-sm text-slate-600 max-w-md mx-auto">
-                Welcome aboard, <strong className="text-blue-600">{formData.full_name}</strong>! Your application for <span className="text-slate-900 font-semibold">{formData.course_selected}</span> has been logged. Our engineering team will review your profile and reach out via WhatsApp and email to schedule your technical interview round.
-              </p>
+              <h4 className="text-xl sm:text-2xl font-extrabold text-slate-900 font-heading">
+                Thank You for Applying!
+              </h4>
+              <div className="space-y-2 text-xs sm:text-sm text-slate-700 max-w-md mx-auto leading-relaxed">
+                <p>
+                  Thank you for your interest in <strong className="text-slate-900 font-bold">NEXTECHX SOLUTIONS</strong>. Your application has been received successfully.
+                </p>
+                <p>
+                  For any queries, please contact our HR team at{' '}
+                  <a 
+                    href="mailto:hr@nextechxsolutions.com" 
+                    className="text-blue-600 hover:text-blue-700 font-bold underline"
+                  >
+                    hr@nextechxsolutions.com
+                  </a>.
+                </p>
+                <p className="font-semibold text-slate-900">
+                  We appreciate your interest in joining our team!
+                </p>
+              </div>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">

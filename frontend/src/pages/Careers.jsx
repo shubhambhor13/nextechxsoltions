@@ -507,29 +507,36 @@ export default function Careers({ onOpenQuote, onOpenConsultation }) {
               <motion.div 
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="p-8 rounded-2xl bg-emerald-50 border border-emerald-200 text-center space-y-4"
+                className="p-8 sm:p-10 rounded-2xl bg-emerald-50/90 border border-emerald-200 text-center space-y-4 shadow-sm"
               >
                 <div className="w-16 h-16 rounded-full bg-emerald-600 text-white flex items-center justify-center mx-auto shadow-md">
                   <CheckCircle2 className="w-8 h-8" />
                 </div>
-                <h3 className="text-2xl font-bold text-slate-900 font-heading">Application Transmitted Successfully!</h3>
-                <p className="text-xs sm:text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
-                  Thank you, <strong className="text-slate-800">{formData.full_name}</strong>! Your application for <strong className="text-slate-800">'{formData.position}'</strong> and resume have been securely routed to our HR desk (<strong className="text-slate-800">hr@nextechxsolutions.com</strong>).
-                </p>
-                <div className="p-3.5 rounded-xl bg-blue-50/80 border border-blue-200/80 text-xs text-blue-900 max-w-md mx-auto space-y-1">
-                  <p className="font-bold flex items-center justify-center gap-1.5">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-blue-600" />
-                    <span>Confirmation Email Dispatched</span>
+                <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 font-heading">
+                  Thank You for Applying!
+                </h3>
+                <div className="space-y-3 max-w-lg mx-auto text-slate-700 text-sm sm:text-base leading-relaxed">
+                  <p>
+                    Thank you for your interest in <strong className="text-slate-900 font-bold">NEXTECHX SOLUTIONS</strong>. Your application has been received successfully.
                   </p>
-                  <p className="text-blue-800">
-                    A formal acknowledgement receipt has been sent to your registered email address. Shortlisted candidates will be contacted directly regarding the next evaluation rounds.
+                  <p>
+                    For any queries, please contact our HR team at{' '}
+                    <a 
+                      href="mailto:hr@nextechxsolutions.com" 
+                      className="text-blue-600 hover:text-blue-700 font-bold underline transition-colors"
+                    >
+                      hr@nextechxsolutions.com
+                    </a>.
+                  </p>
+                  <p className="font-semibold text-slate-900">
+                    We appreciate your interest in joining our team!
                   </p>
                 </div>
                 <div className="pt-2">
                   <button
                     type="button"
                     onClick={() => setSubmitSuccess(false)}
-                    className="px-6 py-2.5 rounded-xl bg-slate-900 text-white text-xs font-bold hover:bg-slate-800 transition-colors"
+                    className="px-6 py-2.5 rounded-xl bg-slate-900 text-white text-xs sm:text-sm font-bold hover:bg-slate-800 transition-colors shadow-sm"
                   >
                     Submit Another Application
                   </button>
