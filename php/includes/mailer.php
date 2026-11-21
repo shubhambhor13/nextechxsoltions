@@ -127,6 +127,7 @@ class NextTechXMailer {
 
     /**
      * Create and configure a fresh PHPMailer instance
+     * Supports Hostinger SMTP (Port 465 with SSL/SMTPS) as primary, with full fallback support
      */
     public static function createMailer() {
         if (!class_exists('PHPMailer\PHPMailer\PHPMailer')) {
@@ -135,16 +136,17 @@ class NextTechXMailer {
 
         $mail = new PHPMailer(true);
 
-        $host = self::getEnv('SMTP_HOST', 'smtp.gmail.com');
-        $port = (int) self::getEnv('SMTP_PORT', 587);
-        $username = self::getEnv('SMTP_USERNAME', 'nextechxsolutions@gmail.com');
+        $host = self::getEnv('SMTP_HOST', 'smtp.hostinger.com');
+        $port = (int) self::getEnv('SMTP_PORT', 465);
+        $encryption = strtolower((string) self::getEnv('SMTP_ENCRYPTION', ($port === 465 ? 'ssl' : 'tls')));
+        $username = self::getEnv('SMTP_USERNAME', 'hr@nextechxsolutions.com');
         $password = self::getEnv('SMTP_PASSWORD', '');
-        $from_email = self::getEnv('SMTP_FROM_EMAIL', 'nextechxsolutions@gmail.com');
+        $from_email = self::getEnv('SMTP_FROM_EMAIL', 'hr@nextechxsolutions.com');
         $from_name = self::getEnv('SMTP_FROM_NAME', 'NEXTECHX SOLUTIONS');
 
         // Fail fast with clear actionable error if SMTP_PASSWORD is not provided
         if (empty($password)) {
-            throw new Exception("SMTP_PASSWORD is not configured. Please set your 16-character Gmail App Password in your server environment variables or .env file.");
+            throw new Exception("SMTP_PASSWORD is not configured. Please set your Hostinger email password in your server environment variables or .env file.");
         }
 
         $mail->isSMTP();
@@ -154,13 +156,16 @@ class NextTechXMailer {
         $mail->Username = $username;
         $mail->Password = $password;
 
-        if ($port === 465) {
+        // Configure encryption: SMTPS for port 465 / SSL, STARTTLS for port 587 / TLS
+        if ($encryption === 'ssl' || $encryption === 'smtps' || $port === 465) {
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-        } else {
+        } elseif ($encryption === 'tls' || $encryption === 'starttls' || $port === 587) {
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        } else {
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         }
 
-        // Configure CA bundle to guarantee TLS certificate verification succeeds across all servers
+        // Configure CA bundle to guarantee TLS/SSL certificate verification succeeds across all servers
         $ca_candidates = array_filter([
             dirname(__DIR__) . '/cacert.pem',
             __DIR__ . '/../cacert.pem',
@@ -190,7 +195,7 @@ class NextTechXMailer {
         $mail->Encoding = 'base64';
         $mail->Timeout = 15;
 
-        // Sensible default sender
+        // Sensible default sender from hr@nextechxsolutions.com
         $mail->setFrom($from_email, $from_name);
 
         return $mail;
@@ -229,7 +234,7 @@ class NextTechXMailer {
         $applying_for = htmlspecialchars(trim($data['applying_for'] ?? 'Internship'));
         $education = htmlspecialchars(trim($data['education'] ?? 'Degree'));
         $app_id = $data['id'] ?? ('NTX-' . date('Ymd') . '-' . substr(md5(uniqid()), 0, 4));
-        $hr_email = 'hr@nextechxsolutions.com';
+        $hr_email = self::getEnv('SMTP_FROM_EMAIL', 'hr@nextechxsolutions.com');
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return ['success' => false, 'error' => 'Invalid applicant email address'];

@@ -35,14 +35,18 @@ assert_test("PHPMailer Exception class exists", class_exists('PHPMailer\PHPMaile
 // TEST 2: Environment Variable Loader
 // ---------------------------------------------------------
 echo "\n--- Test Group 2: Environment Variable Configuration ---\n";
-$host = NextTechXMailer::getEnv('SMTP_HOST', 'smtp.gmail.com');
-$port = NextTechXMailer::getEnv('SMTP_PORT', 587);
-$user = NextTechXMailer::getEnv('SMTP_USERNAME', 'nextechxsolutions@gmail.com');
+$host = NextTechXMailer::getEnv('SMTP_HOST', 'smtp.hostinger.com');
+$port = NextTechXMailer::getEnv('SMTP_PORT', 465);
+$encryption = NextTechXMailer::getEnv('SMTP_ENCRYPTION', 'ssl');
+$user = NextTechXMailer::getEnv('SMTP_USERNAME', 'hr@nextechxsolutions.com');
+$from_email = NextTechXMailer::getEnv('SMTP_FROM_EMAIL', 'hr@nextechxsolutions.com');
 $from_name = NextTechXMailer::getEnv('SMTP_FROM_NAME', 'NEXTECHX SOLUTIONS');
 
-assert_test("SMTP_HOST defaults to smtp.gmail.com", $host === 'smtp.gmail.com');
-assert_test("SMTP_PORT defaults to 587", (int)$port === 587);
-assert_test("SMTP_USERNAME defaults to nextechxsolutions@gmail.com", $user === 'nextechxsolutions@gmail.com');
+assert_test("SMTP_HOST defaults to smtp.hostinger.com", $host === 'smtp.hostinger.com');
+assert_test("SMTP_PORT defaults to 465", (int)$port === 465);
+assert_test("SMTP_ENCRYPTION defaults to ssl", strtolower($encryption) === 'ssl');
+assert_test("SMTP_USERNAME defaults to hr@nextechxsolutions.com", $user === 'hr@nextechxsolutions.com');
+assert_test("SMTP_FROM_EMAIL defaults to hr@nextechxsolutions.com", $from_email === 'hr@nextechxsolutions.com');
 assert_test("SMTP_FROM_NAME defaults to NEXTECHX SOLUTIONS", $from_name === 'NEXTECHX SOLUTIONS');
 
 // ---------------------------------------------------------
