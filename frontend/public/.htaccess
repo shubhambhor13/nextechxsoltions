@@ -19,6 +19,7 @@ DirectoryIndex index.html index.php
   RewriteRule ^api/careers/apply/?$ api/apply_career.php [L,QSA]
   RewriteRule ^api/careers/vacancies/?$ api/apply_career.php?action=vacancies [L,QSA]
   RewriteRule ^api/careers/applications/?$ api/apply_career.php?action=applications [L,QSA]
+  RewriteRule ^api/careers/download-resume/([0-9]+)/?$ api/apply_career.php?action=download_resume&id=$1 [L,QSA]
   RewriteRule ^api/quotation/?$ api/quote.php [L,QSA]
   RewriteRule ^api/training/register/?$ api/apply.php [L,QSA]
   RewriteRule ^api/training/courses/?$ api/apply.php?action=courses [L,QSA]

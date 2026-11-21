@@ -83,6 +83,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         exit;
     }
 
+    // 3. Download Resume Action (Safely serve stored applicant resume from disk)
+    if ($action === 'download_resume' && !empty($_GET['id'])) {
+        $app_id = (int)$_GET['id'];
+        $app = null;
+        $db = function_exists('get_db') ? get_db() : null;
+        if ($db) {
+            $stmt = $db->prepare("SELECT resume_filename, resume_filepath FROM career_applications WHERE id = :id");
+            $stmt->execute([':id' => $app_id]);
+            $app = $stmt->fetch();
+        }
+
+        if ($app && !empty($app['resume_filepath']) && file_exists($app['resume_filepath'])) {
+            $fpath = $app['resume_filepath'];
+            $orig_name = !empty($app['resume_filename']) ? $app['resume_filename'] : basename($fpath);
+            $mime = 'application/octet-stream';
+            if (function_exists('mime_content_type')) {
+                $mime = mime_content_type($fpath) ?: $mime;
+            }
+
+            header('Content-Description: File Transfer');
+            header('Content-Type: ' . $mime);
+            header('Content-Disposition: attachment; filename="' . basename($orig_name) . '"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($fpath));
+            readfile($fpath);
+            exit;
+        }
+
+        http_response_code(404);
+        echo json_encode(['error' => 'Resume file not found on server disk.']);
+        exit;
+    }
+
     // Default GET: Return opportunities list (Jobs empty - currently offering internships only)
     echo json_encode([
         'notice' => 'Currently, we are offering internship opportunities. Stay connected for future updates.',
