@@ -4,12 +4,12 @@ $page_desc = "Intelligent autonomous agents, generative AI, and end-to-end workf
 require_once __DIR__ . '/includes/header.php';
 ?>
 
-<!-- 1. Hero Section -->
+<!-- 1. Hero Section with Interactive Graphic -->
 <section class="relative pt-12 pb-16 lg:pt-16 lg:pb-24 bg-gradient-to-b from-slate-50/80 via-white to-white border-b border-slate-200/80 overflow-hidden">
-    <div class="absolute inset-0 bg-grid-corporate opacity-30 pointer-events-none"></div>
-    <div class="absolute -top-32 right-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute inset-0 bg-grid-corporate opacity-35 pointer-events-none"></div>
+    <div class="absolute -top-32 right-1/4 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-left space-y-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-left space-y-8">
         <!-- Breadcrumb Navigation -->
         <div class="flex items-center gap-2 text-xs font-mono text-slate-500">
             <a href="index.php" class="hover:text-blue-600 transition-colors">Home</a>
@@ -19,15 +19,16 @@ require_once __DIR__ . '/includes/header.php';
             <span class="text-slate-900 font-semibold">AI & Automation</span>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <!-- Left Column: Title, Overview & Actions -->
-            <div class="lg:col-span-8 space-y-5">
+            <div class="lg:col-span-7 space-y-6">
                 <div class="flex items-center gap-3">
-                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 via-indigo-600 to-cyan-500 text-white flex items-center justify-center shrink-0 shadow-sm">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 via-indigo-600 to-cyan-500 text-white flex items-center justify-center shrink-0 shadow-md">
                         <i data-lucide="bot" class="w-6 h-6 stroke-[2]"></i>
                     </div>
-                    <span class="inline-flex items-center px-3.5 py-1 rounded-full text-xs font-semibold font-mono bg-blue-50 text-blue-700 border border-blue-200">
-                        Autonomous Intelligence
+                    <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-semibold font-mono bg-blue-50 text-blue-700 border border-blue-200">
+                        <span class="w-1.5 h-1.5 rounded-full bg-blue-600 animate-pulse"></span>
+                        <span>Autonomous Intelligence</span>
                     </span>
                 </div>
 
@@ -35,42 +36,106 @@ require_once __DIR__ . '/includes/header.php';
                     AI & Automation
                 </h1>
 
-                <p class="text-base sm:text-lg text-slate-600 leading-relaxed font-normal">
+                <p class="text-base sm:text-lg text-slate-600 leading-relaxed font-normal max-w-2xl">
                     Our AI & Automation practice builds intelligent, production-ready systems that transform operational efficiency. We combine state-of-the-art Large Language Models (LLMs), autonomous event-driven agents, and computer vision pipelines to eliminate manual overhead, accelerate decision-making, and create responsive customer experiences.
                 </p>
 
                 <div class="pt-2 flex flex-wrap items-center gap-3.5">
-                    <a href="contact.php" class="px-7 py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-bold text-sm shadow-sm transition-all font-heading flex items-center gap-2">
+                    <a href="contact.php" class="px-7 py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-bold text-sm shadow-md transition-all font-heading flex items-center gap-2 active:scale-95">
                         <span>Inquire About AI & Automation</span>
                         <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </a>
 
-                    <button onclick="openQuoteModal()" class="px-6 py-3.5 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold text-sm transition-colors font-heading">
+                    <button onclick="openQuoteModal()" class="px-6 py-3.5 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-800 font-semibold text-sm transition-all font-heading">
                         Request Quotation
+                    </button>
+
+                    <button onclick="openConsultationModal()" class="px-6 py-3.5 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-800 font-semibold text-sm transition-all font-heading flex items-center gap-2">
+                        <i data-lucide="phone-call" class="w-4 h-4 text-blue-600"></i>
+                        <span>Book Strategy Call</span>
                     </button>
                 </div>
             </div>
 
-            <!-- Right Column: Quick Highlights Panel -->
-            <div class="lg:col-span-4">
-                <div class="bg-slate-50/90 rounded-2xl p-6 border border-slate-200/90 shadow-2xs space-y-4">
-                    <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider font-mono flex items-center gap-2">
-                        <i data-lucide="activity" class="w-4 h-4 text-blue-600"></i>
-                        <span>Practice Snapshot</span>
-                    </h3>
+            <!-- Right Column: Bespoke High-Tech Illustration / Interactive Graphic -->
+            <div class="lg:col-span-5">
+                <div class="relative w-full max-w-lg mx-auto">
+                    <div class="absolute -inset-2 bg-gradient-to-r from-blue-600/20 via-cyan-500/20 to-indigo-600/20 rounded-3xl blur-xl opacity-70 pointer-events-none"></div>
+                    <div class="relative rounded-2xl bg-slate-900 border border-slate-800 shadow-2xl overflow-hidden font-sans text-left">
+                        <!-- Window Top Bar -->
+                        <div class="flex items-center justify-between px-4 py-3 bg-slate-950/80 border-b border-slate-800">
+                            <div class="flex items-center gap-2">
+                                <div class="w-3 h-3 rounded-full bg-rose-500/80"></div>
+                                <div class="w-3 h-3 rounded-full bg-amber-500/80"></div>
+                                <div class="w-3 h-3 rounded-full bg-emerald-500/80"></div>
+                                <span class="ml-2 text-xs font-mono text-slate-400">agent_orchestrator.py</span>
+                            </div>
+                            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800/80 text-[10px] font-mono">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                <span>LIVE PIPELINE</span>
+                            </span>
+                        </div>
 
-                    <div class="space-y-3 text-xs text-slate-600">
-                        <div class="p-3 rounded-xl bg-white border border-slate-200/80">
-                            <span class="font-bold text-slate-900 block font-heading mb-0.5">Delivery Model</span>
-                            <span>Agile Sprints • Fixed Milestone SOWs</span>
+                        <!-- Visual Pipeline Nodes -->
+                        <div class="p-5 space-y-3.5 text-xs">
+                            <div class="p-3 rounded-xl bg-slate-800/60 border border-slate-700/60 flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-7 h-7 rounded-lg bg-cyan-500/10 text-cyan-400 flex items-center justify-center border border-cyan-500/20">
+                                        <i data-lucide="zap" class="w-4 h-4"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-slate-200">Inbound Event Ingestion</p>
+                                        <p class="text-[11px] text-slate-400 font-mono">WhatsApp Cloud API & ERP Webhook</p>
+                                    </div>
+                                </div>
+                                <span class="text-[10px] font-mono text-cyan-400 bg-cyan-950/80 px-2 py-0.5 rounded border border-cyan-800/50">200 OK</span>
+                            </div>
+
+                            <div class="flex justify-center -my-1">
+                                <div class="w-0.5 h-3 bg-gradient-to-b from-cyan-500 to-indigo-500"></div>
+                            </div>
+
+                            <div class="p-3 rounded-xl bg-slate-800/90 border border-indigo-500/30 flex items-center justify-between shadow-inner">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-7 h-7 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center border border-indigo-500/40">
+                                        <i data-lucide="brain" class="w-4 h-4"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-white">Cognitive RAG Retrieval</p>
+                                        <p class="text-[11px] text-slate-300 font-mono">Vector Embeddings + Claude 3.5 Sonnet</p>
+                                    </div>
+                                </div>
+                                <span class="text-[10px] font-mono text-indigo-300 bg-indigo-950 px-2 py-0.5 rounded border border-indigo-800">Match 99.4%</span>
+                            </div>
+
+                            <div class="flex justify-center -my-1">
+                                <div class="w-0.5 h-3 bg-gradient-to-b from-indigo-500 to-blue-500"></div>
+                            </div>
+
+                            <div class="p-3 rounded-xl bg-slate-800/60 border border-slate-700/60 flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-7 h-7 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center border border-emerald-500/20">
+                                        <i data-lucide="check-circle" class="w-4 h-4"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-slate-200">Automated Resolution & DB Sync</p>
+                                        <p class="text-[11px] text-slate-400 font-mono">Invoice Approved & Customer Notified</p>
+                                    </div>
+                                </div>
+                                <span class="text-[10px] font-mono text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-800/50">COMPLETE</span>
+                            </div>
                         </div>
-                        <div class="p-3 rounded-xl bg-white border border-slate-200/80">
-                            <span class="font-bold text-slate-900 block font-heading mb-0.5">Code & IP Ownership</span>
-                            <span>100% Client Retained with Mutual NDA</span>
-                        </div>
-                        <div class="p-3 rounded-xl bg-white border border-slate-200/80">
-                            <span class="font-bold text-slate-900 block font-heading mb-0.5">Engineering Lead</span>
-                            <span>Direct Technical Architect Collaboration</span>
+
+                        <!-- Console Telemetry Footer -->
+                        <div class="px-5 py-3 bg-slate-950/90 border-t border-slate-800/80 flex items-center justify-between text-[11px] font-mono text-slate-400">
+                            <span class="flex items-center gap-1.5">
+                                <i data-lucide="clock" class="w-3.5 h-3.5 text-cyan-400"></i>
+                                <span>Latency: <strong class="text-white">210ms</strong></span>
+                            </span>
+                            <span class="flex items-center gap-1.5">
+                                <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i>
+                                <span>Guardrails: <strong class="text-emerald-400">Enforced</strong></span>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -79,278 +144,495 @@ require_once __DIR__ . '/includes/header.php';
     </div>
 </section>
 
-<!-- 2. Core Concepts Section -->
-<section class="py-16 lg:py-20 bg-white border-b border-slate-200/80">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 text-left">
-        <div class="space-y-2">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-800 text-xs font-semibold uppercase tracking-wider font-mono">
-                <i data-lucide="cpu" class="w-3.5 h-3.5 text-blue-600"></i>
-                <span>Architectural Principles</span>
+<!-- 2. Practice Value Drivers / Highlights Strip -->
+<section class="bg-slate-50/80 border-b border-slate-200/80 py-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-left">
+            <div class="p-3.5 rounded-xl bg-white border border-slate-200/80 shadow-2xs">
+                <span class="text-[11px] font-mono text-slate-400 uppercase tracking-wider block">Delivery Framework</span>
+                <span class="text-xs sm:text-sm font-bold text-slate-900 font-heading">Agile Sprints & Fixed SOWs</span>
             </div>
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight font-heading">
-                Core Technical Concepts
-            </h2>
-            <p class="text-sm sm:text-base text-slate-600 max-w-2xl">
-                Fundamental technical concepts and engineering standards underpinning our AI & Automation implementations.
-            </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="p-6 rounded-2xl bg-slate-50/60 border border-slate-200/90 hover:border-blue-300 transition-colors space-y-2.5">
-                <div class="w-8 h-8 rounded-lg bg-blue-100/70 text-blue-700 flex items-center justify-center font-bold text-xs font-mono">01</div>
-                <h3 class="text-base font-bold text-slate-900 font-heading">Artificial Intelligence (AI)</h3>
-                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Foundational algorithms and neural systems capable of reasoning, planning, and executing complex cognitive tasks autonomously.</p>
+            <div class="p-3.5 rounded-xl bg-white border border-slate-200/80 shadow-2xs">
+                <span class="text-[11px] font-mono text-slate-400 uppercase tracking-wider block">Security & Legal</span>
+                <span class="text-xs sm:text-sm font-bold text-slate-900 font-heading">100% Client Code & IP</span>
             </div>
-            <div class="p-6 rounded-2xl bg-slate-50/60 border border-slate-200/90 hover:border-blue-300 transition-colors space-y-2.5">
-                <div class="w-8 h-8 rounded-lg bg-blue-100/70 text-blue-700 flex items-center justify-center font-bold text-xs font-mono">02</div>
-                <h3 class="text-base font-bold text-slate-900 font-heading">Machine Learning (ML)</h3>
-                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Supervised and unsupervised models trained on structured enterprise data to generate predictive insights and automated classifications.</p>
+            <div class="p-3.5 rounded-xl bg-white border border-slate-200/80 shadow-2xs">
+                <span class="text-[11px] font-mono text-slate-400 uppercase tracking-wider block">Leadership</span>
+                <span class="text-xs sm:text-sm font-bold text-slate-900 font-heading">Direct Architect Access</span>
             </div>
-            <div class="p-6 rounded-2xl bg-slate-50/60 border border-slate-200/90 hover:border-blue-300 transition-colors space-y-2.5">
-                <div class="w-8 h-8 rounded-lg bg-blue-100/70 text-blue-700 flex items-center justify-center font-bold text-xs font-mono">03</div>
-                <h3 class="text-base font-bold text-slate-900 font-heading">Generative AI & LLMs</h3>
-                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Custom retrieval-augmented generation (RAG) architectures leveraging GPT-4o, Claude, and open-source models with private enterprise context.</p>
-            </div>
-            <div class="p-6 rounded-2xl bg-slate-50/60 border border-slate-200/90 hover:border-blue-300 transition-colors space-y-2.5">
-                <div class="w-8 h-8 rounded-lg bg-blue-100/70 text-blue-700 flex items-center justify-center font-bold text-xs font-mono">04</div>
-                <h3 class="text-base font-bold text-slate-900 font-heading">Natural Language Processing (NLP)</h3>
-                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">High-precision semantic understanding, sentiment analysis, entity extraction, and multilingual translation for enterprise text streams.</p>
-            </div>
-            <div class="p-6 rounded-2xl bg-slate-50/60 border border-slate-200/90 hover:border-blue-300 transition-colors space-y-2.5">
-                <div class="w-8 h-8 rounded-lg bg-blue-100/70 text-blue-700 flex items-center justify-center font-bold text-xs font-mono">05</div>
-                <h3 class="text-base font-bold text-slate-900 font-heading">Computer Vision</h3>
-                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Automated visual inspection, optical character recognition (OCR), facial verification, and object tracking across images and video feeds.</p>
-            </div>
-            <div class="p-6 rounded-2xl bg-slate-50/60 border border-slate-200/90 hover:border-blue-300 transition-colors space-y-2.5">
-                <div class="w-8 h-8 rounded-lg bg-blue-100/70 text-blue-700 flex items-center justify-center font-bold text-xs font-mono">06</div>
-                <h3 class="text-base font-bold text-slate-900 font-heading">Intelligent Automation (IA)</h3>
-                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Connecting AI decision nodes directly into existing operational APIs, ERPs, and CRMs to automate multi-step business transactions.</p>
+            <div class="p-3.5 rounded-xl bg-white border border-slate-200/80 shadow-2xs">
+                <span class="text-[11px] font-mono text-slate-400 uppercase tracking-wider block">Architecture</span>
+                <span class="text-xs sm:text-sm font-bold text-slate-900 font-heading">Zero-Vendor-Lock-In</span>
             </div>
         </div>
     </div>
 </section>
 
-<!-- 3. Our Offerings Section -->
-<section class="py-16 lg:py-20 bg-slate-50/60 border-b border-slate-200/80">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 text-left">
-        <div class="space-y-2">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-800 text-xs font-semibold uppercase tracking-wider font-mono">
+<!-- 3. Core Concepts Section -->
+<section class="py-16 lg:py-24 bg-white border-b border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 text-left">
+        <div class="space-y-3 max-w-3xl">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-50 text-blue-800 text-xs font-semibold uppercase tracking-wider font-mono">
+                <i data-lucide="cpu" class="w-3.5 h-3.5 text-blue-600"></i>
+                <span>Architectural Principles</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight font-heading">
+                Core Technical Concepts
+            </h2>
+            <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
+                Fundamental technical concepts and engineering standards underpinning our AI & Automation practice.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="p-6 sm:p-7 rounded-2xl bg-white border border-cyan-100 hover:border-cyan-300 shadow-2xs hover:shadow-lg hover:-translate-y-1 transition-all duration-300 space-y-3.5 flex flex-col justify-between">
+                <div class="flex items-center justify-between">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 via-indigo-600 to-cyan-500 text-white flex items-center justify-center shadow-xs">
+                        <i data-lucide="brain" class="w-5 h-5 stroke-[2]"></i>
+                    </div>
+                    <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">01</span>
+                </div>
+                <div class="space-y-2">
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900 font-heading">Artificial Intelligence (AI)</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Foundational algorithms and neural systems capable of reasoning, planning, and executing complex cognitive tasks autonomously.</p>
+                </div>
+            </div>
+
+            <div class="p-6 sm:p-7 rounded-2xl bg-white border border-cyan-100 hover:border-cyan-300 shadow-2xs hover:shadow-lg hover:-translate-y-1 transition-all duration-300 space-y-3.5 flex flex-col justify-between">
+                <div class="flex items-center justify-between">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 via-indigo-600 to-cyan-500 text-white flex items-center justify-center shadow-xs">
+                        <i data-lucide="cpu" class="w-5 h-5 stroke-[2]"></i>
+                    </div>
+                    <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">02</span>
+                </div>
+                <div class="space-y-2">
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900 font-heading">Machine Learning (ML)</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Supervised and unsupervised models trained on structured enterprise data to generate predictive insights and automated classifications.</p>
+                </div>
+            </div>
+
+            <div class="p-6 sm:p-7 rounded-2xl bg-white border border-cyan-100 hover:border-cyan-300 shadow-2xs hover:shadow-lg hover:-translate-y-1 transition-all duration-300 space-y-3.5 flex flex-col justify-between">
+                <div class="flex items-center justify-between">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 via-indigo-600 to-cyan-500 text-white flex items-center justify-center shadow-xs">
+                        <i data-lucide="sparkles" class="w-5 h-5 stroke-[2]"></i>
+                    </div>
+                    <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">03</span>
+                </div>
+                <div class="space-y-2">
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900 font-heading">Generative AI & LLMs</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Custom retrieval-augmented generation (RAG) architectures leveraging GPT-4o, Claude, and open-source models with private enterprise context.</p>
+                </div>
+            </div>
+
+            <div class="p-6 sm:p-7 rounded-2xl bg-white border border-cyan-100 hover:border-cyan-300 shadow-2xs hover:shadow-lg hover:-translate-y-1 transition-all duration-300 space-y-3.5 flex flex-col justify-between">
+                <div class="flex items-center justify-between">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 via-indigo-600 to-cyan-500 text-white flex items-center justify-center shadow-xs">
+                        <i data-lucide="message-square" class="w-5 h-5 stroke-[2]"></i>
+                    </div>
+                    <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">04</span>
+                </div>
+                <div class="space-y-2">
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900 font-heading">Natural Language Processing (NLP)</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">High-precision semantic understanding, sentiment analysis, entity extraction, and multilingual translation for enterprise text streams.</p>
+                </div>
+            </div>
+
+            <div class="p-6 sm:p-7 rounded-2xl bg-white border border-cyan-100 hover:border-cyan-300 shadow-2xs hover:shadow-lg hover:-translate-y-1 transition-all duration-300 space-y-3.5 flex flex-col justify-between">
+                <div class="flex items-center justify-between">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 via-indigo-600 to-cyan-500 text-white flex items-center justify-center shadow-xs">
+                        <i data-lucide="eye" class="w-5 h-5 stroke-[2]"></i>
+                    </div>
+                    <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">05</span>
+                </div>
+                <div class="space-y-2">
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900 font-heading">Computer Vision</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Automated visual inspection, optical character recognition (OCR), facial verification, and object tracking across images and video feeds.</p>
+                </div>
+            </div>
+
+            <div class="p-6 sm:p-7 rounded-2xl bg-white border border-cyan-100 hover:border-cyan-300 shadow-2xs hover:shadow-lg hover:-translate-y-1 transition-all duration-300 space-y-3.5 flex flex-col justify-between">
+                <div class="flex items-center justify-between">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 via-indigo-600 to-cyan-500 text-white flex items-center justify-center shadow-xs">
+                        <i data-lucide="zap" class="w-5 h-5 stroke-[2]"></i>
+                    </div>
+                    <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">06</span>
+                </div>
+                <div class="space-y-2">
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900 font-heading">Intelligent Automation (IA)</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Connecting AI decision nodes directly into existing operational APIs, ERPs, and CRMs to automate multi-step business transactions.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 4. What We Offer Section -->
+<section class="py-16 lg:py-24 bg-slate-50/60 border-b border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 text-left">
+        <div class="space-y-3 max-w-3xl">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-50 text-blue-800 text-xs font-semibold uppercase tracking-wider font-mono">
                 <i data-lucide="sparkles" class="w-3.5 h-3.5 text-blue-600"></i>
                 <span>Comprehensive Services</span>
             </div>
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight font-heading">
-                Our Specific Offerings
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight font-heading">
+                What We Offer
             </h2>
-            <p class="text-sm sm:text-base text-slate-600 max-w-2xl">
+            <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
                 Tailored capabilities and modular technical solutions engineered for your business requirements.
             </p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="bg-white p-6 sm:p-7 rounded-2xl border border-slate-200/90 shadow-2xs space-y-3">
-                <div class="w-5 h-5 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
-                    <i data-lucide="check" class="w-3.5 h-3.5 stroke-[2.5]"></i>
+            <div class="bg-white p-7 rounded-2xl border border-slate-200 shadow-2xs hover:shadow-lg hover:border-blue-300 transition-all duration-300 space-y-3 flex flex-col justify-between">
+                <div class="space-y-3">
+                    <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-100">
+                        <i data-lucide="check" class="w-4 h-4 stroke-[2.5]"></i>
+                    </div>
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900 font-heading">Custom RAG AI Chatbots</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Context-aware conversational assistants trained on private company documentation, SOPs, and knowledge repositories.</p>
                 </div>
-                <h3 class="text-base sm:text-lg font-bold text-slate-900 font-heading">Custom RAG AI Chatbots</h3>
-                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Context-aware conversational assistants trained on private company documentation, SOPs, and knowledge repositories.</p>
             </div>
-            <div class="bg-white p-6 sm:p-7 rounded-2xl border border-slate-200/90 shadow-2xs space-y-3">
-                <div class="w-5 h-5 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
-                    <i data-lucide="check" class="w-3.5 h-3.5 stroke-[2.5]"></i>
+
+            <div class="bg-white p-7 rounded-2xl border border-slate-200 shadow-2xs hover:shadow-lg hover:border-blue-300 transition-all duration-300 space-y-3 flex flex-col justify-between">
+                <div class="space-y-3">
+                    <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-100">
+                        <i data-lucide="check" class="w-4 h-4 stroke-[2.5]"></i>
+                    </div>
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900 font-heading">Autonomous AI Agents</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Goal-driven multi-step agents that proactively plan tasks, query databases, invoke APIs, and deliver verifiable outcomes.</p>
                 </div>
-                <h3 class="text-base sm:text-lg font-bold text-slate-900 font-heading">Autonomous AI Agents</h3>
-                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Goal-driven multi-step agents that proactively plan tasks, query databases, invoke APIs, and deliver verifiable outcomes.</p>
             </div>
-            <div class="bg-white p-6 sm:p-7 rounded-2xl border border-slate-200/90 shadow-2xs space-y-3">
-                <div class="w-5 h-5 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
-                    <i data-lucide="check" class="w-3.5 h-3.5 stroke-[2.5]"></i>
+
+            <div class="bg-white p-7 rounded-2xl border border-slate-200 shadow-2xs hover:shadow-lg hover:border-blue-300 transition-all duration-300 space-y-3 flex flex-col justify-between">
+                <div class="space-y-3">
+                    <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-100">
+                        <i data-lucide="check" class="w-4 h-4 stroke-[2.5]"></i>
+                    </div>
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900 font-heading">Business Process Automation</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">End-to-end digitisation of routine back-office approvals, customer triage, and transaction workflows.</p>
                 </div>
-                <h3 class="text-base sm:text-lg font-bold text-slate-900 font-heading">Business Process Automation</h3>
-                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">End-to-end digitisation of routine back-office approvals, customer triage, and transaction workflows.</p>
             </div>
-            <div class="bg-white p-6 sm:p-7 rounded-2xl border border-slate-200/90 shadow-2xs space-y-3">
-                <div class="w-5 h-5 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
-                    <i data-lucide="check" class="w-3.5 h-3.5 stroke-[2.5]"></i>
+
+            <div class="bg-white p-7 rounded-2xl border border-slate-200 shadow-2xs hover:shadow-lg hover:border-blue-300 transition-all duration-300 space-y-3 flex flex-col justify-between">
+                <div class="space-y-3">
+                    <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-100">
+                        <i data-lucide="check" class="w-4 h-4 stroke-[2.5]"></i>
+                    </div>
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900 font-heading">Workflow Automation (n8n & Webhooks)</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Multi-platform automated event pipelines synchronising CRMs, payment gateways, email systems, and messaging apps.</p>
                 </div>
-                <h3 class="text-base sm:text-lg font-bold text-slate-900 font-heading">Workflow Automation (n8n & Webhooks)</h3>
-                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Multi-platform automated event pipelines synchronising CRMs, payment gateways, email systems, and messaging apps.</p>
             </div>
-            <div class="bg-white p-6 sm:p-7 rounded-2xl border border-slate-200/90 shadow-2xs space-y-3">
-                <div class="w-5 h-5 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
-                    <i data-lucide="check" class="w-3.5 h-3.5 stroke-[2.5]"></i>
+
+            <div class="bg-white p-7 rounded-2xl border border-slate-200 shadow-2xs hover:shadow-lg hover:border-blue-300 transition-all duration-300 space-y-3 flex flex-col justify-between">
+                <div class="space-y-3">
+                    <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-100">
+                        <i data-lucide="check" class="w-4 h-4 stroke-[2.5]"></i>
+                    </div>
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900 font-heading">Intelligent OCR Document Extraction</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Automated extraction and structured validation of data from invoices, purchase orders, identity cards, and receipts.</p>
                 </div>
-                <h3 class="text-base sm:text-lg font-bold text-slate-900 font-heading">Intelligent OCR Document Extraction</h3>
-                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Automated extraction and structured validation of data from invoices, purchase orders, identity cards, and receipts.</p>
             </div>
-            <div class="bg-white p-6 sm:p-7 rounded-2xl border border-slate-200/90 shadow-2xs space-y-3">
-                <div class="w-5 h-5 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
-                    <i data-lucide="check" class="w-3.5 h-3.5 stroke-[2.5]"></i>
+
+            <div class="bg-white p-7 rounded-2xl border border-slate-200 shadow-2xs hover:shadow-lg hover:border-blue-300 transition-all duration-300 space-y-3 flex flex-col justify-between">
+                <div class="space-y-3">
+                    <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-100">
+                        <i data-lucide="check" class="w-4 h-4 stroke-[2.5]"></i>
+                    </div>
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900 font-heading">Enterprise AI Integration</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Seamless embedding of AI microservices into your existing web, mobile, and legacy ERP infrastructure.</p>
                 </div>
-                <h3 class="text-base sm:text-lg font-bold text-slate-900 font-heading">Enterprise AI Integration</h3>
-                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Seamless embedding of AI microservices into your existing web, mobile, and legacy ERP infrastructure.</p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- 4. Technology Stack Section -->
-<section class="py-16 lg:py-20 bg-white border-b border-slate-200/80">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 text-left">
-        <div class="space-y-2">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-800 text-xs font-semibold uppercase tracking-wider font-mono">
+<!-- 5. Technology Stack Section -->
+<section class="py-16 lg:py-24 bg-white border-b border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 text-left">
+        <div class="space-y-3 max-w-3xl">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-50 text-blue-800 text-xs font-semibold uppercase tracking-wider font-mono">
                 <i data-lucide="terminal" class="w-3.5 h-3.5 text-blue-600"></i>
                 <span>Production Stack</span>
             </div>
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight font-heading">
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight font-heading">
                 Technology Stack & Tooling
             </h2>
-            <p class="text-sm sm:text-base text-slate-600 max-w-2xl">
+            <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
                 Battle-tested tools, languages, and frameworks leveraged across our AI & Automation lifecycle.
             </p>
         </div>
 
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-            <div class="p-4 rounded-xl bg-slate-50/60 border border-slate-200/80 flex flex-col justify-between">
+            <div class="p-4 sm:p-5 rounded-xl bg-slate-50/70 border border-slate-200/80 hover:border-blue-300 hover:bg-white transition-all flex flex-col justify-between">
                 <span class="text-[11px] font-mono text-slate-500 uppercase tracking-wide">Core Language</span>
-                <span class="text-sm font-bold text-slate-900 font-heading mt-1">Python</span>
+                <span class="text-sm sm:text-base font-bold text-slate-900 font-heading mt-1.5">Python</span>
             </div>
-            <div class="p-4 rounded-xl bg-slate-50/60 border border-slate-200/80 flex flex-col justify-between">
+            <div class="p-4 sm:p-5 rounded-xl bg-slate-50/70 border border-slate-200/80 hover:border-blue-300 hover:bg-white transition-all flex flex-col justify-between">
                 <span class="text-[11px] font-mono text-slate-500 uppercase tracking-wide">Frameworks</span>
-                <span class="text-sm font-bold text-slate-900 font-heading mt-1">FastAPI / PyTorch</span>
+                <span class="text-sm sm:text-base font-bold text-slate-900 font-heading mt-1.5">FastAPI / PyTorch</span>
             </div>
-            <div class="p-4 rounded-xl bg-slate-50/60 border border-slate-200/80 flex flex-col justify-between">
+            <div class="p-4 sm:p-5 rounded-xl bg-slate-50/70 border border-slate-200/80 hover:border-blue-300 hover:bg-white transition-all flex flex-col justify-between">
                 <span class="text-[11px] font-mono text-slate-500 uppercase tracking-wide">Foundation Models</span>
-                <span class="text-sm font-bold text-slate-900 font-heading mt-1">OpenAI & Claude LLMs</span>
+                <span class="text-sm sm:text-base font-bold text-slate-900 font-heading mt-1.5">OpenAI & Claude LLMs</span>
             </div>
-            <div class="p-4 rounded-xl bg-slate-50/60 border border-slate-200/80 flex flex-col justify-between">
+            <div class="p-4 sm:p-5 rounded-xl bg-slate-50/70 border border-slate-200/80 hover:border-blue-300 hover:bg-white transition-all flex flex-col justify-between">
                 <span class="text-[11px] font-mono text-slate-500 uppercase tracking-wide">Agent Orchestration</span>
-                <span class="text-sm font-bold text-slate-900 font-heading mt-1">LangChain & LlamaIndex</span>
+                <span class="text-sm sm:text-base font-bold text-slate-900 font-heading mt-1.5">LangChain & LlamaIndex</span>
             </div>
-            <div class="p-4 rounded-xl bg-slate-50/60 border border-slate-200/80 flex flex-col justify-between">
+            <div class="p-4 sm:p-5 rounded-xl bg-slate-50/70 border border-slate-200/80 hover:border-blue-300 hover:bg-white transition-all flex flex-col justify-between">
                 <span class="text-[11px] font-mono text-slate-500 uppercase tracking-wide">Vector Databases</span>
-                <span class="text-sm font-bold text-slate-900 font-heading mt-1">ChromaDB / Pinecone</span>
+                <span class="text-sm sm:text-base font-bold text-slate-900 font-heading mt-1.5">ChromaDB / Pinecone</span>
             </div>
-            <div class="p-4 rounded-xl bg-slate-50/60 border border-slate-200/80 flex flex-col justify-between">
+            <div class="p-4 sm:p-5 rounded-xl bg-slate-50/70 border border-slate-200/80 hover:border-blue-300 hover:bg-white transition-all flex flex-col justify-between">
                 <span class="text-[11px] font-mono text-slate-500 uppercase tracking-wide">Event Pipelines</span>
-                <span class="text-sm font-bold text-slate-900 font-heading mt-1">n8n Automation Engine</span>
+                <span class="text-sm sm:text-base font-bold text-slate-900 font-heading mt-1.5">n8n Automation Engine</span>
             </div>
-            <div class="p-4 rounded-xl bg-slate-50/60 border border-slate-200/80 flex flex-col justify-between">
+            <div class="p-4 sm:p-5 rounded-xl bg-slate-50/70 border border-slate-200/80 hover:border-blue-300 hover:bg-white transition-all flex flex-col justify-between">
                 <span class="text-[11px] font-mono text-slate-500 uppercase tracking-wide">Messaging Gateway</span>
-                <span class="text-sm font-bold text-slate-900 font-heading mt-1">WhatsApp Cloud API</span>
+                <span class="text-sm sm:text-base font-bold text-slate-900 font-heading mt-1.5">WhatsApp Cloud API</span>
             </div>
-            <div class="p-4 rounded-xl bg-slate-50/60 border border-slate-200/80 flex flex-col justify-between">
+            <div class="p-4 sm:p-5 rounded-xl bg-slate-50/70 border border-slate-200/80 hover:border-blue-300 hover:bg-white transition-all flex flex-col justify-between">
                 <span class="text-[11px] font-mono text-slate-500 uppercase tracking-wide">Cloud Deployment</span>
-                <span class="text-sm font-bold text-slate-900 font-heading mt-1">Docker & AWS ECS</span>
+                <span class="text-sm sm:text-base font-bold text-slate-900 font-heading mt-1.5">Docker & AWS ECS</span>
             </div>
         </div>
     </div>
 </section>
 
-<!-- 5. End-to-End Workflow Pipeline -->
-<section class="py-16 lg:py-20 bg-slate-50/60 border-b border-slate-200/80">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 text-left">
-        <div class="space-y-2">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-800 text-xs font-semibold uppercase tracking-wider font-mono">
+<!-- 6. Our Workflow (Connected Step-by-Step Pipeline) -->
+<section class="py-16 lg:py-24 bg-slate-50/60 border-b border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 text-left">
+        <div class="space-y-3 max-w-3xl">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-50 text-blue-800 text-xs font-semibold uppercase tracking-wider font-mono">
                 <i data-lucide="workflow" class="w-3.5 h-3.5 text-blue-600"></i>
-                <span>Structured Execution</span>
+                <span>Execution Pipeline</span>
             </div>
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight font-heading">
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight font-heading">
                 Our End-to-End Workflow
             </h2>
-            <p class="text-sm sm:text-base text-slate-600 max-w-2xl">
+            <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
                 From requirement discovery to deployment and continuous maintenance—our disciplined execution process.
             </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="bg-white p-6 sm:p-7 rounded-2xl border border-slate-200/90 shadow-2xs space-y-3 relative">
-                <span class="text-xs font-mono font-bold px-2.5 py-1 rounded-md bg-blue-50 text-blue-700">Step 01</span>
-                <h3 class="text-base sm:text-lg font-bold text-slate-900 font-heading">Requirement Analysis</h3>
-                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">We analyze manual friction points, existing data sources, and business objectives to define measurable automation KPIs.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative">
+            <div class="bg-white p-7 rounded-2xl border border-slate-200/90 shadow-2xs hover:shadow-lg hover:border-blue-400/80 transition-all duration-300 space-y-4 relative flex flex-col justify-between">
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-mono font-bold px-3 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200">Step 01</span>
+                        <span class="text-slate-300 text-xs font-mono">01 / 06</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 font-heading">Requirement Analysis</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">We analyze manual friction points, existing data sources, and business objectives to define measurable automation KPIs.</p>
+                </div>
+                <div class="pt-3 border-t border-slate-100">
+                    <span class="text-[10px] font-mono text-slate-500 uppercase tracking-wider block mb-1">Tangible Output:</span>
+                    <span class="text-xs font-semibold text-blue-700 bg-blue-50/80 px-2.5 py-1 rounded-md block border border-blue-200/60 leading-tight">Feasibility Assessment & Automation Blueprint</span>
+                </div>
             </div>
-            <div class="bg-white p-6 sm:p-7 rounded-2xl border border-slate-200/90 shadow-2xs space-y-3 relative">
-                <span class="text-xs font-mono font-bold px-2.5 py-1 rounded-md bg-blue-50 text-blue-700">Step 02</span>
-                <h3 class="text-base sm:text-lg font-bold text-slate-900 font-heading">AI Solution Design</h3>
-                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Architecting the prompt strategy, vector embedding pipeline, data schemas, security guardrails, and system integrations.</p>
+
+            <div class="bg-white p-7 rounded-2xl border border-slate-200/90 shadow-2xs hover:shadow-lg hover:border-blue-400/80 transition-all duration-300 space-y-4 relative flex flex-col justify-between">
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-mono font-bold px-3 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200">Step 02</span>
+                        <span class="text-slate-300 text-xs font-mono">02 / 06</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 font-heading">AI Solution Design</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Architecting the prompt strategy, vector embedding pipeline, data schemas, security guardrails, and system integrations.</p>
+                </div>
+                <div class="pt-3 border-t border-slate-100">
+                    <span class="text-[10px] font-mono text-slate-500 uppercase tracking-wider block mb-1">Tangible Output:</span>
+                    <span class="text-xs font-semibold text-blue-700 bg-blue-50/80 px-2.5 py-1 rounded-md block border border-blue-200/60 leading-tight">Architecture Schema & Security Guardrail Specs</span>
+                </div>
             </div>
-            <div class="bg-white p-6 sm:p-7 rounded-2xl border border-slate-200/90 shadow-2xs space-y-3 relative">
-                <span class="text-xs font-mono font-bold px-2.5 py-1 rounded-md bg-blue-50 text-blue-700">Step 03</span>
-                <h3 class="text-base sm:text-lg font-bold text-slate-900 font-heading">Development & Tuning</h3>
-                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Engineering custom microservices, fine-tuning retrieval models, and building structured workflow triggers in Python.</p>
+
+            <div class="bg-white p-7 rounded-2xl border border-slate-200/90 shadow-2xs hover:shadow-lg hover:border-blue-400/80 transition-all duration-300 space-y-4 relative flex flex-col justify-between">
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-mono font-bold px-3 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200">Step 03</span>
+                        <span class="text-slate-300 text-xs font-mono">03 / 06</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 font-heading">Development & Tuning</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Engineering custom microservices, fine-tuning retrieval models, and building structured workflow triggers in Python.</p>
+                </div>
+                <div class="pt-3 border-t border-slate-100">
+                    <span class="text-[10px] font-mono text-slate-500 uppercase tracking-wider block mb-1">Tangible Output:</span>
+                    <span class="text-xs font-semibold text-blue-700 bg-blue-50/80 px-2.5 py-1 rounded-md block border border-blue-200/60 leading-tight">Functional Agent Prototype & Retrieval Model</span>
+                </div>
             </div>
-            <div class="bg-white p-6 sm:p-7 rounded-2xl border border-slate-200/90 shadow-2xs space-y-3 relative">
-                <span class="text-xs font-mono font-bold px-2.5 py-1 rounded-md bg-blue-50 text-blue-700">Step 04</span>
-                <h3 class="text-base sm:text-lg font-bold text-slate-900 font-heading">API Integration</h3>
-                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Connecting the AI engine directly with your operational tools (WhatsApp, CRM, databases, ERP, and payment platforms).</p>
+
+            <div class="bg-white p-7 rounded-2xl border border-slate-200/90 shadow-2xs hover:shadow-lg hover:border-blue-400/80 transition-all duration-300 space-y-4 relative flex flex-col justify-between">
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-mono font-bold px-3 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200">Step 04</span>
+                        <span class="text-slate-300 text-xs font-mono">04 / 06</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 font-heading">API Integration</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Connecting the AI engine directly with your operational tools (WhatsApp, CRM, databases, ERP, and payment platforms).</p>
+                </div>
+                <div class="pt-3 border-t border-slate-100">
+                    <span class="text-[10px] font-mono text-slate-500 uppercase tracking-wider block mb-1">Tangible Output:</span>
+                    <span class="text-xs font-semibold text-blue-700 bg-blue-50/80 px-2.5 py-1 rounded-md block border border-blue-200/60 leading-tight">End-to-End API Webhooks & ERP Connections</span>
+                </div>
             </div>
-            <div class="bg-white p-6 sm:p-7 rounded-2xl border border-slate-200/90 shadow-2xs space-y-3 relative">
-                <span class="text-xs font-mono font-bold px-2.5 py-1 rounded-md bg-blue-50 text-blue-700">Step 05</span>
-                <h3 class="text-base sm:text-lg font-bold text-slate-900 font-heading">Rigorous Testing & QA</h3>
-                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Validating model accuracy, latency thresholds, hallucinations, edge-case fallbacks, and data privacy security controls.</p>
+
+            <div class="bg-white p-7 rounded-2xl border border-slate-200/90 shadow-2xs hover:shadow-lg hover:border-blue-400/80 transition-all duration-300 space-y-4 relative flex flex-col justify-between">
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-mono font-bold px-3 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200">Step 05</span>
+                        <span class="text-slate-300 text-xs font-mono">05 / 06</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 font-heading">Rigorous Testing & QA</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Validating model accuracy, latency thresholds, hallucinations, edge-case fallbacks, and data privacy security controls.</p>
+                </div>
+                <div class="pt-3 border-t border-slate-100">
+                    <span class="text-[10px] font-mono text-slate-500 uppercase tracking-wider block mb-1">Tangible Output:</span>
+                    <span class="text-xs font-semibold text-blue-700 bg-blue-50/80 px-2.5 py-1 rounded-md block border border-blue-200/60 leading-tight">QA Validation Report & Accuracy Audit</span>
+                </div>
             </div>
-            <div class="bg-white p-6 sm:p-7 rounded-2xl border border-slate-200/90 shadow-2xs space-y-3 relative">
-                <span class="text-xs font-mono font-bold px-2.5 py-1 rounded-md bg-blue-50 text-blue-700">Step 06</span>
-                <h3 class="text-base sm:text-lg font-bold text-slate-900 font-heading">Deployment & Monitoring</h3>
-                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Zero-downtime cloud release with continuous telemetry, prompt performance tracking, and automated failure retries.</p>
+
+            <div class="bg-white p-7 rounded-2xl border border-slate-200/90 shadow-2xs hover:shadow-lg hover:border-blue-400/80 transition-all duration-300 space-y-4 relative flex flex-col justify-between">
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-mono font-bold px-3 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200">Step 06</span>
+                        <span class="text-slate-300 text-xs font-mono">06 / 06</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 font-heading">Deployment & Monitoring</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Zero-downtime cloud release with continuous telemetry, prompt performance tracking, and automated failure retries.</p>
+                </div>
+                <div class="pt-3 border-t border-slate-100">
+                    <span class="text-[10px] font-mono text-slate-500 uppercase tracking-wider block mb-1">Tangible Output:</span>
+                    <span class="text-xs font-semibold text-blue-700 bg-blue-50/80 px-2.5 py-1 rounded-md block border border-blue-200/60 leading-tight">Production Deployment & Live Telemetry</span>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- 6. Real-World Business Applications -->
-<section class="py-16 lg:py-20 bg-white border-b border-slate-200/80">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 text-left">
-        <div class="space-y-2">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-800 text-xs font-semibold uppercase tracking-wider font-mono">
+<!-- 7. Applications & Use Cases Section -->
+<section class="py-16 lg:py-24 bg-white border-b border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 text-left">
+        <div class="space-y-3 max-w-3xl">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-50 text-blue-800 text-xs font-semibold uppercase tracking-wider font-mono">
                 <i data-lucide="zap" class="w-3.5 h-3.5 text-blue-600"></i>
                 <span>Enterprise Impact</span>
             </div>
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight font-heading">
-                Business Applications
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight font-heading">
+                Applications & Use Cases
             </h2>
-            <p class="text-sm sm:text-base text-slate-600 max-w-2xl">
-                High-leverage enterprise automation use cases built with NextTechX engineering.
+            <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
+                Real-world operational implementations delivering measurable outcomes for our clients.
             </p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="p-6 sm:p-7 rounded-2xl bg-slate-50/60 border border-slate-200/90 space-y-2">
-                <h3 class="text-base sm:text-lg font-bold text-slate-900 font-heading">24/7 Omnichannel Customer Support</h3>
-                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Resolving up to 70% of inbound customer queries instantly across web chat and WhatsApp without human agent intervention.</p>
+            <div class="p-7 sm:p-8 rounded-2xl bg-slate-50/70 border border-slate-200/90 hover:border-blue-300 hover:bg-white transition-all duration-300 space-y-4 flex flex-col justify-between">
+                <div class="space-y-3">
+                    <span class="inline-block px-3 py-1 rounded-full bg-slate-200/80 text-slate-700 font-mono text-xs font-semibold">
+                        Fintech & Customer Support
+                    </span>
+                    <h3 class="text-lg sm:text-xl font-bold text-slate-900 font-heading">
+                        24/7 Omnichannel Customer Support
+                    </h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        Resolving up to 70% of inbound customer queries instantly across web chat and WhatsApp without human agent intervention.
+                    </p>
+                </div>
+                <div class="pt-3 border-t border-slate-200/60 flex items-center gap-2 text-xs font-semibold text-emerald-700 bg-emerald-50/80 px-3 py-1.5 rounded-lg border border-emerald-200">
+                    <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+                    <span>70% Instant First-Contact Resolution</span>
+                </div>
             </div>
-            <div class="p-6 sm:p-7 rounded-2xl bg-slate-50/60 border border-slate-200/90 space-y-2">
-                <h3 class="text-base sm:text-lg font-bold text-slate-900 font-heading">Automated Accounts Payable & Invoicing</h3>
-                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Ingesting incoming vendor invoices via OCR, reconciling against purchase orders, and pushing to accounting software.</p>
+
+            <div class="p-7 sm:p-8 rounded-2xl bg-slate-50/70 border border-slate-200/90 hover:border-blue-300 hover:bg-white transition-all duration-300 space-y-4 flex flex-col justify-between">
+                <div class="space-y-3">
+                    <span class="inline-block px-3 py-1 rounded-full bg-slate-200/80 text-slate-700 font-mono text-xs font-semibold">
+                        Supply Chain & Corporate Finance
+                    </span>
+                    <h3 class="text-lg sm:text-xl font-bold text-slate-900 font-heading">
+                        Automated Accounts Payable & Invoicing
+                    </h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        Ingesting incoming vendor invoices via OCR, reconciling against purchase orders, and pushing to accounting software.
+                    </p>
+                </div>
+                <div class="pt-3 border-t border-slate-200/60 flex items-center gap-2 text-xs font-semibold text-emerald-700 bg-emerald-50/80 px-3 py-1.5 rounded-lg border border-emerald-200">
+                    <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+                    <span>85% Manual AP Cycle Time Reduction</span>
+                </div>
             </div>
-            <div class="p-6 sm:p-7 rounded-2xl bg-slate-50/60 border border-slate-200/90 space-y-2">
-                <h3 class="text-base sm:text-lg font-bold text-slate-900 font-heading">HR & Employee Onboarding Assistant</h3>
-                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Guiding new hires through documentation, policy lookups, hardware provisioning, and automated training modules.</p>
+
+            <div class="p-7 sm:p-8 rounded-2xl bg-slate-50/70 border border-slate-200/90 hover:border-blue-300 hover:bg-white transition-all duration-300 space-y-4 flex flex-col justify-between">
+                <div class="space-y-3">
+                    <span class="inline-block px-3 py-1 rounded-full bg-slate-200/80 text-slate-700 font-mono text-xs font-semibold">
+                        Enterprise HR Operations
+                    </span>
+                    <h3 class="text-lg sm:text-xl font-bold text-slate-900 font-heading">
+                        HR & Employee Onboarding Assistant
+                    </h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        Guiding new hires through documentation, policy lookups, hardware provisioning, and automated training modules.
+                    </p>
+                </div>
+                <div class="pt-3 border-t border-slate-200/60 flex items-center gap-2 text-xs font-semibold text-emerald-700 bg-emerald-50/80 px-3 py-1.5 rounded-lg border border-emerald-200">
+                    <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+                    <span>Zero-Wait Onboarding Processing</span>
+                </div>
             </div>
-            <div class="p-6 sm:p-7 rounded-2xl bg-slate-50/60 border border-slate-200/90 space-y-2">
-                <h3 class="text-base sm:text-lg font-bold text-slate-900 font-heading">Sales Lead Qualification & Routing</h3>
-                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Instant conversational qualification of website leads, calendar appointment booking, and CRM data enrichment.</p>
+
+            <div class="p-7 sm:p-8 rounded-2xl bg-slate-50/70 border border-slate-200/90 hover:border-blue-300 hover:bg-white transition-all duration-300 space-y-4 flex flex-col justify-between">
+                <div class="space-y-3">
+                    <span class="inline-block px-3 py-1 rounded-full bg-slate-200/80 text-slate-700 font-mono text-xs font-semibold">
+                        B2B Sales & Marketing
+                    </span>
+                    <h3 class="text-lg sm:text-xl font-bold text-slate-900 font-heading">
+                        Sales Lead Qualification & Routing
+                    </h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        Instant conversational qualification of website leads, calendar appointment booking, and CRM data enrichment.
+                    </p>
+                </div>
+                <div class="pt-3 border-t border-slate-200/60 flex items-center gap-2 text-xs font-semibold text-emerald-700 bg-emerald-50/80 px-3 py-1.5 rounded-lg border border-emerald-200">
+                    <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+                    <span>3.2x Faster Qualified Lead Routing</span>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- 7. Closing CTA Section -->
-<section class="py-16 lg:py-20 bg-slate-50/60">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 font-heading tracking-tight">
-            Accelerate Operations with Intelligent AI
+<!-- 8. Contact Us CTA Banner -->
+<section class="py-16 lg:py-24 bg-gradient-to-br from-slate-900 via-slate-950 to-blue-950 text-white relative overflow-hidden">
+    <div class="absolute inset-0 bg-grid-corporate opacity-20 pointer-events-none"></div>
+    <div class="absolute -bottom-20 left-1/3 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6 relative z-10">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 text-cyan-300 border border-white/15 text-xs font-semibold font-mono">
+            <i data-lucide="shield-check" class="w-3.5 h-3.5 text-cyan-400"></i>
+            <span>Mutual Non-Disclosure • Enterprise Confidentiality</span>
+        </div>
+
+        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white font-heading tracking-tight">
+            Ready to Discuss Your AI & Automation Requirements?
         </h2>
-        <p class="text-sm sm:text-base text-slate-600 max-w-xl mx-auto leading-relaxed">
-            Discuss your automation objectives with our AI engineering architects today.
+
+        <p class="text-sm sm:text-base text-slate-300 max-w-xl mx-auto leading-relaxed">
+            Connect directly with our solutions engineering team to evaluate your scope and receive actionable technical guidance.
         </p>
-        <div class="pt-2 flex flex-wrap items-center justify-center gap-4">
-            <a href="contact.php" class="px-7 py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-bold text-sm shadow-sm transition-all font-heading flex items-center gap-2">
-                <span>Contact Our AI Team</span>
+
+        <div class="pt-3 flex flex-wrap items-center justify-center gap-4">
+            <a href="contact.php" class="px-8 py-3.5 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-bold text-sm shadow-lg shadow-cyan-500/20 transition-all font-heading flex items-center gap-2 active:scale-95">
+                <span>Contact Engineering Team</span>
                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
             </a>
-            <button onclick="openConsultationModal()" class="px-7 py-3.5 rounded-xl border border-slate-300 hover:bg-white text-slate-700 font-semibold text-sm transition-all font-heading flex items-center gap-2">
-                <i data-lucide="phone-call" class="w-4 h-4 text-blue-600"></i>
-                <span>Book Technical Consultation</span>
+
+            <button onclick="openQuoteModal()" class="px-7 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white border border-white/20 font-semibold text-sm transition-all font-heading">
+                Request Quotation
+            </button>
+
+            <button onclick="openConsultationModal()" class="px-7 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white border border-white/20 font-semibold text-sm transition-all font-heading flex items-center gap-2">
+                <i data-lucide="phone-call" class="w-4 h-4 text-cyan-400"></i>
+                <span>Book Strategy Call</span>
             </button>
         </div>
     </div>
