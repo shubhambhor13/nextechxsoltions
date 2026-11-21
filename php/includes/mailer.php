@@ -656,11 +656,9 @@ class NextTechXMailer {
 
       <!-- 3. Professional Corporate Footer -->
       <tr>
-        <td class="footer-cell" style="padding: 22px 36px; border-top: 1px solid #e5e7eb; background-color: #ffffff;">
-          <p style="font-size: 12px; color: #6b7280; line-height: 1.6; margin: 0;">
-            <strong style="color: #0f2b5c; font-size: 12.5px; letter-spacing: 0.3px;">NEXTECHX SOLUTIONS</strong><br>
-            Website: <a href="{$websiteUrl}" target="_blank" rel="noopener" style="color: #0f2b5c; text-decoration: underline;">{$websiteUrl}</a> &nbsp;|&nbsp; 
-            Email: <a href="mailto:{$hrEmail}" style="color: #0f2b5c; text-decoration: underline;">{$hrEmail}</a>
+        <td class="footer-cell" style="padding: 20px 36px; border-top: 1px solid #e5e7eb; background-color: #ffffff;">
+          <p style="font-size: 12px; color: #6b7280; line-height: 1.5; margin: 0;">
+            <strong style="color: #0f2b5c; font-size: 12px; letter-spacing: 0.4px;">NEXTECHX SOLUTIONS</strong>
           </p>
         </td>
       </tr>
