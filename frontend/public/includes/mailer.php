@@ -23,6 +23,10 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
+if (file_exists(__DIR__ . '/cms.php')) {
+    require_once __DIR__ . '/cms.php';
+}
+
 class NextTechXMailer {
 
     public static $last_password_source = null;
@@ -272,6 +276,578 @@ class NextTechXMailer {
     }
 
     /**
+     * Centralized Form Submission Dispatcher
+     * Handles both:
+     * 1. Admin/Company Email Notification to nextechxsolutions@gmail.com (with all fields & attachments)
+     * 2. Automatic Confirmation Email to Applicant / Visitor
+     */
+    public static function sendFormSubmission($form_type, $form_title, $fields, $user_email, $user_name = '', $attachments = [], $reference_id = null) {
+        $prefix = strtoupper(substr(preg_replace('/[^a-zA-Z]/', '', $form_type), 0, 3));
+        if (empty($prefix)) $prefix = 'REQ';
+        $ref_id = $reference_id ?: ('NTX-' . $prefix . '-' . date('Ymd') . '-' . substr(md5(uniqid()), 0, 4));
+        $submission_date = date('d M Y, h:i A T');
+        $user_name = trim($user_name) ?: 'Valued Visitor';
+        $user_email = trim($user_email);
+
+        $company_to = 'nextechxsolutions@gmail.com';
+        $hr_from = self::getEnv('SMTP_FROM_EMAIL', 'hr@nextechxsolutions.com');
+        $from_name = self::getEnv('SMTP_FROM_NAME', 'NEXTECHX SOLUTIONS');
+
+        $company_success = false;
+        $company_error = null;
+        $user_success = false;
+        $user_error = null;
+
+        // Normalize attachments array: support string filepath or array of ['path' => '...', 'name' => '...']
+        $normalized_attachments = [];
+        if (!empty($attachments)) {
+            if (is_string($attachments)) {
+                $attachments = [$attachments];
+            }
+            foreach ($attachments as $att) {
+                if (is_string($att) && file_exists($att)) {
+                    $normalized_attachments[] = [
+                        'path' => realpath($att) ?: $att,
+                        'name' => basename($att)
+                    ];
+                } elseif (is_array($att) && !empty($att['path']) && file_exists($att['path'])) {
+                    $normalized_attachments[] = [
+                        'path' => realpath($att['path']) ?: $att['path'],
+                        'name' => !empty($att['name']) ? $att['name'] : basename($att['path'])
+                    ];
+                }
+            }
+        }
+
+        // =========================================================
+        // 1. DISPATCH COMPANY / ADMIN NOTIFICATION
+        // =========================================================
+        $admin_subject = "[$form_title] New Submission from {$user_name} – NEXTECHX SOLUTIONS";
+        $admin_html = self::buildAdminNotificationHtml([
+            'form_type' => $form_type,
+            'form_title' => $form_title,
+            'user_name' => $user_name,
+            'user_email' => $user_email,
+            'fields' => $fields,
+            'reference_id' => $ref_id,
+            'submission_date' => $submission_date,
+            'attachments' => $normalized_attachments
+        ]);
+
+        $admin_plain = "NEW FORM SUBMISSION – NEXTECHX SOLUTIONS\n" .
+            "============================================================\n" .
+            "Form Type:     $form_title\n" .
+            "Reference ID:  $ref_id\n" .
+            "Date & Time:   $submission_date\n" .
+            "Submitter:     $user_name\n" .
+            "Email:         $user_email\n\n" .
+            "SUBMITTED DETAILS:\n" .
+            "------------------------------------------------------------\n";
+        foreach ($fields as $label => $val) {
+            if (is_array($val)) $val = implode(', ', $val);
+            $admin_plain .= str_pad($label . ":", 24) . " $val\n";
+        }
+        if (!empty($normalized_attachments)) {
+            $admin_plain .= "\nATTACHMENTS:\n";
+            foreach ($normalized_attachments as $a) {
+                $admin_plain .= " - " . $a['name'] . "\n";
+            }
+        }
+        $admin_plain .= "\n============================================================\nNEXTECHX SOLUTIONS Centralized Form Engine\nhttps://nextechxsolutions.com";
+
+        try {
+            $mailAdmin = self::createMailer();
+            $mailAdmin->addAddress($company_to, 'NEXTECHX SOLUTIONS Admin Desk');
+            if (filter_var($user_email, FILTER_VALIDATE_EMAIL)) {
+                $mailAdmin->addReplyTo($user_email, $user_name);
+            }
+            $mailAdmin->Subject = $admin_subject;
+            $mailAdmin->isHTML(true);
+            $mailAdmin->Body = $admin_html;
+            $mailAdmin->AltBody = $admin_plain;
+
+            foreach ($normalized_attachments as $att) {
+                try {
+                    $mailAdmin->addAttachment($att['path'], $att['name']);
+                } catch (\Throwable $attErr) {
+                    self::logError('admin_notification_attachment', $attErr->getMessage(), $company_to);
+                }
+            }
+
+            $mailAdmin->send();
+            $company_success = true;
+        } catch (\Throwable $e) {
+            $err465 = $e->getMessage() . (!empty($mailAdmin->ErrorInfo) ? (' | ' . $mailAdmin->ErrorInfo) : '');
+            $is_auth = (stripos($err465, 'authenticate') !== false || stripos($err465, '535') !== false);
+            if (!$is_auth) {
+                try {
+                    $mailAdminRetry = self::createMailer(587, 'tls');
+                    $mailAdminRetry->addAddress($company_to, 'NEXTECHX SOLUTIONS Admin Desk');
+                    if (filter_var($user_email, FILTER_VALIDATE_EMAIL)) {
+                        $mailAdminRetry->addReplyTo($user_email, $user_name);
+                    }
+                    $mailAdminRetry->Subject = $admin_subject;
+                    $mailAdminRetry->isHTML(true);
+                    $mailAdminRetry->Body = $admin_html;
+                    $mailAdminRetry->AltBody = $admin_plain;
+
+                    foreach ($normalized_attachments as $att) {
+                        try { $mailAdminRetry->addAttachment($att['path'], $att['name']); } catch (\Throwable $t) {}
+                    }
+
+                    $mailAdminRetry->send();
+                    $company_success = true;
+                } catch (\Throwable $retryErr) {
+                    $company_error = "Port 465: $err465 | Port 587: " . $retryErr->getMessage();
+                    self::logError('admin_notification', $company_error, $company_to);
+                }
+            } else {
+                $company_error = "Port 465 Auth Error: $err465";
+                self::logError('admin_notification', $company_error, $company_to);
+            }
+        }
+
+        // =========================================================
+        // 2. DISPATCH USER CONFIRMATION EMAIL
+        // =========================================================
+        if (filter_var($user_email, FILTER_VALIDATE_EMAIL)) {
+            $user_subject_map = [
+                'contact' => "Thank You for Contacting NEXTECHX SOLUTIONS [Ref: $ref_id]",
+                'career' => "Application Received – NEXTECHX SOLUTIONS [Ref: $ref_id]",
+                'internship' => "Internship Application Received – NEXTECHX SOLUTIONS [Ref: $ref_id]",
+                'quote' => "Quotation Request Received – NEXTECHX SOLUTIONS [Ref: $ref_id]",
+                'consultation' => "Consultation Confirmed – NEXTECHX SOLUTIONS [Ref: $ref_id]"
+            ];
+            $user_subject = $user_subject_map[$form_type] ?? "Submission Received – NEXTECHX SOLUTIONS [Ref: $ref_id]";
+
+            $user_html = self::buildUserConfirmationHtml([
+                'form_type' => $form_type,
+                'form_title' => $form_title,
+                'user_name' => $user_name,
+                'fields' => $fields,
+                'reference_id' => $ref_id,
+                'submission_date' => $submission_date,
+                'hr_email' => $hr_from
+            ]);
+
+            $user_plain = "Dear $user_name,\n\n" .
+                "Thank you for contacting NEXTECHX SOLUTIONS.\n\n" .
+                "We are pleased to confirm that we have received your $form_title (Reference ID: $ref_id).\n\n" .
+                "Our team will carefully review your submitted details and connect with you shortly.\n\n" .
+                "If you have any questions, feel free to reach out to our team at $hr_from.\n\n" .
+                "Best Regards,\n" .
+                "NEXTECHX SOLUTIONS Team\n" .
+                "Website: https://nextechxsolutions.com\n" .
+                "Email: $hr_from\n" .
+                "Phone: +91 93098 35085";
+
+            try {
+                $mailUser = self::createMailer();
+                $mailUser->addAddress($user_email, $user_name);
+                $mailUser->addReplyTo($hr_from, 'NEXTECHX SOLUTIONS Desk');
+                $mailUser->Subject = $user_subject;
+                $mailUser->isHTML(true);
+                $mailUser->Body = $user_html;
+                $mailUser->AltBody = $user_plain;
+
+                $mailUser->send();
+                $user_success = true;
+            } catch (\Throwable $e) {
+                $err465 = $e->getMessage() . (!empty($mailUser->ErrorInfo) ? (' | ' . $mailUser->ErrorInfo) : '');
+                $is_auth = (stripos($err465, 'authenticate') !== false || stripos($err465, '535') !== false);
+                if (!$is_auth) {
+                    try {
+                        $mailUserRetry = self::createMailer(587, 'tls');
+                        $mailUserRetry->addAddress($user_email, $user_name);
+                        $mailUserRetry->addReplyTo($hr_from, 'NEXTECHX SOLUTIONS Desk');
+                        $mailUserRetry->Subject = $user_subject;
+                        $mailUserRetry->isHTML(true);
+                        $mailUserRetry->Body = $user_html;
+                        $mailUserRetry->AltBody = $user_plain;
+
+                        $mailUserRetry->send();
+                        $user_success = true;
+                    } catch (\Throwable $retryErr) {
+                        $user_error = "Port 465: $err465 | Port 587: " . $retryErr->getMessage();
+                        self::logError('user_confirmation', $user_error, $user_email);
+                    }
+                } else {
+                    $user_error = "Port 465 Auth Error: $err465";
+                    self::logError('user_confirmation', $user_error, $user_email);
+                }
+            }
+        }
+
+        return [
+            'success' => ($company_success && ($user_success || empty($user_email))),
+            'company_email_sent' => $company_success,
+            'user_email_sent' => $user_success,
+            'company_error' => $company_error,
+            'user_error' => $user_error,
+            'reference_id' => $ref_id,
+            'submission_date' => $submission_date
+        ];
+    }
+
+    /**
+     * Direct SMTP Delivery Test Action (Without application or database records)
+     * Used for real-time testing and administrative verification
+     */
+    public static function testSmtpDelivery($test_recipient = 'nextechxsolutions@gmail.com') {
+        $timestamp = date('d M Y, h:i:s A T');
+        $from = self::getEnv('SMTP_FROM_EMAIL', 'hr@nextechxsolutions.com');
+        $subject = "Live SMTP Test Notification – NEXTECHX SOLUTIONS";
+
+        $html = '<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 8px;">
+            <h2 style="color: #0f172a; margin-top: 0;">NEXTECHX SOLUTIONS</h2>
+            <p style="color: #334155; font-size: 15px; line-height: 1.6;">Hello Team,</p>
+            <p style="color: #334155; font-size: 15px; line-height: 1.6;">This is a live <strong>Centralized Email Delivery Verification</strong> sent from NEXTECHX SOLUTIONS Form System.</p>
+            <div style="background-color: #f8fafc; border-left: 4px solid #0284c7; padding: 12px 16px; margin: 16px 0;">
+                <p style="margin: 0; font-size: 14px; color: #0f172a;"><strong>Sender:</strong> ' . htmlspecialchars($from) . '</p>
+                <p style="margin: 4px 0 0 0; font-size: 14px; color: #0f172a;"><strong>Recipient:</strong> ' . htmlspecialchars($test_recipient) . '</p>
+                <p style="margin: 4px 0 0 0; font-size: 14px; color: #0f172a;"><strong>Timestamp:</strong> ' . $timestamp . '</p>
+                <p style="margin: 4px 0 0 0; font-size: 14px; color: #0f172a;"><strong>Status:</strong> Active & Functional</p>
+            </div>
+            <p style="color: #94a3b8; font-size: 12px; margin: 0;">NEXTECHX SOLUTIONS &bull; <a href="https://nextechxsolutions.com" style="color: #0284c7;">nextechxsolutions.com</a></p>
+        </div>';
+
+        $plain = "NEXTECHX SOLUTIONS\nLive SMTP Test Notification\nSender: $from\nRecipient: $test_recipient\nTimestamp: $timestamp\nStatus: Active & Functional";
+
+        try {
+            $mail = self::createMailer();
+            $mail->clearAddresses();
+            $mail->addAddress($test_recipient, 'NEXTECHX SOLUTIONS Admin');
+            $mail->addReplyTo($from, 'NEXTECHX SOLUTIONS HR');
+            $mail->Subject = $subject;
+            $mail->isHTML(true);
+            $mail->Body = $html;
+            $mail->AltBody = $plain;
+            $mail->send();
+
+            return [
+                'success' => true,
+                'recipient' => $test_recipient,
+                'from' => $from,
+                'message' => 'Test email successfully dispatched to ' . $test_recipient,
+                'port' => 465,
+                'meta' => self::$last_smtp_meta,
+                'smtp_dialog' => array_slice(self::$last_smtp_debug, -6)
+            ];
+        } catch (\Throwable $e) {
+            $err465 = $e->getMessage() . (!empty($mail->ErrorInfo) ? (' | ' . $mail->ErrorInfo) : '');
+            $is_auth = (stripos($err465, 'authenticate') !== false || stripos($err465, '535') !== false);
+            if (!$is_auth) {
+                try {
+                    $retry = self::createMailer(587, 'tls');
+                    $retry->clearAddresses();
+                    $retry->addAddress($test_recipient, 'NEXTECHX SOLUTIONS Admin');
+                    $retry->addReplyTo($from, 'NEXTECHX SOLUTIONS HR');
+                    $retry->Subject = $subject;
+                    $retry->isHTML(true);
+                    $retry->Body = $html;
+                    $retry->AltBody = $plain;
+                    $retry->send();
+
+                    return [
+                        'success' => true,
+                        'recipient' => $test_recipient,
+                        'from' => $from,
+                        'message' => 'Test email successfully dispatched via Port 587 STARTTLS to ' . $test_recipient,
+                        'port' => 587,
+                        'meta' => self::$last_smtp_meta,
+                        'smtp_dialog' => array_slice(self::$last_smtp_debug, -6)
+                    ];
+                } catch (\Throwable $reErr) {
+                    $full_err = "Port 465: $err465 | Port 587: " . $reErr->getMessage();
+                    self::logError('test_smtp', $full_err, $test_recipient);
+                    return [
+                        'success' => false,
+                        'recipient' => $test_recipient,
+                        'error' => $full_err,
+                        'meta' => self::$last_smtp_meta,
+                        'smtp_dialog' => array_slice(self::$last_smtp_debug, -8)
+                    ];
+                }
+            } else {
+                self::logError('test_smtp', $err465, $test_recipient);
+                return [
+                    'success' => false,
+                    'recipient' => $test_recipient,
+                    'error' => $err465,
+                    'meta' => self::$last_smtp_meta,
+                    'smtp_dialog' => array_slice(self::$last_smtp_debug, -8)
+                ];
+            }
+        }
+    }
+
+    /**
+     * Responsive Corporate HTML Template for Company/Admin Notification
+     */
+    public static function buildAdminNotificationHtml($p) {
+        $formTitle = htmlspecialchars($p['form_title']);
+        $userName = htmlspecialchars($p['user_name']);
+        $userEmail = htmlspecialchars($p['user_email']);
+        $refId = htmlspecialchars($p['reference_id']);
+        $subDate = htmlspecialchars($p['submission_date']);
+        $fields = $p['fields'];
+        $attachments = $p['attachments'];
+        $websiteUrl = 'https://nextechxsolutions.com';
+
+        // Badge color based on form type
+        $badgeBg = '#e0f2fe';
+        $badgeColor = '#0369a1';
+        if (strpos(strtolower($formTitle), 'career') !== false || strpos(strtolower($formTitle), 'intern') !== false) {
+            $badgeBg = '#ecfdf5';
+            $badgeColor = '#047857';
+        } elseif (strpos(strtolower($formTitle), 'quote') !== false) {
+            $badgeBg = '#fef3c7';
+            $badgeColor = '#b45309';
+        } elseif (strpos(strtolower($formTitle), 'consult') !== false) {
+            $badgeBg = '#ede9fe';
+            $badgeColor = '#6d28d9';
+        }
+
+        // Build Table Rows
+        $tableRows = '';
+        $messageBlock = '';
+        foreach ($fields as $label => $val) {
+            if (is_array($val)) $val = implode(', ', $val);
+            $cleanVal = htmlspecialchars((string)$val);
+            if (strtolower($label) === 'message' || strtolower($label) === 'requirements' || strtolower($label) === 'notes' || strtolower($label) === 'statement') {
+                if (!empty($val)) {
+                    $messageBlock = '<div style="margin-top: 20px; padding: 14px 16px; background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px;">
+                        <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #64748b; margin-bottom: 6px;">' . htmlspecialchars($label) . '</div>
+                        <div style="font-size: 13.5px; color: #1e293b; line-height: 1.6; white-space: pre-wrap;">' . $cleanVal . '</div>
+                    </div>';
+                }
+            } else {
+                $displayVal = $cleanVal;
+                if (strtolower($label) === 'email') {
+                    $displayVal = '<a href="mailto:' . $cleanVal . '" style="color: #0284c7; text-decoration: none;">' . $cleanVal . '</a>';
+                } elseif (strtolower($label) === 'phone' || strtolower($label) === 'whatsapp') {
+                    $displayVal = '<a href="tel:' . $cleanVal . '" style="color: #0284c7; text-decoration: none;">' . $cleanVal . '</a>';
+                }
+                $tableRows .= '<tr>
+                    <td style="padding: 7px 0; color: #64748b; font-size: 13px; font-weight: 500; width: 38%; vertical-align: top;">' . htmlspecialchars($label) . ':</td>
+                    <td style="padding: 7px 0; color: #0f172a; font-size: 13.5px; font-weight: 600; vertical-align: top;">' . $displayVal . '</td>
+                </tr>';
+            }
+        }
+
+        // Attachments Row
+        $attHtml = '';
+        if (!empty($attachments)) {
+            $attList = [];
+            foreach ($attachments as $a) {
+                $attList[] = '<span style="color: #059669; font-weight: 700;">' . htmlspecialchars($a['name']) . '</span>';
+            }
+            $tableRows .= '<tr>
+                <td style="padding: 7px 0; color: #64748b; font-size: 13px; font-weight: 500; width: 38%; vertical-align: top;">Attached File(s):</td>
+                <td style="padding: 7px 0; font-size: 13.5px; vertical-align: top;">' . implode(', ', $attList) . '</td>
+            </tr>';
+        }
+
+        return <<<HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{$formTitle} – NEXTECHX SOLUTIONS</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #1e293b;">
+  <div style="width: 100%; background-color: #f8fafc; padding: 36px 12px; box-sizing: border-box;">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
+      <tr>
+        <td style="padding: 24px 32px 20px 32px; border-bottom: 1px solid #e2e8f0; background-color: #ffffff;">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0">
+            <tr>
+              <td style="vertical-align: middle;">
+                <table cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td style="vertical-align: middle; padding-right: 12px;">
+                      <img src="https://nextechxsolutions.com/favicon.png" width="34" height="34" alt="NEXTECHX SOLUTIONS Logo" style="display: block; border: 0; outline: none; border-radius: 6px;">
+                    </td>
+                    <td style="vertical-align: middle;">
+                      <span style="font-size: 17px; font-weight: 800; color: #0f172a; letter-spacing: -0.3px;">
+                        NEXTECHX <span style="color: #0284c7;">SOLUTIONS</span>
+                      </span>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td style="vertical-align: middle; text-align: right;">
+                <span style="font-size: 11px; font-weight: 700; color: {$badgeColor}; background-color: {$badgeBg}; padding: 4px 10px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px;">{$formTitle}</span>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="padding: 32px 32px 28px 32px; background-color: #ffffff;">
+          <h2 style="font-size: 18px; font-weight: 700; color: #0f172a; margin: 0 0 6px 0;">New {$formTitle} Received</h2>
+          <p style="font-size: 14px; color: #475569; margin: 0 0 16px 0; line-height: 1.5;">
+            A visitor has submitted a new <strong>{$formTitle}</strong> via the NEXTECHX SOLUTIONS website.
+          </p>
+
+          <div style="border: 1px solid #e2e8f0; border-radius: 6px; background-color: #f8fafc; margin: 20px 0; padding: 16px 20px;">
+            <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #64748b; margin-bottom: 12px;">Submission Metadata & Details</div>
+            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td style="padding: 7px 0; color: #64748b; font-size: 13px; font-weight: 500; width: 38%; vertical-align: top;">Reference ID:</td>
+                <td style="padding: 7px 0; color: #0f172a; font-size: 13.5px; font-weight: 700; font-family: SFMono-Regular, Consolas, Monaco, monospace; vertical-align: top;">{$refId}</td>
+              </tr>
+              <tr>
+                <td style="padding: 7px 0; color: #64748b; font-size: 13px; font-weight: 500; width: 38%; vertical-align: top;">Submission Time:</td>
+                <td style="padding: 7px 0; color: #0f172a; font-size: 13.5px; font-weight: 600; vertical-align: top;">{$subDate}</td>
+              </tr>
+              {$tableRows}
+            </table>
+          </div>
+
+          {$messageBlock}
+
+          <div style="margin-top: 24px;">
+            <a href="mailto:{$userEmail}?subject=Regarding%20your%20submission%20to%20NEXTECHX%20SOLUTIONS%20[Ref:%20{$refId}]" style="display: inline-block; padding: 10px 20px; background-color: #0f2b48; color: #ffffff !important; text-decoration: none; font-size: 13px; font-weight: 600; border-radius: 6px;">Reply to Submitter</a>
+            <a href="{$websiteUrl}/submissions.php" style="display: inline-block; margin-left: 8px; padding: 10px 18px; background-color: #f1f5f9; color: #0f172a !important; text-decoration: none; font-size: 13px; font-weight: 600; border-radius: 6px; border: 1px solid #e2e8f0;">Open Submissions Portal</a>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="padding: 20px 32px; border-top: 1px solid #e2e8f0; background-color: #ffffff;">
+          <p style="font-size: 12px; color: #64748b; line-height: 1.6; margin: 0;">
+            <strong style="color: #0f172a; font-size: 13px;">NEXTECHX SOLUTIONS</strong> &bull; Centralized Form Submission System<br>
+            Website: <a href="{$websiteUrl}" target="_blank" rel="noopener" style="color: #0284c7; text-decoration: underline;">{$websiteUrl}</a> &bull;
+            Admin Recipient: <span style="color: #0f172a; font-weight: 600;">nextechxsolutions@gmail.com</span>
+          </p>
+        </td>
+      </tr>
+    </table>
+  </div>
+</body>
+</html>
+HTML;
+    }
+
+    /**
+     * Responsive Corporate HTML Template for Applicant / User Confirmation
+     */
+    public static function buildUserConfirmationHtml($p) {
+        $userName = htmlspecialchars($p['user_name']);
+        $formTitle = htmlspecialchars($p['form_title']);
+        $formType = $p['form_type'];
+        $refId = htmlspecialchars($p['reference_id']);
+        $subDate = htmlspecialchars($p['submission_date']);
+        $fields = $p['fields'];
+        $hrEmail = htmlspecialchars($p['hr_email']);
+        $websiteUrl = 'https://nextechxsolutions.com';
+
+        // Customized reassurance message per form type
+        $reassurance = "We are pleased to confirm that we have received your request. Our team will review your submission and connect with you shortly.";
+        if ($formType === 'contact') {
+            $reassurance = "Thank you for contacting NEXTECHX SOLUTIONS. We have received your inquiry and our technical solutions team will review your message and get in touch with you within 24 hours.";
+        } elseif ($formType === 'quote') {
+            $reassurance = "Thank you for requesting an enterprise quotation from NEXTECHX SOLUTIONS. Our solutions engineering team is reviewing your project requirements to prepare a comprehensive scope and price estimate.";
+        } elseif ($formType === 'consultation') {
+            $reassurance = "Your strategy consultation with NEXTECHX SOLUTIONS has been reserved. Our Solutions Architect will connect with you at your chosen date and time.";
+        } elseif ($formType === 'career' || $formType === 'internship') {
+            $reassurance = "Thank you for your interest in NEXTECHX SOLUTIONS. We are pleased to confirm that we have received your application. Our recruitment team will carefully review your credentials and contact you regarding the next steps.";
+        }
+
+        // Summary Rows for user
+        $summaryRows = '';
+        foreach ($fields as $label => $val) {
+            if (is_array($val)) $val = implode(', ', $val);
+            if (in_array(strtolower($label), ['service category', 'service interest', 'target position', 'position', 'course selected', 'internship domain', 'consultation topic', 'topic', 'budget range', 'preferred date'])) {
+                $summaryRows .= '<tr>
+                    <td style="padding: 6px 0; color: #64748b; font-size: 13px; font-weight: 500; width: 40%; vertical-align: top;">' . htmlspecialchars($label) . ':</td>
+                    <td style="padding: 6px 0; color: #0f172a; font-size: 13.5px; font-weight: 600; vertical-align: top;">' . htmlspecialchars((string)$val) . '</td>
+                </tr>';
+            }
+        }
+
+        return <<<HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Thank You – NEXTECHX SOLUTIONS</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #111827;">
+  <div style="width: 100%; background-color: #ffffff; padding: 36px 16px; box-sizing: border-box;">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" style="max-width: 580px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px;">
+      <tr>
+        <td style="padding: 28px 36px 22px 36px; border-bottom: 1px solid #e5e7eb; background-color: #ffffff;">
+          <table cellpadding="0" cellspacing="0" border="0">
+            <tr>
+              <td style="vertical-align: middle; padding-right: 12px;">
+                <img src="https://nextechxsolutions.com/favicon.png" width="32" height="32" alt="NEXTECHX SOLUTIONS Logo" style="display: block; border: 0; outline: none; border-radius: 4px;">
+              </td>
+              <td style="vertical-align: middle;">
+                <span style="font-size: 16px; font-weight: 800; color: #0f2b5c; letter-spacing: 0.4px;">
+                  NEXTECHX SOLUTIONS
+                </span>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="padding: 36px 36px 32px 36px; background-color: #ffffff;">
+          <p style="font-size: 15px; font-weight: 600; color: #111827; line-height: 1.6; margin: 0 0 16px 0;">
+            Dear {$userName},
+          </p>
+
+          <p style="font-size: 14.5px; color: #374151; line-height: 1.7; margin: 0 0 16px 0;">
+            {$reassurance}
+          </p>
+
+          <div style="border: 1px solid #e5e7eb; border-radius: 6px; background-color: #f9fafb; margin: 20px 0; padding: 14px 18px;">
+            <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #6b7280; margin-bottom: 10px;">Submission Confirmation</div>
+            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td style="padding: 5px 0; color: #6b7280; font-size: 13px; font-weight: 500; width: 40%; vertical-align: top;">Reference ID:</td>
+                <td style="padding: 5px 0; color: #0f2b5c; font-size: 13px; font-weight: 700; font-family: SFMono-Regular, Consolas, Monaco, monospace; vertical-align: top;">{$refId}</td>
+              </tr>
+              <tr>
+                <td style="padding: 5px 0; color: #6b7280; font-size: 13px; font-weight: 500; width: 40%; vertical-align: top;">Date & Time:</td>
+                <td style="padding: 5px 0; color: #111827; font-size: 13px; font-weight: 600; vertical-align: top;">{$subDate}</td>
+              </tr>
+              {$summaryRows}
+            </table>
+          </div>
+
+          <p style="font-size: 14px; color: #374151; line-height: 1.7; margin: 0 0 24px 0;">
+            If you have any questions or additional requirements, please reply to this email or contact our support desk directly at <a href="mailto:{$hrEmail}" style="color: #0f2b5c; font-weight: 600; text-decoration: underline;">{$hrEmail}</a>.
+          </p>
+
+          <p style="font-size: 14px; color: #111827; line-height: 1.65; margin: 0;">
+            Best Regards,<br>
+            <strong style="color: #0f2b5c;">NEXTECHX SOLUTIONS Team</strong><br>
+            <a href="mailto:{$hrEmail}" style="color: #0f2b5c; text-decoration: underline;">{$hrEmail}</a><br>
+            <a href="{$websiteUrl}" target="_blank" rel="noopener" style="color: #0f2b5c; text-decoration: underline;">{$websiteUrl}</a>
+          </p>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="padding: 20px 36px; border-top: 1px solid #e5e7eb; background-color: #ffffff;">
+          <p style="font-size: 12px; color: #6b7280; line-height: 1.5; margin: 0;">
+            <strong style="color: #0f2b5c; font-size: 12px; letter-spacing: 0.4px;">NEXTECHX SOLUTIONS</strong> &bull; Enterprise Technology & Engineering
+          </p>
+        </td>
+      </tr>
+    </table>
+  </div>
+</body>
+</html>
+HTML;
+    }
+
+    /**
      * 1. Send Applicant Confirmation Email
      */
     public static function sendApplicantConfirmation($data) {
@@ -290,16 +866,41 @@ class NextTechXMailer {
         $subject = "Thank You for Applying – NEXTECHX SOLUTIONS";
         $submission_date = date('d M Y, h:i A');
 
-        // Generate Clean Corporate Responsive HTML Email Template
-        $htmlBody = self::buildApplicantEmailHtml([
-            'full_name' => $full_name,
-            'position' => $position,
-            'applying_for' => $applying_for,
-            'education' => $education,
-            'app_id' => $app_id,
-            'hr_email' => $hr_email,
-            'date_time' => $submission_date
-        ]);
+        // Check dynamic CMS email template
+        $use_cms_template = false;
+        if (function_exists('cms_get_email_template')) {
+            $tpl = cms_get_email_template('applicant_confirmation');
+            if ($tpl && !empty($tpl['is_active'])) {
+                $replacements = [
+                    '{{applicant_name}}' => $full_name,
+                    '{{full_name}}' => $full_name,
+                    '{{position}}' => $position,
+                    '{{applying_for}}' => $applying_for,
+                    '{{education}}' => $education,
+                    '{{application_id}}' => $app_id,
+                    '{{company_name}}' => 'NEXTECHX SOLUTIONS',
+                    '{{hr_email}}' => $hr_email,
+                    '{{date}}' => $submission_date,
+                    '{{date_time}}' => $submission_date
+                ];
+                $subject = str_replace(array_keys($replacements), array_values($replacements), $tpl['subject'] ?? $subject);
+                $htmlBody = str_replace(array_keys($replacements), array_values($replacements), $tpl['body_html'] ?? '');
+                $use_cms_template = true;
+            }
+        }
+
+        if (!$use_cms_template) {
+            // Generate Clean Corporate Responsive HTML Email Template
+            $htmlBody = self::buildApplicantEmailHtml([
+                'full_name' => $full_name,
+                'position' => $position,
+                'applying_for' => $applying_for,
+                'education' => $education,
+                'app_id' => $app_id,
+                'hr_email' => $hr_email,
+                'date_time' => $submission_date
+            ]);
+        }
 
         $plainBody = "Dear $full_name,\n\n" .
             "Thank you for your interest in NEXTECHX SOLUTIONS.\n\n" .
@@ -397,19 +998,45 @@ class NextTechXMailer {
         $company_to = 'nextechxsolutions@gmail.com';
         $subject = "New Application Received – $full_name – $position";
 
-        $htmlBody = self::buildCompanyEmailHtml([
-            'full_name' => $full_name,
-            'email' => $email,
-            'phone' => $phone,
-            'position' => $position,
-            'applying_for' => $applying_for,
-            'education' => $education,
-            'message' => $message,
-            'app_id' => $app_id,
-            'date_time' => $submission_date,
-            'has_resume' => ($resume_filepath && file_exists($resume_filepath)),
-            'resume_filename' => $resume_filename
-        ]);
+        // Check dynamic CMS email template
+        $use_cms_company_template = false;
+        if (function_exists('cms_get_email_template')) {
+            $tpl = cms_get_email_template('company_application_notification');
+            if ($tpl && !empty($tpl['is_active'])) {
+                $replacements = [
+                    '{{applicant_name}}' => $full_name,
+                    '{{full_name}}' => $full_name,
+                    '{{email}}' => $email,
+                    '{{phone}}' => $phone,
+                    '{{position}}' => $position,
+                    '{{applying_for}}' => $applying_for,
+                    '{{education}}' => $education,
+                    '{{application_id}}' => $app_id,
+                    '{{message}}' => $message,
+                    '{{date}}' => $submission_date,
+                    '{{date_time}}' => $submission_date
+                ];
+                $subject = str_replace(array_keys($replacements), array_values($replacements), $tpl['subject'] ?? $subject);
+                $htmlBody = str_replace(array_keys($replacements), array_values($replacements), $tpl['body_html'] ?? '');
+                $use_cms_company_template = true;
+            }
+        }
+
+        if (!$use_cms_company_template) {
+            $htmlBody = self::buildCompanyEmailHtml([
+                'full_name' => $full_name,
+                'email' => $email,
+                'phone' => $phone,
+                'position' => $position,
+                'applying_for' => $applying_for,
+                'education' => $education,
+                'message' => $message,
+                'app_id' => $app_id,
+                'date_time' => $submission_date,
+                'has_resume' => ($resume_filepath && file_exists($resume_filepath)),
+                'resume_filename' => $resume_filename
+            ]);
+        }
 
         $plainBody = "NEW APPLICATION RECEIVED – NEXTECHX SOLUTIONS\n\n" .
             "Candidate Name: $full_name\n" .

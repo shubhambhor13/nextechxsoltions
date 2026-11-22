@@ -68,6 +68,12 @@
                 <textarea name="requirements" rows="3" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-600 focus:outline-none text-sm" placeholder="Please outline your objectives, required features, or current challenges..."></textarea>
             </div>
 
+            <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Project Brief / Specification Document (Optional)</label>
+                <input type="file" name="attachment" accept=".pdf,.doc,.docx,.txt,.zip" class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-3.5 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer border border-slate-200 rounded-xl">
+                <p class="text-[10px] text-slate-400 mt-0.5">Accepted: PDF, DOC, DOCX, TXT, ZIP (Max 15 MB)</p>
+            </div>
+
             <div class="pt-2 flex items-center justify-end gap-3">
                 <button type="button" onclick="closeQuoteModal()" class="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-50 text-sm font-semibold transition-colors">
                     Cancel
@@ -147,15 +153,11 @@
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Preferred Batch Timing</label>
-                    <select name="batch_timing" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-600 focus:outline-none text-sm bg-white">
-                        <option value="Morning Batch (8:00 AM - 10:00 AM)">Morning Batch (8:00 AM - 10:00 AM)</option>
-                        <option value="Evening Batch (6:00 PM - 8:00 PM)">Evening Batch (6:00 PM - 8:00 PM)</option>
-                        <option value="Weekend Intensive (Sat & Sun)">Weekend Intensive (Sat & Sun)</option>
-                    </select>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Upload Resume (PDF, DOC, DOCX)</label>
+                    <input type="file" name="resume" accept=".pdf,.doc,.docx" class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-3.5 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 cursor-pointer border border-slate-200 rounded-xl">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Resume / LinkedIn Profile Link</label>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Or Resume / LinkedIn Link</label>
                     <input type="url" name="resume_link" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-600 focus:outline-none text-sm" placeholder="https://drive.google.com/... or LinkedIn URL">
                 </div>
             </div>

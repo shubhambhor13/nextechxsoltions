@@ -67,6 +67,10 @@ function get_db() {
                     service_interest TEXT,
                     message TEXT NOT NULL,
                     status TEXT DEFAULT 'new',
+                    email_sent INTEGER DEFAULT 0,
+                    admin_email_status TEXT DEFAULT 'pending',
+                    user_email_status TEXT DEFAULT 'pending',
+                    email_error TEXT,
                     created_at TEXT DEFAULT CURRENT_TIMESTAMP
                 );
                 CREATE TABLE IF NOT EXISTS quotation_requests (
@@ -79,7 +83,13 @@ function get_db() {
                     budget_range TEXT,
                     project_timeline TEXT,
                     requirements TEXT NOT NULL,
+                    attachment_filename TEXT,
+                    attachment_filepath TEXT,
                     status TEXT DEFAULT 'pending',
+                    email_sent INTEGER DEFAULT 0,
+                    admin_email_status TEXT DEFAULT 'pending',
+                    user_email_status TEXT DEFAULT 'pending',
+                    email_error TEXT,
                     created_at TEXT DEFAULT CURRENT_TIMESTAMP
                 );
                 CREATE TABLE IF NOT EXISTS consultation_bookings (
@@ -93,6 +103,10 @@ function get_db() {
                     preferred_time TEXT NOT NULL,
                     notes TEXT,
                     status TEXT DEFAULT 'scheduled',
+                    email_sent INTEGER DEFAULT 0,
+                    admin_email_status TEXT DEFAULT 'pending',
+                    user_email_status TEXT DEFAULT 'pending',
+                    email_error TEXT,
                     created_at TEXT DEFAULT CURRENT_TIMESTAMP
                 );
                 CREATE TABLE IF NOT EXISTS student_registrations (
@@ -105,11 +119,55 @@ function get_db() {
                     course_selected TEXT NOT NULL,
                     batch_timing TEXT NOT NULL,
                     resume_link TEXT,
+                    resume_filename TEXT,
+                    resume_filepath TEXT,
                     statement TEXT,
                     status TEXT DEFAULT 'under_review',
+                    email_sent INTEGER DEFAULT 0,
+                    admin_email_status TEXT DEFAULT 'pending',
+                    user_email_status TEXT DEFAULT 'pending',
+                    email_error TEXT,
+                    created_at TEXT DEFAULT CURRENT_TIMESTAMP
+                );
+                CREATE TABLE IF NOT EXISTS career_applications (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    full_name TEXT NOT NULL,
+                    email TEXT NOT NULL,
+                    phone TEXT NOT NULL,
+                    applying_for TEXT NOT NULL,
+                    position TEXT NOT NULL,
+                    education TEXT NOT NULL,
+                    resume_filename TEXT,
+                    resume_filepath TEXT,
+                    message TEXT,
+                    status TEXT DEFAULT 'under_review',
+                    email_sent INTEGER DEFAULT 0,
+                    applicant_email_status TEXT DEFAULT 'pending',
+                    company_email_status TEXT DEFAULT 'pending',
+                    email_error TEXT,
                     created_at TEXT DEFAULT CURRENT_TIMESTAMP
                 );
             ");
+
+            // Automatic safe column migrations for existing SQLite databases
+            $tables_columns = [
+                'contact_messages' => ['email_sent' => 'INTEGER DEFAULT 0', 'admin_email_status' => "TEXT DEFAULT 'pending'", 'user_email_status' => "TEXT DEFAULT 'pending'", 'email_error' => 'TEXT'],
+                'quotation_requests' => ['attachment_filename' => 'TEXT', 'attachment_filepath' => 'TEXT', 'email_sent' => 'INTEGER DEFAULT 0', 'admin_email_status' => "TEXT DEFAULT 'pending'", 'user_email_status' => "TEXT DEFAULT 'pending'", 'email_error' => 'TEXT'],
+                'consultation_bookings' => ['email_sent' => 'INTEGER DEFAULT 0', 'admin_email_status' => "TEXT DEFAULT 'pending'", 'user_email_status' => "TEXT DEFAULT 'pending'", 'email_error' => 'TEXT'],
+                'student_registrations' => ['resume_filename' => 'TEXT', 'resume_filepath' => 'TEXT', 'email_sent' => 'INTEGER DEFAULT 0', 'admin_email_status' => "TEXT DEFAULT 'pending'", 'user_email_status' => "TEXT DEFAULT 'pending'", 'email_error' => 'TEXT'],
+                'career_applications' => ['status' => "TEXT DEFAULT 'under_review'", 'applicant_email_status' => "TEXT DEFAULT 'pending'", 'company_email_status' => "TEXT DEFAULT 'pending'", 'email_error' => 'TEXT']
+            ];
+
+            foreach ($tables_columns as $table => $cols) {
+                try {
+                    $existing = $pdo->query("PRAGMA table_info($table)")->fetchAll(PDO::FETCH_COLUMN, 1);
+                    foreach ($cols as $col => $def) {
+                        if (!in_array($col, $existing)) {
+                            $pdo->exec("ALTER TABLE $table ADD COLUMN $col $def");
+                        }
+                    }
+                } catch (\Throwable $migErr) {}
+            }
         } catch (Exception $e) {
             $pdo = null;
         }
@@ -133,6 +191,93 @@ function save_record_fallback($table, $data) {
     $records[] = $data;
     file_put_contents($file, json_encode($records, JSON_PRETTY_PRINT));
     return true;
+}
+
+/**
+ * Fetch all records from SQLite or fallback JSON
+ */
+function get_records($table, $limit = 250) {
+    $db = get_db();
+    if ($db) {
+        try {
+            $stmt = $db->query("SELECT * FROM " . preg_replace('/[^a-zA-Z0-9_]/', '', $table) . " ORDER BY id DESC LIMIT " . (int)$limit);
+            return $stmt->fetchAll();
+        } catch (\Throwable $e) {}
+    }
+    $db_dir = dirname(DB_PATH);
+    $file = $db_dir . '/fallback_' . preg_replace('/[^a-zA-Z0-9_-]/', '', $table) . '.json';
+    if (file_exists($file)) {
+        $arr = json_decode(file_get_contents($file), true);
+        if (is_array($arr)) {
+            usort($arr, fn($a, $b) => ($b['id'] ?? 0) <=> ($a['id'] ?? 0));
+            return array_slice($arr, 0, $limit);
+        }
+    }
+    return [];
+}
+
+/**
+ * Update record status in SQLite or fallback JSON
+ */
+function update_record_status($table, $id, $status, $extra = []) {
+    $db = get_db();
+    if ($db) {
+        try {
+            $sets = ["status = :status"];
+            $params = [':status' => $status, ':id' => (int)$id];
+            foreach ($extra as $k => $v) {
+                $clean_k = preg_replace('/[^a-zA-Z0-9_]/', '', $k);
+                $sets[] = "$clean_k = :$clean_k";
+                $params[":$clean_k"] = $v;
+            }
+            $sql = "UPDATE " . preg_replace('/[^a-zA-Z0-9_]/', '', $table) . " SET " . implode(', ', $sets) . " WHERE id = :id";
+            $stmt = $db->prepare($sql);
+            return $stmt->execute($params);
+        } catch (\Throwable $e) {}
+    }
+    $db_dir = dirname(DB_PATH);
+    $file = $db_dir . '/fallback_' . preg_replace('/[^a-zA-Z0-9_-]/', '', $table) . '.json';
+    if (file_exists($file)) {
+        $arr = json_decode(file_get_contents($file), true);
+        if (is_array($arr)) {
+            foreach ($arr as &$item) {
+                if (($item['id'] ?? null) == $id) {
+                    $item['status'] = $status;
+                    foreach ($extra as $k => $v) {
+                        $item[$k] = $v;
+                    }
+                    file_put_contents($file, json_encode($arr, JSON_PRETTY_PRINT));
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+/**
+ * Get single record by ID
+ */
+function get_record_by_id($table, $id) {
+    $db = get_db();
+    if ($db) {
+        try {
+            $stmt = $db->prepare("SELECT * FROM " . preg_replace('/[^a-zA-Z0-9_]/', '', $table) . " WHERE id = :id");
+            $stmt->execute([':id' => (int)$id]);
+            return $stmt->fetch();
+        } catch (\Throwable $e) {}
+    }
+    $db_dir = dirname(DB_PATH);
+    $file = $db_dir . '/fallback_' . preg_replace('/[^a-zA-Z0-9_-]/', '', $table) . '.json';
+    if (file_exists($file)) {
+        $arr = json_decode(file_get_contents($file), true);
+        if (is_array($arr)) {
+            foreach ($arr as $item) {
+                if (($item['id'] ?? null) == $id) return $item;
+            }
+        }
+    }
+    return null;
 }
 
 /**

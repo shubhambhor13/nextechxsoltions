@@ -47,14 +47,14 @@
                 <!-- Col 3: Practices -->
                 <div>
                     <h4 class="text-xs font-bold text-slate-200 uppercase tracking-wider mb-4 font-heading">
-                        Enterprise Solutions
+                        Our Services
                     </h4>
                     <ul class="space-y-2.5 text-sm text-slate-400">
-                        <li><a href="ai-automation.php" class="hover:text-cyan-400 transition-colors">AI & Autonomous Agents</a></li>
-                        <li><a href="ai-automation.php" class="hover:text-cyan-400 transition-colors">n8n Workflow Automation</a></li>
-                        <li><a href="it-services.php" class="hover:text-cyan-400 transition-colors">Custom Software Development</a></li>
-                        <li><a href="it-services.php" class="hover:text-cyan-400 transition-colors">Enterprise Cloud & APIs</a></li>
-                        <li><a href="research-publication.php" class="hover:text-cyan-400 transition-colors">Research Paper Publication</a></li>
+                        <li><a href="ai-automation.php" class="hover:text-cyan-400 transition-colors">AI & Automation</a></li>
+                        <li><a href="software-development.php" class="hover:text-cyan-400 transition-colors">Software Development</a></li>
+                        <li><a href="saas-development.php" class="hover:text-cyan-400 transition-colors">SaaS Development</a></li>
+                        <li><a href="data-annotation.php" class="hover:text-cyan-400 transition-colors">Data Annotation</a></li>
+                        <li><a href="bpo-services.php" class="hover:text-cyan-400 transition-colors">BPO Services</a></li>
                     </ul>
                 </div>
 
@@ -80,7 +80,7 @@
                     </h4>
                     <ul class="space-y-2.5 text-sm text-slate-400">
                         <li><a href="javascript:void(0)" onclick="alert('Client Confidentiality Agreement (NDA): All client intellectual property, databases, and proprietary workflows are protected under bilateral non-disclosure.')" class="hover:text-slate-200 transition-colors">Confidentiality & NDA</a></li>
-                        <li><a href="javascript:void(0)" onclick="alert('Data Privacy Policy: We do not store or sell client data. Enterprise data pipelines operate with AES-256 in-transit and at-rest encryption.')" class="hover:text-slate-200 transition-colors">Data Privacy Policy</a></li>
+                        <li><a href="privacy.php" class="hover:text-slate-200 transition-colors">Data Privacy Policy</a></li>
                         <li><a href="javascript:void(0)" onclick="alert('Terms of Service: Distributed online IT solutions delivered strictly in accordance with approved milestone-based scopes of work.')" class="hover:text-slate-200 transition-colors">Terms of Service</a></li>
                     </ul>
                     <div class="mt-6">
@@ -106,10 +106,56 @@
                         <i data-lucide="message-circle" class="w-3.5 h-3.5 text-emerald-400"></i>
                         <span>WhatsApp Connect</span>
                     </a>
+                    <span>•</span>
+                    <a href="<?= SITE_LINKEDIN_URL ?>" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-400 flex items-center gap-1 transition-colors">
+                        <i data-lucide="linkedin" class="w-3.5 h-3.5 text-blue-400"></i>
+                        <span>LinkedIn</span>
+                    </a>
+                    <span>•</span>
+                    <a href="submissions.php" class="hover:text-slate-200 flex items-center gap-1 transition-colors text-slate-500 hover:text-slate-300" title="Manage Form Submissions & Applications">
+                        <i data-lucide="inbox" class="w-3.5 h-3.5 text-slate-500"></i>
+                        <span>Submissions</span>
+                    </a>
                 </div>
             </div>
         </div>
     </footer>
+
+    <!-- Cookie Notice Banner (Configurable in CMS) -->
+    <?php $cookie_notice = function_exists('cms_get_cookie_notice') ? cms_get_cookie_notice() : ['enabled' => true, 'text' => 'We utilize security and telemetry cookies to ensure optimal browsing performance and protect client submissions.']; ?>
+    <?php if (!empty($cookie_notice['enabled'])): ?>
+    <div id="cmsCookieNotice" class="hidden fixed bottom-5 left-5 z-50 max-w-md bg-slate-900/95 text-slate-200 border border-slate-700/80 rounded-2xl p-4 shadow-2xl backdrop-blur-md text-xs leading-relaxed animate-in fade-in slide-in-from-bottom-2">
+        <div class="flex items-start gap-3">
+            <div class="p-2 rounded-xl bg-blue-600/20 text-blue-400 shrink-0">
+                <i data-lucide="cookie" class="w-5 h-5"></i>
+            </div>
+            <div class="space-y-2">
+                <p class="font-normal text-slate-300">
+                    <?= htmlspecialchars($cookie_notice['text'] ?? 'We utilize security and telemetry cookies to ensure optimal browsing performance and protect client submissions.') ?>
+                </p>
+                <div class="flex items-center gap-3 pt-1">
+                    <button onclick="acceptCookieNotice()" class="px-4 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs transition-colors">
+                        Acknowledge
+                    </button>
+                    <a href="privacy.php" class="text-slate-400 hover:text-white underline text-[11px]">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!localStorage.getItem('ntx_cookie_consent')) {
+                const el = document.getElementById('cmsCookieNotice');
+                if (el) el.classList.remove('hidden');
+            }
+        });
+        function acceptCookieNotice() {
+            localStorage.setItem('ntx_cookie_consent', 'accepted');
+            const el = document.getElementById('cmsCookieNotice');
+            if (el) el.classList.add('hidden');
+        }
+    </script>
+    <?php endif; ?>
 
     <?php require_once __DIR__ . '/modals.php'; ?>
     <?php require_once __DIR__ . '/chatbot.php'; ?>

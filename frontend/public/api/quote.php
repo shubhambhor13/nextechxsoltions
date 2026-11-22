@@ -11,19 +11,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/mailer.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $db = function_exists('get_db') ? get_db() : null;
-    if ($db) {
-        try {
-            $stmt = $db->query("SELECT * FROM quotation_requests ORDER BY id DESC LIMIT 50");
-            echo json_encode($stmt->fetchAll());
-            exit;
-        } catch (Exception $e) {}
-    }
-    $fallback_file = dirname(DB_PATH) . '/fallback_quotation_requests.json';
-    $data = file_exists($fallback_file) ? json_decode(file_get_contents($fallback_file), true) : [];
-    echo json_encode(is_array($data) ? $data : []);
+    $records = get_records('quotation_requests', 100);
+    echo json_encode($records);
     exit;
 }
 
@@ -53,6 +45,34 @@ if (empty($name) || empty($email) || empty($phone) || empty($service_category) |
     exit;
 }
 
+// Handle optional file attachment (spec sheet, RFP, project brief)
+$attached_filename = null;
+$attached_filepath = null;
+$email_attachments = [];
+
+$file = $_FILES['attachment'] ?? ($_FILES['project_file'] ?? null);
+if ($file && isset($file['error']) && $file['error'] === UPLOAD_ERR_OK) {
+    $orig_name = basename($file['name']);
+    $ext = strtolower(pathinfo($orig_name, PATHINFO_EXTENSION));
+    $allowed_exts = ['pdf', 'doc', 'docx', 'txt', 'rtf', 'odt', 'zip', 'png', 'jpg', 'jpeg'];
+    if (in_array($ext, $allowed_exts) && $file['size'] <= 15 * 1024 * 1024) {
+        $upload_dir = __DIR__ . '/../uploads/attachments/';
+        if (!is_dir($upload_dir)) @mkdir($upload_dir, 0755, true);
+        $safe_name = date('Ymd_His') . '_' . substr(md5(uniqid()), 0, 6) . '_' . preg_replace('/[^a-zA-Z0-9_\-\.]/', '_', $orig_name);
+        $target = $upload_dir . $safe_name;
+        if (@move_uploaded_file($file['tmp_name'], $target) || @copy($file['tmp_name'], $target)) {
+            $attached_filename = $orig_name;
+            $attached_filepath = $target;
+            $email_attachments[] = [
+                'path' => $target,
+                'name' => $orig_name
+            ];
+        }
+    }
+}
+
+$ref_id = 'NTX-QUO-' . date('Ymd') . '-' . substr(md5(uniqid()), 0, 4);
+
 $record = [
     'name' => $name,
     'email' => $email,
@@ -62,15 +82,25 @@ $record = [
     'budget_range' => $budget_range,
     'project_timeline' => $project_timeline,
     'requirements' => $requirements,
-    'status' => 'pending'
+    'attachment_filename' => $attached_filename,
+    'attachment_filepath' => $attached_filepath,
+    'status' => 'pending',
+    'email_sent' => 0,
+    'admin_email_status' => 'pending',
+    'user_email_status' => 'pending',
+    'email_error' => null,
+    'created_at' => date('Y-m-d H:i:s')
 ];
 
+$record_id = null;
+$db = function_exists('get_db') ? get_db() : null;
+
+// 1. SAVE TO DATABASE FIRST (Zero Data Loss)
 try {
-    $db = function_exists('get_db') ? get_db() : null;
     if ($db) {
         $stmt = $db->prepare("
-            INSERT INTO quotation_requests (name, email, phone, company, service_category, budget_range, project_timeline, requirements, status, created_at)
-            VALUES (:name, :email, :phone, :company, :service_category, :budget_range, :project_timeline, :requirements, 'pending', datetime('now'))
+            INSERT INTO quotation_requests (name, email, phone, company, service_category, budget_range, project_timeline, requirements, attachment_filename, attachment_filepath, status, email_sent, admin_email_status, user_email_status, created_at)
+            VALUES (:name, :email, :phone, :company, :service_category, :budget_range, :project_timeline, :requirements, :attachment_filename, :attachment_filepath, 'pending', 0, 'pending', 'pending', datetime('now'))
         ");
         $stmt->execute([
             ':name' => $name,
@@ -80,22 +110,72 @@ try {
             ':service_category' => $service_category,
             ':budget_range' => $budget_range,
             ':project_timeline' => $project_timeline,
-            ':requirements' => $requirements
+            ':requirements' => $requirements,
+            ':attachment_filename' => $attached_filename,
+            ':attachment_filepath' => $attached_filepath
         ]);
+        $record_id = (int)$db->lastInsertId();
     } else {
         save_record_fallback('quotation_requests', $record);
     }
-
-    echo json_encode([
-        'status' => 'success',
-        'success' => true,
-        'message' => 'Your quotation request has been received! Our solutions team (' . SITE_EMAIL_CONTACT . ') will review your requirements and provide a customized price estimate within 24 hours.'
-    ]);
 } catch (Exception $e) {
     save_record_fallback('quotation_requests', $record);
-    echo json_encode([
-        'status' => 'success',
-        'success' => true,
-        'message' => 'Your quotation request has been received! Our solutions team (' . SITE_EMAIL_CONTACT . ') will review your requirements and provide a customized price estimate within 24 hours.'
+}
+
+// 2. DISPATCH CENTRALIZED NOTIFICATION & CONFIRMATION EMAILS
+$fields = [
+    'Client Name' => $name,
+    'Email Address' => $email,
+    'Phone / WhatsApp' => $phone,
+    'Company / Startup' => $company ?: 'Not specified',
+    'Service Category' => $service_category,
+    'Estimated Budget' => $budget_range,
+    'Project Timeline' => $project_timeline,
+    'Requirements & Scope' => $requirements
+];
+
+$mailResult = NextTechXMailer::sendFormSubmission('quote', 'Quotation Request', $fields, $email, $name, $email_attachments, $ref_id);
+
+$admin_sent = !empty($mailResult['company_email_sent']);
+$user_sent = !empty($mailResult['user_email_sent']);
+$overall_sent = ($admin_sent && $user_sent);
+$email_err = trim(($mailResult['company_error'] ?? '') . ' | ' . ($mailResult['user_error'] ?? ''), ' |');
+
+// 3. UPDATE DATABASE WITH EMAIL DELIVERY STATUS
+if ($db && $record_id) {
+    try {
+        $update = $db->prepare("
+            UPDATE quotation_requests SET
+                email_sent = :sent,
+                admin_email_status = :adm_st,
+                user_email_status = :usr_st,
+                email_error = :err
+            WHERE id = :id
+        ");
+        $update->execute([
+            ':sent' => $overall_sent ? 1 : 0,
+            ':adm_st' => $admin_sent ? 'sent' : 'failed',
+            ':usr_st' => $user_sent ? 'sent' : 'failed',
+            ':err' => $email_err ?: null,
+            ':id' => $record_id
+        ]);
+    } catch (Exception $e) {}
+} elseif (function_exists('update_record_status')) {
+    update_record_status('quotation_requests', $record_id ?: 1, 'pending', [
+        'email_sent' => $overall_sent ? 1 : 0,
+        'admin_email_status' => $admin_sent ? 'sent' : 'failed',
+        'user_email_status' => $user_sent ? 'sent' : 'failed',
+        'email_error' => $email_err ?: null
     ]);
 }
+
+// 4. RETURN CLEAN STRUCTURED JSON
+echo json_encode([
+    'status' => 'success',
+    'success' => true,
+    'reference_id' => $ref_id,
+    'message' => 'Your quotation request has been received! Our solutions team will review your specifications and provide a customized price estimate within 24 hours. A confirmation email has been dispatched to ' . htmlspecialchars($email) . '.',
+    'email_sent' => $overall_sent,
+    'admin_notification_sent' => $admin_sent,
+    'user_confirmation_sent' => $user_sent
+]);
