@@ -223,6 +223,70 @@ export const api = {
     return res.json();
   },
 
+  // Centralized CMS Foundation APIs
+  async getCmsSettings() {
+    try {
+      const res = await fetch(`${BASE_URL}/cms/settings`);
+      return await res.json();
+    } catch {
+      return { success: false, settings: {} };
+    }
+  },
+
+  async saveCmsSettings(settings) {
+    const res = await fetch(`${BASE_URL}/cms/save-settings`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ settings })
+    });
+    return res.json();
+  },
+
+  async getCmsAppearance() {
+    try {
+      const res = await fetch(`${BASE_URL}/cms/appearance`);
+      return await res.json();
+    } catch {
+      return { success: false, appearance: {} };
+    }
+  },
+
+  async getCmsNavigation() {
+    try {
+      const res = await fetch(`${BASE_URL}/cms/navigation`);
+      return await res.json();
+    } catch {
+      return { success: false, navigation: [] };
+    }
+  },
+
+  async getCmsPage(slug) {
+    try {
+      const res = await fetch(`${BASE_URL}/cms/page/${slug}`);
+      return await res.json();
+    } catch {
+      return { success: false, page: null, sections: [] };
+    }
+  },
+
+  async saveCmsSection(pageSlug, sectionKey, sectionData) {
+    const res = await fetch(`${BASE_URL}/cms/save-section`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ page_slug: pageSlug, section_key: sectionKey, section_data: sectionData })
+    });
+    return res.json();
+  },
+
+  async getCmsMedia() {
+    try {
+      const res = await fetch(`${BASE_URL}/cms/media`);
+      return await res.json();
+    } catch {
+      return { success: false, media: [] };
+    }
+  },
+
   // Health
   async checkHealth() {
     try {
@@ -230,6 +294,228 @@ export const api = {
       return await res.json();
     } catch {
       return { status: 'offline' };
+    }
+  },
+
+  // ==========================================
+  // PART 2 ADVANCED CMS CLIENT METHODS
+  // ==========================================
+
+  // Services Management
+  async getServices(activeOnly = false) {
+    try {
+      const res = await fetch(`${BASE_URL}/cms/services?active_only=${activeOnly ? '1' : '0'}`);
+      return await res.json();
+    } catch {
+      return { success: false, services: [] };
+    }
+  },
+
+  async saveService(slug, serviceData) {
+    const res = await fetch(`${BASE_URL}/cms/save-service`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ slug, service: serviceData })
+    });
+    return res.json();
+  },
+
+  // Career Opportunities
+  async getCareerOpportunities(activeOnly = false) {
+    try {
+      const res = await fetch(`${BASE_URL}/cms/careers-opportunities?active_only=${activeOnly ? '1' : '0'}`);
+      return await res.json();
+    } catch {
+      return { success: false, opportunities: [] };
+    }
+  },
+
+  async saveCareerOpportunity(data) {
+    const res = await fetch(`${BASE_URL}/cms/save-career-opportunity`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ opportunity: data })
+    });
+    return res.json();
+  },
+
+  // Applications & Inquiries Management
+  async updateApplicationStatus(id, status, internalNotes = '') {
+    const res = await fetch(`${BASE_URL}/cms/update-application-status`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, status, internal_notes: internalNotes })
+    });
+    return res.json();
+  },
+
+  async updateInquiryStatus(type, id, status, internalNotes = '') {
+    const res = await fetch(`${BASE_URL}/cms/update-inquiry-status`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type, id, status, internal_notes: internalNotes })
+    });
+    return res.json();
+  },
+
+  // Forms Management
+  async getForms() {
+    try {
+      const res = await fetch(`${BASE_URL}/cms/forms`);
+      return await res.json();
+    } catch {
+      return { success: false, forms: [] };
+    }
+  },
+
+  async saveForm(formKey, formData) {
+    const res = await fetch(`${BASE_URL}/cms/save-form`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ form_key: formKey, form_data: formData })
+    });
+    return res.json();
+  },
+
+  // Email Templates
+  async getEmailTemplates() {
+    try {
+      const res = await fetch(`${BASE_URL}/cms/email-templates`);
+      return await res.json();
+    } catch {
+      return { success: false, templates: [] };
+    }
+  },
+
+  async saveEmailTemplate(templateKey, templateData) {
+    const res = await fetch(`${BASE_URL}/cms/save-email-template`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ template_key: templateKey, template_data: templateData })
+    });
+    return res.json();
+  },
+
+  // Testimonials & Reviews
+  async getTestimonials(activeOnly = false) {
+    try {
+      const res = await fetch(`${BASE_URL}/cms/testimonials?active_only=${activeOnly ? '1' : '0'}`);
+      return await res.json();
+    } catch {
+      return { success: false, testimonials: [] };
+    }
+  },
+
+  async saveTestimonial(data) {
+    const res = await fetch(`${BASE_URL}/cms/save-testimonial`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ testimonial: data })
+    });
+    return res.json();
+  },
+
+  // Blog & Articles
+  async getArticles(publishedOnly = false) {
+    try {
+      const res = await fetch(`${BASE_URL}/cms/articles?published_only=${publishedOnly ? '1' : '0'}`);
+      return await res.json();
+    } catch {
+      return { success: false, articles: [] };
+    }
+  },
+
+  async saveArticle(data) {
+    const res = await fetch(`${BASE_URL}/cms/save-article`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ article: data })
+    });
+    return res.json();
+  },
+
+  // SEO Management
+  async getPageSeo(pageSlug) {
+    try {
+      const res = await fetch(`${BASE_URL}/cms/page-seo/${pageSlug}`);
+      return await res.json();
+    } catch {
+      return { success: false, seo: null };
+    }
+  },
+
+  async savePageSeo(pageSlug, seoData) {
+    const res = await fetch(`${BASE_URL}/cms/save-page-seo`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ page_slug: pageSlug, seo: seoData })
+    });
+    return res.json();
+  },
+
+  // AI Chatbot Configuration
+  async getChatbotConfig() {
+    try {
+      const res = await fetch(`${BASE_URL}/cms/chatbot-config`);
+      return await res.json();
+    } catch {
+      return { success: false, config: {} };
+    }
+  },
+
+  async saveChatbotConfig(config) {
+    const res = await fetch(`${BASE_URL}/cms/save-chatbot-config`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ config })
+    });
+    return res.json();
+  },
+
+  // Global Website Controls
+  async getGlobalControls() {
+    try {
+      const res = await fetch(`${BASE_URL}/cms/global-controls`);
+      return await res.json();
+    } catch {
+      return { success: false, controls: {} };
+    }
+  },
+
+  async saveGlobalControls(controls) {
+    const res = await fetch(`${BASE_URL}/cms/save-global-controls`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ controls })
+    });
+    return res.json();
+  },
+
+  // Admin Users & Activity Logs
+  async getAdminUsers() {
+    try {
+      const res = await fetch(`${BASE_URL}/cms/admin-users`);
+      return await res.json();
+    } catch {
+      return { success: false, users: [] };
+    }
+  },
+
+  async saveAdminUser(userData) {
+    const res = await fetch(`${BASE_URL}/cms/save-admin-user`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user: userData })
+    });
+    return res.json();
+  },
+
+  async getActivityLogs(limit = 100) {
+    try {
+      const res = await fetch(`${BASE_URL}/cms/activity-logs?limit=${limit}`);
+      return await res.json();
+    } catch {
+      return { success: false, logs: [] };
     }
   }
 };

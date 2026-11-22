@@ -1,0 +1,154 @@
+[
+  {
+    "page_slug": "home",
+    "section_key": "hero",
+    "section_title": "Hero Banner",
+    "section_type": "hero",
+    "sort_order": 1,
+    "is_enabled": 1,
+    "status": "published",
+    "content": {
+      "badge": "Enterprise Engineering & Digital Innovation",
+      "heading": "Engineering Scalable Software & Intelligent Automation",
+      "subheading": "NextTechX Solutions delivers enterprise-grade software engineering, autonomous AI workflows, SaaS platforms, precision data labeling, and dedicated business process outsourcing.",
+      "primary_btn_text": "Explore Our Services",
+      "primary_btn_url": "services.php",
+      "secondary_btn_text": "Request Quotation",
+      "secondary_btn_action": "openQuoteModal",
+      "consultation_btn_text": "Book Strategy Call",
+      "consultation_btn_action": "openConsultationModal",
+      "stats_badge_1": "99.9% Uptime SLAs",
+      "stats_badge_2": "100% Client Code & IP",
+      "stats_badge_3": "ISO-Aligned Standards"
+    }
+  },
+  {
+    "page_slug": "home",
+    "section_key": "about_strip",
+    "section_title": "About Company Strip",
+    "section_type": "feature",
+    "sort_order": 2,
+    "is_enabled": 1,
+    "status": "published",
+    "content": {
+      "eyebrow": "Who We Are",
+      "heading": "Your Trusted Digital Engineering Partner",
+      "description": "We help modern enterprises scale technical capabilities through production-grade engineering, strict security standards, and transparent agile delivery.",
+      "link_text": "Learn More About Us",
+      "link_url": "about.php"
+    }
+  },
+  {
+    "page_slug": "home",
+    "section_key": "services_overview",
+    "section_title": "5 Core Services Grid",
+    "section_type": "services",
+    "sort_order": 3,
+    "is_enabled": 1,
+    "status": "published",
+    "content": {
+      "eyebrow": "What We Do",
+      "heading": "Our Core Practices",
+      "description": "Comprehensive technical solutions engineered to solve operational friction and accelerate digital growth."
+    }
+  },
+  {
+    "page_slug": "home",
+    "section_key": "why_choose_us",
+    "section_title": "Why Choose Us",
+    "section_type": "features_grid",
+    "sort_order": 4,
+    "is_enabled": 1,
+    "status": "published",
+    "content": {
+      "eyebrow": "Client Advantages",
+      "heading": "Why Industry Leaders Choose NEXTECHX SOLUTIONS",
+      "items": [
+        {
+          "title": "Direct Architect Access",
+          "desc": "Work directly with senior solution architects and technical leads on every phase of your project."
+        },
+        {
+          "title": "100% Client Code Ownership",
+          "desc": "Zero vendor lock-in. Full assignment of intellectual property, repository access, and complete technical documentation."
+        },
+        {
+          "title": "Contractual SLA Delivery",
+          "desc": "Strict timeline adherence, clear sprint milestones, and dedicated quality assurance for every engagement."
+        }
+      ]
+    }
+  },
+  {
+    "page_slug": "home",
+    "section_key": "cta_banner",
+    "section_title": "Closing Contact CTA",
+    "section_type": "cta",
+    "sort_order": 5,
+    "is_enabled": 1,
+    "status": "published",
+    "content": {
+      "badge": "Mutual Non-Disclosure \u2022 Enterprise Confidentiality",
+      "heading": "Ready to Transform Your Digital Operations?",
+      "description": "Speak directly with our solutions engineering team to evaluate your requirements and receive an actionable technical blueprint.",
+      "btn_text": "Contact Engineering Team",
+      "btn_url": "contact.php"
+    }
+  },
+  {
+    "page_slug": "about",
+    "section_key": "hero",
+    "section_title": "About Hero",
+    "section_type": "hero",
+    "sort_order": 1,
+    "is_enabled": 1,
+    "status": "published",
+    "content": {
+      "badge": "About Our Company",
+      "heading": "Pioneering Modern Enterprise Technology Solutions",
+      "subheading": "NEXTECHX SOLUTIONS is a modern digital engineering consultancy specializing in scalable software, intelligent AI automation, and resilient back-office operations."
+    }
+  },
+  {
+    "page_slug": "about",
+    "section_key": "mission_vision",
+    "section_title": "Mission & Vision",
+    "section_type": "grid_2",
+    "sort_order": 2,
+    "is_enabled": 1,
+    "status": "published",
+    "content": {
+      "mission_title": "Our Mission",
+      "mission_text": "To empower businesses globally through clean, dependable, and high-performance software engineering that accelerates productivity and unlocks sustainable competitive advantage.",
+      "vision_title": "Our Vision",
+      "vision_text": "To become a globally recognized technical consulting partner known for uncompromising engineering rigor, transparent partnerships, and transformative digital systems."
+    }
+  },
+  {
+    "page_slug": "about",
+    "section_key": "core_values",
+    "section_title": "Core Company Values",
+    "section_type": "values_grid",
+    "sort_order": 3,
+    "is_enabled": 1,
+    "status": "published",
+    "content": {
+      "eyebrow": "Guiding Principles",
+      "heading": "The Values That Define NextTechX",
+      "values": [
+        {
+          "title": "Engineering Excellence",
+          "desc": "We uphold clean code, robust test coverage, and modern architectural principles on every engagement."
+        },
+        {
+          "title": "Integrity & Transparency",
+          "desc": "Uncompromising confidentiality, strict mutual NDAs, and direct, honest communication with our partners."
+        },
+        {
+          "title": "Client-Centric Agility",
+          "desc": "We adapt quickly to evolving business needs, delivering measurable sprint outcomes with zero vendor lock-in."
+        }
+      ]
+    }
+  }
+]

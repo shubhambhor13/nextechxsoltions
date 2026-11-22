@@ -23,6 +23,10 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
+if (file_exists(__DIR__ . '/cms.php')) {
+    require_once __DIR__ . '/cms.php';
+}
+
 class NextTechXMailer {
 
     public static $last_password_source = null;
@@ -290,16 +294,41 @@ class NextTechXMailer {
         $subject = "Thank You for Applying – NEXTECHX SOLUTIONS";
         $submission_date = date('d M Y, h:i A');
 
-        // Generate Clean Corporate Responsive HTML Email Template
-        $htmlBody = self::buildApplicantEmailHtml([
-            'full_name' => $full_name,
-            'position' => $position,
-            'applying_for' => $applying_for,
-            'education' => $education,
-            'app_id' => $app_id,
-            'hr_email' => $hr_email,
-            'date_time' => $submission_date
-        ]);
+        // Check dynamic CMS email template
+        $use_cms_template = false;
+        if (function_exists('cms_get_email_template')) {
+            $tpl = cms_get_email_template('applicant_confirmation');
+            if ($tpl && !empty($tpl['is_active'])) {
+                $replacements = [
+                    '{{applicant_name}}' => $full_name,
+                    '{{full_name}}' => $full_name,
+                    '{{position}}' => $position,
+                    '{{applying_for}}' => $applying_for,
+                    '{{education}}' => $education,
+                    '{{application_id}}' => $app_id,
+                    '{{company_name}}' => 'NEXTECHX SOLUTIONS',
+                    '{{hr_email}}' => $hr_email,
+                    '{{date}}' => $submission_date,
+                    '{{date_time}}' => $submission_date
+                ];
+                $subject = str_replace(array_keys($replacements), array_values($replacements), $tpl['subject'] ?? $subject);
+                $htmlBody = str_replace(array_keys($replacements), array_values($replacements), $tpl['body_html'] ?? '');
+                $use_cms_template = true;
+            }
+        }
+
+        if (!$use_cms_template) {
+            // Generate Clean Corporate Responsive HTML Email Template
+            $htmlBody = self::buildApplicantEmailHtml([
+                'full_name' => $full_name,
+                'position' => $position,
+                'applying_for' => $applying_for,
+                'education' => $education,
+                'app_id' => $app_id,
+                'hr_email' => $hr_email,
+                'date_time' => $submission_date
+            ]);
+        }
 
         $plainBody = "Dear $full_name,\n\n" .
             "Thank you for your interest in NEXTECHX SOLUTIONS.\n\n" .
@@ -397,19 +426,45 @@ class NextTechXMailer {
         $company_to = 'nextechxsolutions@gmail.com';
         $subject = "New Application Received – $full_name – $position";
 
-        $htmlBody = self::buildCompanyEmailHtml([
-            'full_name' => $full_name,
-            'email' => $email,
-            'phone' => $phone,
-            'position' => $position,
-            'applying_for' => $applying_for,
-            'education' => $education,
-            'message' => $message,
-            'app_id' => $app_id,
-            'date_time' => $submission_date,
-            'has_resume' => ($resume_filepath && file_exists($resume_filepath)),
-            'resume_filename' => $resume_filename
-        ]);
+        // Check dynamic CMS email template
+        $use_cms_company_template = false;
+        if (function_exists('cms_get_email_template')) {
+            $tpl = cms_get_email_template('company_application_notification');
+            if ($tpl && !empty($tpl['is_active'])) {
+                $replacements = [
+                    '{{applicant_name}}' => $full_name,
+                    '{{full_name}}' => $full_name,
+                    '{{email}}' => $email,
+                    '{{phone}}' => $phone,
+                    '{{position}}' => $position,
+                    '{{applying_for}}' => $applying_for,
+                    '{{education}}' => $education,
+                    '{{application_id}}' => $app_id,
+                    '{{message}}' => $message,
+                    '{{date}}' => $submission_date,
+                    '{{date_time}}' => $submission_date
+                ];
+                $subject = str_replace(array_keys($replacements), array_values($replacements), $tpl['subject'] ?? $subject);
+                $htmlBody = str_replace(array_keys($replacements), array_values($replacements), $tpl['body_html'] ?? '');
+                $use_cms_company_template = true;
+            }
+        }
+
+        if (!$use_cms_company_template) {
+            $htmlBody = self::buildCompanyEmailHtml([
+                'full_name' => $full_name,
+                'email' => $email,
+                'phone' => $phone,
+                'position' => $position,
+                'applying_for' => $applying_for,
+                'education' => $education,
+                'message' => $message,
+                'app_id' => $app_id,
+                'date_time' => $submission_date,
+                'has_resume' => ($resume_filepath && file_exists($resume_filepath)),
+                'resume_filename' => $resume_filename
+            ]);
+        }
 
         $plainBody = "NEW APPLICATION RECEIVED – NEXTECHX SOLUTIONS\n\n" .
             "Candidate Name: $full_name\n" .

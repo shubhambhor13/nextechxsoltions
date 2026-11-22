@@ -1,8 +1,27 @@
 <?php
-$page_title = "Careers & Internships — Technical Opportunities";
-$page_desc = "Explore interview-based technical internships and student programs with NextTechX Solutions. Apply online.";
+require_once __DIR__ . '/includes/config.php';
+require_once __DIR__ . '/includes/cms.php';
+
+$page_seo = cms_get_page_seo('careers');
+$page_title = $page_seo['meta_title'] ?? ("Careers & Internships — " . SITE_NAME);
+$page_desc = $page_seo['meta_description'] ?? "Explore interview-based technical internships and student programs with NextTechX Solutions. Apply online.";
 require_once __DIR__ . '/includes/header.php';
 
+$cms_opps = cms_get_career_opportunities(true);
+if (!empty($cms_opps)) {
+    $internship_roles = [];
+    foreach ($cms_opps as $opp) {
+        $internship_roles[] = [
+            "id" => $opp['slug'],
+            "title" => $opp['title'],
+            "domain" => $opp['department'] ?? 'Engineering',
+            "badgeColor" => "bg-blue-50 text-blue-700 border-blue-200",
+            "desc" => $opp['description'] ?? '',
+            "skills" => is_array($opp['skills']) ? $opp['skills'] : (json_decode($opp['skills'] ?? '[]', true) ?: []),
+            "liveProject" => $opp['duration'] ?? 'Live Client Project Track'
+        ];
+    }
+} else {
 $internship_roles = [
     [
         "id" => "intern-aiml",

@@ -1,0 +1,11 @@
+[
+  {
+    "id": 1,
+    "username": "admin",
+    "email": "admin@nextechxsolutions.com",
+    "password_hash": "$2y$10$93uaFGUGYwwRepTs/dGtue76BTijv6ZJF6ErEs0oWdtikkQH7r6FS",
+    "full_name": "NextTechX Administrator",
+    "role": "super_admin",
+    "created_at": "2026-11-22 14:53:53"
+  }
+]

@@ -12,7 +12,8 @@ from backend.routers import (
     portfolio,
     ai_chat,
     admin,
-    careers
+    careers,
+    cms
 )
 
 app = FastAPI(
@@ -54,6 +55,7 @@ app.include_router(portfolio.router)
 app.include_router(ai_chat.router)
 app.include_router(admin.router)
 app.include_router(careers.router)
+app.include_router(cms.router)
 
 # Mount Frontend Production Build if present
 dist_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend", "dist")

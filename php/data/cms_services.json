@@ -1,0 +1,240 @@
+[
+  {
+    "slug": "ai-automation",
+    "title": "AI & Automation",
+    "badge": "Autonomous Intelligence",
+    "icon": "bot",
+    "color": "cyan",
+    "sort_order": 1,
+    "is_active": 1,
+    "short_desc": "Intelligent autonomous agents, generative AI, and end-to-end workflow automation.",
+    "content": {
+      "overview": "Empower your enterprise with intelligent conversational agents, autonomous multi-step workflow pipelines, computer vision, and predictive machine learning models.",
+      "tech_stack": [
+        "Python",
+        "PyTorch",
+        "LangChain",
+        "LlamaIndex",
+        "FastAPI",
+        "ChromaDB",
+        "Hugging Face",
+        "OpenCV"
+      ],
+      "offerings": [
+        {
+          "title": "Autonomous Multi-Agent Workflows",
+          "desc": "Agentic pipelines, supervisor models & tool-use APIs."
+        },
+        {
+          "title": "Enterprise Retrieval-Augmented Generation (RAG)",
+          "desc": "Vector databases, hybrid search & hallucination filters."
+        },
+        {
+          "title": "Computer Vision & Object Recognition",
+          "desc": "Real-time inference, defect inspection & spatial tracking."
+        },
+        {
+          "title": "Predictive Analytics & ML Modeling",
+          "desc": "Anomaly detection, forecasting & tabular classification models."
+        }
+      ],
+      "cta": {
+        "title": "Ready to Transform Your Business with AI & Automation?",
+        "subtitle": "Schedule an executive discovery call with our engineering leaders to explore tailored agentic systems.",
+        "button_text": "Inquire About AI & Automation",
+        "button_url": "contact.php"
+      }
+    }
+  },
+  {
+    "slug": "software-development",
+    "title": "Software Development",
+    "badge": "Full-Stack Engineering",
+    "icon": "code-2",
+    "color": "blue",
+    "sort_order": 2,
+    "is_active": 1,
+    "short_desc": "Enterprise web platforms, scalable microservices, and high-performance applications.",
+    "content": {
+      "overview": "Architecting resilient, scalable, and secure digital software backbones for startups and global enterprises.",
+      "tech_stack": [
+        "TypeScript",
+        "React",
+        "Next.js",
+        "Node.js",
+        "Python",
+        "PostgreSQL",
+        "Redis",
+        "Docker",
+        "Kubernetes",
+        "AWS"
+      ],
+      "offerings": [
+        {
+          "title": "Enterprise Web Platforms",
+          "desc": "Scalable SPAs and SSR portals with React, Next.js, and modern backends."
+        },
+        {
+          "title": "Microservices & Distributed APIs",
+          "desc": "High-throughput REST and GraphQL services built for high concurrency."
+        },
+        {
+          "title": "Cross-Platform Mobile Apps",
+          "desc": "Native performance iOS and Android applications with Flutter and React Native."
+        },
+        {
+          "title": "Cloud-Native Infrastructure & DevOps",
+          "desc": "Docker, Kubernetes, CI/CD automated deployments and resilient caching."
+        }
+      ],
+      "cta": {
+        "title": "Accelerate Your Engineering Roadmap",
+        "subtitle": "Partner with our elite full-stack engineering team to build scalable, fault-tolerant web and mobile systems.",
+        "button_text": "Inquire About Software Development",
+        "button_url": "contact.php"
+      }
+    }
+  },
+  {
+    "slug": "saas-development",
+    "title": "SaaS Development",
+    "badge": "Cloud-Native Product",
+    "icon": "layers",
+    "color": "indigo",
+    "sort_order": 3,
+    "is_active": 1,
+    "short_desc": "Multi-tenant platforms, recurring subscription billing, and cloud-native scalability.",
+    "content": {
+      "overview": "From MVP inception to venture-scale SaaS platforms with frictionless billing, multi-tenancy, and global uptime.",
+      "tech_stack": [
+        "React",
+        "Next.js",
+        "Node.js",
+        "Go",
+        "PostgreSQL",
+        "Redis",
+        "Stripe",
+        "Docker",
+        "AWS",
+        "Cloudflare"
+      ],
+      "offerings": [
+        {
+          "title": "Multi-Tenant Cloud Architecture",
+          "desc": "Secure schema/database isolation, role-based controls and fast provisioning."
+        },
+        {
+          "title": "Subscription Billing & Metering",
+          "desc": "Stripe, Lemon Squeezy, Razorpay integrations with automated invoicing."
+        },
+        {
+          "title": "Enterprise RBAC & Security",
+          "desc": "Granular permissions, SSO/SAML, audit logs, and compliance enforcement."
+        },
+        {
+          "title": "High-Availability Global Scaling",
+          "desc": "Auto-scaling clusters, geo-distributed caching, and zero-downtime releases."
+        }
+      ],
+      "cta": {
+        "title": "Ready to Build Your Scalable SaaS Platform?",
+        "subtitle": "Let's turn your software concept into a reliable, enterprise-ready recurring revenue engine.",
+        "button_text": "Inquire About SaaS Development",
+        "button_url": "contact.php"
+      }
+    }
+  },
+  {
+    "slug": "data-annotation",
+    "title": "Data Annotation",
+    "badge": "ML Ground Truth",
+    "icon": "check-square",
+    "color": "emerald",
+    "sort_order": 4,
+    "is_active": 1,
+    "short_desc": "High-precision data labeling, image annotation, and ground-truth validation for AI models.",
+    "content": {
+      "overview": "Precision training datasets annotated by certified specialists and verified by multi-tier automated consensus.",
+      "tech_stack": [
+        "CVAT",
+        "Label Studio",
+        "Roboflow",
+        "Python",
+        "PyTorch",
+        "NumPy",
+        "LabelMe",
+        "FiftyOne"
+      ],
+      "offerings": [
+        {
+          "title": "2D/3D Bounding Boxes & Cuboids",
+          "desc": "Precise spatial bounding for autonomous vehicles and robotics vision."
+        },
+        {
+          "title": "Polygon & Semantic Segmentation",
+          "desc": "Pixel-level boundary delineation for medical imaging and geospatial maps."
+        },
+        {
+          "title": "NLP, NER & Sentiment Labeling",
+          "desc": "Entity extraction, conversation grading, intent classification, and RLHF."
+        },
+        {
+          "title": "Video Annotation & Object Tracking",
+          "desc": "Frame-by-frame temporal tracking, event segmentation, and trajectory tagging."
+        }
+      ],
+      "cta": {
+        "title": "High-Quality Ground Truth for Your AI Models",
+        "subtitle": "Request a customized data annotation pilot with 99.5%+ QA accuracy benchmark guarantee.",
+        "button_text": "Inquire About Data Annotation",
+        "button_url": "contact.php"
+      }
+    }
+  },
+  {
+    "slug": "bpo-services",
+    "title": "BPO Services",
+    "badge": "Operations Excellence",
+    "icon": "headphones",
+    "color": "purple",
+    "sort_order": 5,
+    "is_active": 1,
+    "short_desc": "Scalable back-office operations, multichannel customer support, and business processing.",
+    "content": {
+      "overview": "Cost-effective, SLA-driven business process outsourcing and customer experience management.",
+      "tech_stack": [
+        "Zendesk",
+        "Freshdesk",
+        "Salesforce",
+        "Jira Service Desk",
+        "Intercom",
+        "HubSpot",
+        "Google Workspace"
+      ],
+      "offerings": [
+        {
+          "title": "24/7 Multichannel Customer Support",
+          "desc": "Omnichannel email, live chat, ticketing, and tier-1/tier-2 desk coverage."
+        },
+        {
+          "title": "Back-Office Data Management",
+          "desc": "High-accuracy data entry, document indexing, verification, and CRM cleansing."
+        },
+        {
+          "title": "Content Moderation & Compliance",
+          "desc": "Real-time community screening, policy enforcement, and brand safety audits."
+        },
+        {
+          "title": "Technical Helpdesk & IT Support",
+          "desc": "Hardware/software troubleshooting, user provisioning, and SLA adherence."
+        }
+      ],
+      "cta": {
+        "title": "Scale Your Business Operations Seamlessly",
+        "subtitle": "Empower your core team by delegating repetitive workflows and customer touchpoints to our certified operational specialists.",
+        "button_text": "Inquire About BPO Services",
+        "button_url": "contact.php"
+      }
+    }
+  }
+]

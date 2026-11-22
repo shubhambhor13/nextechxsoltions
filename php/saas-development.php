@@ -1,7 +1,21 @@
 <?php
-$page_title = "SaaS Development — NEXTECHX SOLUTIONS";
-$page_desc = "Multi-tenant platforms, recurring subscription billing, and cloud-native scalability.";
+require_once __DIR__ . '/includes/cms.php';
+$service = cms_get_service('saas-development');
+$page_seo = cms_get_page_seo('saas-development');
+$page_title = $page_seo['meta_title'] ?? (($service['title'] ?? "SaaS Development") . " — " . SITE_NAME);
+$page_desc = $page_seo['meta_description'] ?? ($service['short_desc'] ?? "Multi-tenant platforms, recurring subscription billing, and cloud-native scalability.");
 require_once __DIR__ . '/includes/header.php';
+
+$srv_title = $service['title'] ?? 'SaaS Development';
+$srv_badge = $service['badge'] ?? 'Cloud Product Engineering';
+$srv_short = $service['short_desc'] ?? 'Multi-tenant platforms, recurring subscription billing, and cloud-native scalability.';
+$srv_content = $service['content'] ?? [];
+$srv_overview = !empty($srv_content['overview']) ? $srv_content['overview'] : 'From MVP inception to venture-scale SaaS platforms with frictionless billing, multi-tenancy, and global uptime.';
+$srv_cta = $srv_content['cta'] ?? [];
+$srv_cta_title = $srv_cta['title'] ?? ('Ready to Discuss Your ' . $srv_title . ' Requirements?');
+$srv_cta_sub = $srv_cta['subtitle'] ?? 'Connect directly with our solutions engineering team to evaluate your scope and receive actionable technical guidance.';
+$srv_cta_btn = $srv_cta['button_text'] ?? ('Inquire About ' . $srv_title);
+$srv_cta_url = $srv_cta['button_url'] ?? 'contact.php';
 ?>
 
 <!-- 1. Visually Attractive Hero Section with Bespoke Graphic -->
@@ -16,7 +30,7 @@ require_once __DIR__ . '/includes/header.php';
             <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-400"></i>
             <a href="services.php" class="hover:text-blue-600 transition-colors">Services</a>
             <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-400"></i>
-            <span class="text-slate-900 font-semibold">SaaS Development</span>
+            <span class="text-slate-900 font-semibold"><?= htmlspecialchars($srv_title) ?></span>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
@@ -28,16 +42,16 @@ require_once __DIR__ . '/includes/header.php';
                     </div>
                     <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-semibold font-mono bg-sky-50 text-sky-800 border-sky-200">
                         <span class="w-1.5 h-1.5 rounded-full bg-current animate-pulse"></span>
-                        <span>Cloud Product Engineering</span>
+                        <span><?= htmlspecialchars($srv_badge) ?></span>
                     </span>
                 </div>
 
                 <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight font-heading">
-                    SaaS Development
+                    <?= htmlspecialchars($srv_title) ?>
                 </h1>
 
                 <p class="text-lg sm:text-xl font-medium text-slate-700 leading-snug">
-                    Multi-tenant platforms, recurring subscription billing, and cloud-native scalability.
+                    <?= htmlspecialchars($srv_short) ?>
                 </p>
 
                 <p class="text-sm sm:text-base text-slate-600 leading-relaxed font-normal max-w-2xl">
@@ -46,8 +60,8 @@ require_once __DIR__ . '/includes/header.php';
 
                 <!-- Action Buttons -->
                 <div class="pt-2 flex flex-wrap items-center gap-3.5">
-                    <a href="contact.php" class="px-7 py-3.5 rounded-xl bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-700 hover:to-blue-700 text-white font-bold text-sm shadow-md hover:shadow-lg transition-all font-heading flex items-center gap-2 active:scale-95">
-                        <span>Inquire About SaaS Development</span>
+                    <a href="<?= htmlspecialchars($srv_cta_url) ?>" class="px-7 py-3.5 rounded-xl bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-700 hover:to-blue-700 text-white font-bold text-sm shadow-md hover:shadow-lg transition-all font-heading flex items-center gap-2 active:scale-95">
+                        <span><?= htmlspecialchars($srv_cta_btn) ?></span>
                         <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </a>
 
@@ -748,11 +762,11 @@ require_once __DIR__ . '/includes/header.php';
         </div>
 
         <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white font-heading tracking-tight">
-            Ready to Discuss Your SaaS Development Requirements?
+            <?= htmlspecialchars($srv_cta_title) ?>
         </h2>
 
         <p class="text-sm sm:text-base text-slate-300 max-w-xl mx-auto leading-relaxed">
-            Connect directly with our solutions engineering team to evaluate your scope and receive actionable technical guidance.
+            <?= htmlspecialchars($srv_cta_sub) ?>
         </p>
 
         <div class="pt-3 flex flex-wrap items-center justify-center gap-4">

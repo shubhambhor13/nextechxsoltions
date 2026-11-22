@@ -1,0 +1,114 @@
+[
+  {
+    "slug": "home",
+    "title": "Home",
+    "meta_title": "NEXTECHX SOLUTIONS \u2014 Home",
+    "meta_description": "High-velocity IT consulting and custom digital solutions.",
+    "status": "published",
+    "template": "home"
+  },
+  {
+    "slug": "about",
+    "title": "About Us",
+    "meta_title": "About Us \u2014 NEXTECHX SOLUTIONS",
+    "meta_description": "Learn about NEXTECHX SOLUTIONS and our enterprise engineering team.",
+    "status": "published",
+    "template": "about"
+  },
+  {
+    "slug": "services",
+    "title": "Our Services",
+    "meta_title": "Our Services \u2014 NEXTECHX SOLUTIONS",
+    "meta_description": "Explore our 5 core enterprise services.",
+    "status": "published",
+    "template": "services"
+  },
+  {
+    "slug": "ai-automation",
+    "title": "AI & Automation",
+    "meta_title": "AI & Automation \u2014 NEXTECHX SOLUTIONS",
+    "meta_description": "Intelligent autonomous agents, generative AI, and end-to-end workflow automation.",
+    "status": "published",
+    "template": "service_detail"
+  },
+  {
+    "slug": "software-development",
+    "title": "Software Development",
+    "meta_title": "Software Development \u2014 NEXTECHX SOLUTIONS",
+    "meta_description": "Enterprise web platforms, scalable microservices, and high-performance applications.",
+    "status": "published",
+    "template": "service_detail"
+  },
+  {
+    "slug": "saas-development",
+    "title": "SaaS Development",
+    "meta_title": "SaaS Development \u2014 NEXTECHX SOLUTIONS",
+    "meta_description": "Multi-tenant platforms, recurring subscription billing, and cloud-native scalability.",
+    "status": "published",
+    "template": "service_detail"
+  },
+  {
+    "slug": "data-annotation",
+    "title": "Data Annotation",
+    "meta_title": "Data Annotation \u2014 NEXTECHX SOLUTIONS",
+    "meta_description": "High-precision data labeling, image annotation, and ground-truth validation for AI models.",
+    "status": "published",
+    "template": "service_detail"
+  },
+  {
+    "slug": "bpo-services",
+    "title": "BPO Services",
+    "meta_title": "BPO Services \u2014 NEXTECHX SOLUTIONS",
+    "meta_description": "Scalable back-office operations, multichannel customer support, and business processing.",
+    "status": "published",
+    "template": "service_detail"
+  },
+  {
+    "slug": "careers",
+    "title": "Careers",
+    "meta_title": "Careers \u2014 NEXTECHX SOLUTIONS",
+    "meta_description": "Explore open engineering positions and internships at NEXTECHX SOLUTIONS.",
+    "status": "published",
+    "template": "careers"
+  },
+  {
+    "slug": "contact",
+    "title": "Contact Us",
+    "meta_title": "Contact Us \u2014 NEXTECHX SOLUTIONS",
+    "meta_description": "Get in touch with our solutions engineering team.",
+    "status": "published",
+    "template": "contact"
+  },
+  {
+    "slug": "how-we-work",
+    "title": "How We Work",
+    "meta_title": "How We Work \u2014 NEXTECHX SOLUTIONS",
+    "meta_description": "Our disciplined delivery framework and agile software engineering process.",
+    "status": "published",
+    "template": "default"
+  },
+  {
+    "slug": "industries",
+    "title": "Industries",
+    "meta_title": "Industries \u2014 NEXTECHX SOLUTIONS",
+    "meta_description": "Tailored enterprise software and technology solutions across sectors.",
+    "status": "published",
+    "template": "default"
+  },
+  {
+    "slug": "faqs",
+    "title": "Frequently Asked Questions",
+    "meta_title": "FAQs \u2014 NEXTECHX SOLUTIONS",
+    "meta_description": "Answers to common inquiries about our services, billing, and SLAs.",
+    "status": "published",
+    "template": "default"
+  },
+  {
+    "slug": "privacy",
+    "title": "Privacy Policy",
+    "meta_title": "Privacy Policy \u2014 NEXTECHX SOLUTIONS",
+    "meta_description": "NextTechX Solutions data protection, client confidentiality, and privacy terms.",
+    "status": "published",
+    "template": "default"
+  }
+]

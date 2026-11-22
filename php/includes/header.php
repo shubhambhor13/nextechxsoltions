@@ -1,8 +1,23 @@
 <?php
 require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/cms.php';
 
-$page_title = isset($page_title) ? $page_title . ' — ' . SITE_NAME : SITE_NAME . ' — Enterprise IT Solutions, AI Automation & Technology Internships';
-$page_desc = isset($page_desc) ? $page_desc : 'NextTechX Solutions delivers enterprise IT solutions, autonomous AI workflows, cloud infrastructure, and technology internship programs. Your Vision Our Technology.';
+// Check Maintenance Mode
+$current_script = basename($_SERVER['PHP_SELF'] ?? '');
+$req_uri = $_SERVER['REQUEST_URI'] ?? '';
+$is_admin = $current_script === 'admin.php' || strpos($req_uri, 'admin.php') !== false || strpos($req_uri, '/api/') !== false;
+if (!$is_admin && function_exists('cms_is_maintenance_mode') && cms_is_maintenance_mode()) {
+    http_response_code(503);
+    include __DIR__ . '/maintenance.php';
+    exit;
+}
+
+$cms_company_name = cms_get_setting('company_name', SITE_NAME);
+$cms_tagline = cms_get_setting('tagline', SITE_TAGLINE);
+$cms_email = cms_get_setting('email_contact', SITE_EMAIL_CONTACT);
+
+$page_title = isset($page_title) ? $page_title : ($cms_company_name . ' — Enterprise IT Solutions, AI Automation & Technology Internships');
+$page_desc = isset($page_desc) ? $page_desc : ('NextTechX Solutions delivers enterprise IT solutions, autonomous AI workflows, cloud infrastructure, and technology internship programs. ' . $cms_tagline . '.');
 ?>
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth scroll-pt-28 overflow-x-clip">
@@ -91,23 +106,30 @@ $page_desc = isset($page_desc) ? $page_desc : 'NextTechX Solutions delivers ente
     <!-- 1. Top Fixed Navigation Wrapper -->
     <div class="fixed top-0 left-0 right-0 z-50 w-full">
         
-        <!-- Top Operational Notification Bar -->
-        <div class="w-full bg-slate-900 text-slate-300 py-1.5 px-4 text-xs border-b border-slate-800/80 transition-all duration-300">
+        <!-- Top Operational Notification Bar (Configurable in CMS) -->
+        <?php $announcement = cms_get_global_announcement(); ?>
+        <?php if (!empty($announcement['enabled'])): ?>
+        <div class="w-full <?= htmlspecialchars($announcement['bg'] ?? 'bg-slate-900') ?> text-slate-300 py-1.5 px-4 text-xs border-b border-slate-800/80 transition-all duration-300">
             <div class="max-w-7xl mx-auto flex items-center justify-between">
                 <div class="flex items-center gap-2">
                     <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                    <span class="font-medium text-slate-200">Online-First Global IT Delivery</span>
-                    <span class="text-slate-500 hidden sm:inline">•</span>
-                    <span class="text-slate-400 hidden sm:inline">ISO-Aligned Quality Standards</span>
+                    <?php if (!empty($announcement['link'])): ?>
+                        <a href="<?= htmlspecialchars($announcement['link']) ?>" class="font-medium text-slate-200 hover:text-cyan-400 transition-colors">
+                            <?= htmlspecialchars($announcement['text']) ?>
+                        </a>
+                    <?php else: ?>
+                        <span class="font-medium text-slate-200"><?= htmlspecialchars($announcement['text']) ?></span>
+                    <?php endif; ?>
                 </div>
                 <div class="flex items-center gap-3 sm:gap-4 text-xs font-mono">
-                    <a href="mailto:<?= SITE_EMAIL_CONTACT ?>" class="hover:text-cyan-400 flex items-center gap-1.5 transition-colors">
+                    <a href="mailto:<?= htmlspecialchars($cms_email) ?>" class="hover:text-cyan-400 flex items-center gap-1.5 transition-colors">
                         <i data-lucide="mail" class="w-3.5 h-3.5 text-cyan-400"></i>
-                        <span><?= SITE_EMAIL_CONTACT ?></span>
+                        <span><?= htmlspecialchars($cms_email) ?></span>
                     </a>
                 </div>
             </div>
         </div>
+        <?php endif; ?>
 
         <!-- Main Clean White Sticky Header -->
         <header id="mainHeader" class="w-full bg-white/95 backdrop-blur-md border-b border-slate-200/90 shadow-sm py-2.5 sm:py-3 transition-all duration-300">

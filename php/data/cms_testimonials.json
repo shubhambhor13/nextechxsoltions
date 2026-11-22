@@ -1,0 +1,50 @@
+[
+  {
+    "client_name": "Marcus Vance",
+    "client_title": "VP of Engineering",
+    "client_company": "Nexus Telecom IO",
+    "client_image": "",
+    "rating": 5,
+    "review_text": "NextTechX Solutions re-architected our legacy billing infrastructure into a high-concurrency microservices stack. Their engineering discipline, zero-downtime cutover, and transparent communication exceeded our high expectations.",
+    "project_type": "Cloud Microservices & BillingRevamp",
+    "display_location": "all",
+    "sort_order": 1,
+    "is_published": 1
+  },
+  {
+    "client_name": "Elena Rostova",
+    "client_title": "Head of Operations",
+    "client_company": "Apex Logistics AG",
+    "client_image": "",
+    "rating": 5,
+    "review_text": "The autonomous n8n workflows and OCR pipeline delivered by NextTechX cut our freight invoice processing time by 85%. What previously took hours of tedious manual data entry is now reconciled in minutes.",
+    "project_type": "AI Document Automation & n8n",
+    "display_location": "all",
+    "sort_order": 2,
+    "is_published": 1
+  },
+  {
+    "client_name": "Dr. Arthur Pendelton",
+    "client_title": "Director of Medical Informatics",
+    "client_company": "Synapse Health Technologies",
+    "client_image": "",
+    "rating": 5,
+    "review_text": "Their computer vision data annotation team handled over 250,000 medical image segmentation masks under strict HIPAA confidentiality with remarkable sub-pixel accuracy. Truly an enterprise-grade partner.",
+    "project_type": "Precision Medical Data Annotation",
+    "display_location": "services",
+    "sort_order": 3,
+    "is_published": 1
+  },
+  {
+    "client_name": "Sophie Tremblay",
+    "client_title": "Chief Product Officer",
+    "client_company": "FlowMetric SaaS",
+    "client_image": "",
+    "rating": 5,
+    "review_text": "From day one, the NextTechX team understood our multi-tenant SaaS requirements. They built our subscription metering engine and customer portal ahead of schedule, enabling our team to hit our launch milestone smoothly.",
+    "project_type": "Multi-Tenant SaaS Engineering",
+    "display_location": "all",
+    "sort_order": 4,
+    "is_published": 1
+  }
+]

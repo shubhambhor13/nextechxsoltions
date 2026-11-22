@@ -189,11 +189,6 @@ export default function Footer({ onOpenQuote }) {
                     Request a Quotation
                   </button>
                 </li>
-                <li>
-                  <Link to="/admin" className="hover:text-blue-400 transition-colors">
-                    Staff Portal
-                  </Link>
-                </li>
               </ul>
             </div>
           </div>

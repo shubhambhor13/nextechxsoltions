@@ -117,6 +117,42 @@
         </div>
     </footer>
 
+    <!-- Cookie Notice Banner (Configurable in CMS) -->
+    <?php $cookie_notice = function_exists('cms_get_cookie_notice') ? cms_get_cookie_notice() : ['enabled' => true, 'text' => 'We utilize security and telemetry cookies to ensure optimal browsing performance and protect client submissions.']; ?>
+    <?php if (!empty($cookie_notice['enabled'])): ?>
+    <div id="cmsCookieNotice" class="hidden fixed bottom-5 left-5 z-50 max-w-md bg-slate-900/95 text-slate-200 border border-slate-700/80 rounded-2xl p-4 shadow-2xl backdrop-blur-md text-xs leading-relaxed animate-in fade-in slide-in-from-bottom-2">
+        <div class="flex items-start gap-3">
+            <div class="p-2 rounded-xl bg-blue-600/20 text-blue-400 shrink-0">
+                <i data-lucide="cookie" class="w-5 h-5"></i>
+            </div>
+            <div class="space-y-2">
+                <p class="font-normal text-slate-300">
+                    <?= htmlspecialchars($cookie_notice['text'] ?? 'We utilize security and telemetry cookies to ensure optimal browsing performance and protect client submissions.') ?>
+                </p>
+                <div class="flex items-center gap-3 pt-1">
+                    <button onclick="acceptCookieNotice()" class="px-4 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs transition-colors">
+                        Acknowledge
+                    </button>
+                    <a href="privacy.php" class="text-slate-400 hover:text-white underline text-[11px]">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!localStorage.getItem('ntx_cookie_consent')) {
+                const el = document.getElementById('cmsCookieNotice');
+                if (el) el.classList.remove('hidden');
+            }
+        });
+        function acceptCookieNotice() {
+            localStorage.setItem('ntx_cookie_consent', 'accepted');
+            const el = document.getElementById('cmsCookieNotice');
+            if (el) el.classList.add('hidden');
+        }
+    </script>
+    <?php endif; ?>
+
     <?php require_once __DIR__ . '/modals.php'; ?>
     <?php require_once __DIR__ . '/chatbot.php'; ?>
 

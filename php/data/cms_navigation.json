@@ -1,0 +1,112 @@
+[
+  {
+    "id": 1,
+    "menu_location": "primary_header",
+    "label": "Home",
+    "url": "index.php",
+    "parent_id": 0,
+    "sort_order": 1,
+    "target": "_self",
+    "is_active": 1
+  },
+  {
+    "id": 2,
+    "menu_location": "primary_header",
+    "label": "About Us",
+    "url": "about.php",
+    "parent_id": 0,
+    "sort_order": 2,
+    "target": "_self",
+    "is_active": 1
+  },
+  {
+    "id": 3,
+    "menu_location": "primary_header",
+    "label": "Services",
+    "url": "services.php",
+    "parent_id": 0,
+    "sort_order": 3,
+    "target": "_self",
+    "is_active": 1
+  },
+  {
+    "id": 4,
+    "menu_location": "primary_header",
+    "label": "AI & Automation",
+    "url": "ai-automation.php",
+    "parent_id": 3,
+    "sort_order": 1,
+    "target": "_self",
+    "is_active": 1
+  },
+  {
+    "id": 5,
+    "menu_location": "primary_header",
+    "label": "Software Development",
+    "url": "software-development.php",
+    "parent_id": 3,
+    "sort_order": 2,
+    "target": "_self",
+    "is_active": 1
+  },
+  {
+    "id": 6,
+    "menu_location": "primary_header",
+    "label": "SaaS Development",
+    "url": "saas-development.php",
+    "parent_id": 3,
+    "sort_order": 3,
+    "target": "_self",
+    "is_active": 1
+  },
+  {
+    "id": 7,
+    "menu_location": "primary_header",
+    "label": "Data Annotation",
+    "url": "data-annotation.php",
+    "parent_id": 3,
+    "sort_order": 4,
+    "target": "_self",
+    "is_active": 1
+  },
+  {
+    "id": 8,
+    "menu_location": "primary_header",
+    "label": "BPO Services",
+    "url": "bpo-services.php",
+    "parent_id": 3,
+    "sort_order": 5,
+    "target": "_self",
+    "is_active": 1
+  },
+  {
+    "id": 9,
+    "menu_location": "primary_header",
+    "label": "Portfolio",
+    "url": "portfolio.php",
+    "parent_id": 0,
+    "sort_order": 4,
+    "target": "_self",
+    "is_active": 1
+  },
+  {
+    "id": 10,
+    "menu_location": "primary_header",
+    "label": "Careers",
+    "url": "careers.php",
+    "parent_id": 0,
+    "sort_order": 5,
+    "target": "_self",
+    "is_active": 1
+  },
+  {
+    "id": 11,
+    "menu_location": "primary_header",
+    "label": "Contact Us",
+    "url": "contact.php",
+    "parent_id": 0,
+    "sort_order": 6,
+    "target": "_self",
+    "is_active": 1
+  }
+]

@@ -1,0 +1,11 @@
+{
+  "primary_color": "#2563eb",
+  "secondary_color": "#06b6d4",
+  "accent_color": "#4f46e5",
+  "background_color": "#ffffff",
+  "font_heading": "Manrope",
+  "font_body": "Inter",
+  "border_radius": "1rem",
+  "header_theme": "clean_white",
+  "footer_theme": "deep_navy"
+}
