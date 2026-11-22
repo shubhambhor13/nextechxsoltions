@@ -11,19 +11,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/mailer.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $db = function_exists('get_db') ? get_db() : null;
-    if ($db) {
-        try {
-            $stmt = $db->query("SELECT * FROM consultation_bookings ORDER BY id DESC LIMIT 50");
-            echo json_encode($stmt->fetchAll());
-            exit;
-        } catch (Exception $e) {}
-    }
-    $fallback_file = dirname(DB_PATH) . '/fallback_consultation_bookings.json';
-    $data = file_exists($fallback_file) ? json_decode(file_get_contents($fallback_file), true) : [];
-    echo json_encode(is_array($data) ? $data : []);
+    $records = get_records('consultation_bookings', 100);
+    echo json_encode($records);
     exit;
 }
 
@@ -53,6 +45,8 @@ if (empty($name) || empty($email) || empty($phone)) {
     exit;
 }
 
+$ref_id = 'NTX-CNS-' . date('Ymd') . '-' . substr(md5(uniqid()), 0, 4);
+
 $record = [
     'name' => $name,
     'email' => $email,
@@ -62,15 +56,23 @@ $record = [
     'preferred_date' => $preferred_date,
     'preferred_time' => $preferred_time,
     'notes' => $notes,
-    'status' => 'scheduled'
+    'status' => 'scheduled',
+    'email_sent' => 0,
+    'admin_email_status' => 'pending',
+    'user_email_status' => 'pending',
+    'email_error' => null,
+    'created_at' => date('Y-m-d H:i:s')
 ];
 
+$record_id = null;
+$db = function_exists('get_db') ? get_db() : null;
+
+// 1. SAVE TO DATABASE FIRST (Zero Data Loss)
 try {
-    $db = function_exists('get_db') ? get_db() : null;
     if ($db) {
         $stmt = $db->prepare("
-            INSERT INTO consultation_bookings (name, email, phone, company, topic, preferred_date, preferred_time, notes, status, created_at)
-            VALUES (:name, :email, :phone, :company, :topic, :preferred_date, :preferred_time, :notes, 'scheduled', datetime('now'))
+            INSERT INTO consultation_bookings (name, email, phone, company, topic, preferred_date, preferred_time, notes, status, email_sent, admin_email_status, user_email_status, created_at)
+            VALUES (:name, :email, :phone, :company, :topic, :preferred_date, :preferred_time, :notes, 'scheduled', 0, 'pending', 'pending', datetime('now'))
         ");
         $stmt->execute([
             ':name' => $name,
@@ -82,20 +84,68 @@ try {
             ':preferred_time' => $preferred_time,
             ':notes' => $notes
         ]);
+        $record_id = (int)$db->lastInsertId();
     } else {
         save_record_fallback('consultation_bookings', $record);
     }
-
-    echo json_encode([
-        'status' => 'success',
-        'success' => true,
-        'message' => 'Your 30-minute strategy consultation has been reserved! Our Solutions Architect will send meeting credentials to your email and WhatsApp.'
-    ]);
 } catch (Exception $e) {
     save_record_fallback('consultation_bookings', $record);
-    echo json_encode([
-        'status' => 'success',
-        'success' => true,
-        'message' => 'Your 30-minute strategy consultation has been reserved! Our Solutions Architect will send meeting credentials to your email and WhatsApp.'
+}
+
+// 2. DISPATCH CENTRALIZED NOTIFICATION & CONFIRMATION EMAILS
+$fields = [
+    'Client Name' => $name,
+    'Email Address' => $email,
+    'Phone / WhatsApp' => $phone,
+    'Company / Organization' => $company ?: 'Not specified',
+    'Consultation Topic' => $topic,
+    'Preferred Date' => $preferred_date,
+    'Preferred Time Slot' => $preferred_time,
+    'Discussion Notes / Focus' => $notes ?: 'General strategy discussion'
+];
+
+$mailResult = NextTechXMailer::sendFormSubmission('consultation', 'Strategy Consultation Booking', $fields, $email, $name, [], $ref_id);
+
+$admin_sent = !empty($mailResult['company_email_sent']);
+$user_sent = !empty($mailResult['user_email_sent']);
+$overall_sent = ($admin_sent && $user_sent);
+$email_err = trim(($mailResult['company_error'] ?? '') . ' | ' . ($mailResult['user_error'] ?? ''), ' |');
+
+// 3. UPDATE DATABASE WITH EMAIL DELIVERY STATUS
+if ($db && $record_id) {
+    try {
+        $update = $db->prepare("
+            UPDATE consultation_bookings SET
+                email_sent = :sent,
+                admin_email_status = :adm_st,
+                user_email_status = :usr_st,
+                email_error = :err
+            WHERE id = :id
+        ");
+        $update->execute([
+            ':sent' => $overall_sent ? 1 : 0,
+            ':adm_st' => $admin_sent ? 'sent' : 'failed',
+            ':usr_st' => $user_sent ? 'sent' : 'failed',
+            ':err' => $email_err ?: null,
+            ':id' => $record_id
+        ]);
+    } catch (Exception $e) {}
+} elseif (function_exists('update_record_status')) {
+    update_record_status('consultation_bookings', $record_id ?: 1, 'scheduled', [
+        'email_sent' => $overall_sent ? 1 : 0,
+        'admin_email_status' => $admin_sent ? 'sent' : 'failed',
+        'user_email_status' => $user_sent ? 'sent' : 'failed',
+        'email_error' => $email_err ?: null
     ]);
 }
+
+// 4. RETURN CLEAN STRUCTURED JSON
+echo json_encode([
+    'status' => 'success',
+    'success' => true,
+    'reference_id' => $ref_id,
+    'message' => 'Your 30-minute strategy consultation has been reserved for ' . htmlspecialchars($preferred_date) . ' at ' . htmlspecialchars($preferred_time) . '! Our Solutions Architect will send meeting credentials to ' . htmlspecialchars($email) . '.',
+    'email_sent' => $overall_sent,
+    'admin_notification_sent' => $admin_sent,
+    'user_confirmation_sent' => $user_sent
+]);

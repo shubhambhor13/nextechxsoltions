@@ -10,13 +10,150 @@ from datetime import datetime
 logger = logging.getLogger("career_email_service")
 
 # Email Configurations
-TARGET_EMAIL = os.environ.get("CAREER_TARGET_EMAIL", "nextechxsolutions@gmail.com")
-HR_EMAIL = os.environ.get("CAREER_HR_EMAIL", "hr@nextechxsolutions.com")
-SMTP_HOST = os.environ.get("SMTP_HOST", "smtp.gmail.com")
-SMTP_PORT = int(os.environ.get("SMTP_PORT", "587"))
-SMTP_USER = os.environ.get("SMTP_USER", "")
+TARGET_EMAIL = os.environ.get("TARGET_EMAIL", os.environ.get("CAREER_TARGET_EMAIL", "nextechxsolutions@gmail.com"))
+HR_EMAIL = os.environ.get("HR_EMAIL", os.environ.get("CAREER_HR_EMAIL", "hr@nextechxsolutions.com"))
+SMTP_HOST = os.environ.get("SMTP_HOST", "smtp.hostinger.com")
+SMTP_PORT = int(os.environ.get("SMTP_PORT", "465"))
+SMTP_USER = os.environ.get("SMTP_USERNAME", os.environ.get("SMTP_USER", "hr@nextechxsolutions.com"))
 SMTP_PASS = os.environ.get("SMTP_PASS", os.environ.get("SMTP_PASSWORD", ""))
-SMTP_FROM = os.environ.get("SMTP_FROM", SMTP_USER if SMTP_USER else "NextTechX Careers <careers@nextechxsolutions.com>")
+SMTP_FROM = os.environ.get("SMTP_FROM_EMAIL", os.environ.get("SMTP_FROM", "hr@nextechxsolutions.com"))
+SMTP_FROM_NAME = os.environ.get("SMTP_FROM_NAME", "NEXTECHX SOLUTIONS")
+
+def send_form_notification_email(form_type: str, form_title: str, form_data: dict, user_email: str = "", user_name: str = "", attachments: list = None) -> dict:
+    """
+    Unified Form Notification Dispatcher for Python FastAPI backend.
+    Sends full submission details & attachments to nextechxsolutions@gmail.com
+    and dispatches confirmation email to the applicant/visitor.
+    """
+    user_name = user_name or "Valued Submitter"
+    submitted_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    subject = f"[{form_title.upper()}] New Submission from {user_name} - NEXTECHX SOLUTIONS"
+
+    # Plain text summary
+    body_text = f"""
+============================================================
+NEW FORM SUBMISSION: {form_title.upper()}
+============================================================
+Submitter:      {user_name}
+Email Address:  {user_email}
+Date & Time:    {submitted_at}
+
+SUBMITTED DETAILS:
+------------------------------------------------------------
+"""
+    for k, v in form_data.items():
+        body_text += f"{k:20}: {v}\n"
+
+    body_text += f"""
+============================================================
+NextTechX Solutions Form Notification System
+https://nextechxsolutions.com
+"""
+
+    # HTML Summary
+    table_rows = "".join([f"<tr><td style='padding:6px 0;color:#64748b;font-size:13px;font-weight:500;width:35%;'>{k}:</td><td style='padding:6px 0;color:#0f172a;font-size:13.5px;font-weight:600;'>{v}</td></tr>" for k, v in form_data.items()])
+
+    body_html = f"""
+    <!DOCTYPE html>
+    <html>
+    <head><meta charset="utf-8"></head>
+    <body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,sans-serif;color:#1e293b;background-color:#f8fafc;margin:0;padding:24px;">
+      <div style="max-width:600px;margin:0 auto;background:#fff;border-radius:12px;border:1px solid #e2e8f0;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.05);">
+        <div style="background:#0f172a;color:#fff;padding:24px;border-bottom:1px solid #e2e8f0;">
+          <h2 style="margin:0;font-size:20px;font-weight:800;color:#fff;">NEXTECHX <span style="color:#38bdf8;">SOLUTIONS</span></h2>
+          <p style="margin:4px 0 0 0;font-size:13px;color:#94a3b8;">New {form_title} Received</p>
+        </div>
+        <div style="padding:28px;">
+          <div style="border:1px solid #e2e8f0;border-radius:8px;background:#f8fafc;padding:16px 20px;margin-bottom:20px;">
+            <table width="100%" cellpadding="0" cellspacing="0">{table_rows}</table>
+          </div>
+          <p style="font-size:12px;color:#94a3b8;margin:0;">Submitted via NEXTECHX SOLUTIONS Portal on {submitted_at}</p>
+        </div>
+      </div>
+    </body>
+    </html>
+    """
+
+    msg = MIMEMultipart("mixed")
+    msg["From"] = f"{SMTP_FROM_NAME} <{SMTP_FROM}>"
+    msg["To"] = TARGET_EMAIL
+    msg["Subject"] = subject
+    if user_email:
+        msg["Reply-To"] = user_email
+
+    alt = MIMEMultipart("alternative")
+    alt.attach(MIMEText(body_text, "plain", "utf-8"))
+    alt.attach(MIMEText(body_html, "html", "utf-8"))
+    msg.attach(alt)
+
+    # Attachments
+    if attachments:
+        for att in attachments:
+            att_path = att.get("path") if isinstance(att, dict) else str(att)
+            att_name = att.get("name") if isinstance(att, dict) else os.path.basename(att_path)
+            if att_path and os.path.exists(att_path):
+                try:
+                    with open(att_path, "rb") as f:
+                        part = MIMEBase("application", "octet-stream")
+                        part.set_payload(f.read())
+                    encoders.encode_base64(part)
+                    part.add_header("Content-Disposition", f'attachment; filename="{att_name}"')
+                    msg.attach(part)
+                except Exception as e:
+                    logger.warning(f"Could not attach file {att_path}: {e}")
+
+    sent = False
+    error_msg = None
+    if SMTP_USER and SMTP_PASS:
+        try:
+            if SMTP_PORT == 465:
+                server = smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT, timeout=10)
+            else:
+                server = smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=10)
+                server.ehlo()
+                server.starttls()
+                server.ehlo()
+            server.login(SMTP_USER, SMTP_PASS)
+            server.sendmail(SMTP_FROM, [TARGET_EMAIL], msg.as_string())
+            server.quit()
+            sent = True
+        except Exception as e:
+            error_msg = str(e)
+            logger.error(f"Error sending form notification: {e}")
+    else:
+        error_msg = "SMTP credentials not configured"
+
+    # User confirmation email
+    if user_email and SMTP_USER and SMTP_PASS and sent:
+        try:
+            user_msg = MIMEMultipart("alternative")
+            user_msg["From"] = f"{SMTP_FROM_NAME} <{SMTP_FROM}>"
+            user_msg["To"] = user_email
+            user_msg["Subject"] = f"Thank you for contacting NEXTECHX SOLUTIONS - {form_title}"
+            user_msg["Reply-To"] = HR_EMAIL
+
+            u_plain = f"Dear {user_name},\n\nThank you for reaching out to NEXTECHX SOLUTIONS.\nWe have received your {form_title} and our team will get in touch with you shortly.\n\nBest Regards,\nNEXTECHX SOLUTIONS Team\nhttps://nextechxsolutions.com"
+            user_msg.attach(MIMEText(u_plain, "plain", "utf-8"))
+
+            if SMTP_PORT == 465:
+                u_server = smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT, timeout=10)
+            else:
+                u_server = smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=10)
+                u_server.ehlo()
+                u_server.starttls()
+                u_server.ehlo()
+            u_server.login(SMTP_USER, SMTP_PASS)
+            u_server.sendmail(SMTP_FROM, [user_email], user_msg.as_string())
+            u_server.quit()
+        except Exception as e:
+            logger.warning(f"User confirmation email failed: {e}")
+
+    return {
+        "success": True,
+        "sent": sent,
+        "target": TARGET_EMAIL,
+        "error": error_msg
+    }
 
 def send_career_application_email(app_data: dict, resume_path: str, resume_filename: str) -> dict:
     """

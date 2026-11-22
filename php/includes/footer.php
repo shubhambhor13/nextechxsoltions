@@ -111,6 +111,11 @@
                         <i data-lucide="linkedin" class="w-3.5 h-3.5 text-blue-400"></i>
                         <span>LinkedIn</span>
                     </a>
+                    <span>•</span>
+                    <a href="submissions.php" class="hover:text-slate-200 flex items-center gap-1 transition-colors text-slate-500 hover:text-slate-300" title="Manage Form Submissions & Applications">
+                        <i data-lucide="inbox" class="w-3.5 h-3.5 text-slate-500"></i>
+                        <span>Submissions</span>
+                    </a>
                 </div>
             </div>
         </div>

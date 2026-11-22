@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException, Depends
 from backend.database import get_db_connection
 from backend.schemas import ContactMessageCreate, ContactMessageOut
 from backend.services.notification_service import trigger_n8n_automation
+from backend.services.email_service import send_form_notification_email
 from typing import List
 
 router = APIRouter(prefix="/api/contact", tags=["Contact"])
@@ -18,6 +19,22 @@ async def submit_contact_form(data: ContactMessageCreate):
         conn.commit()
         msg_id = cursor.lastrowid
         
+        # Centralized Email Notification to nextechxsolutions@gmail.com
+        send_form_notification_email(
+            form_type="contact",
+            form_title="Contact Form Inquiry",
+            form_data={
+                "Full Name": data.name,
+                "Email": str(data.email),
+                "Phone": data.phone or "Not provided",
+                "Company": data.company or "Not specified",
+                "Service Interest": data.service_interest,
+                "Message": data.message
+            },
+            user_email=str(data.email),
+            user_name=data.name
+        )
+
         # Trigger automation stream
         await trigger_n8n_automation("new_contact_inquiry", {
             "id": msg_id,

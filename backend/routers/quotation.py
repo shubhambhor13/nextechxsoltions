@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException
 from backend.database import get_db_connection
 from backend.schemas import QuotationRequestCreate, QuotationRequestOut
 from backend.services.notification_service import trigger_n8n_automation
+from backend.services.email_service import send_form_notification_email
 from typing import List
 
 router = APIRouter(prefix="/api/quotation", tags=["Quotation"])
@@ -19,6 +20,24 @@ async def submit_quotation_request(data: QuotationRequestCreate):
         conn.commit()
         quote_id = cursor.lastrowid
         
+        # Centralized Email Notification to nextechxsolutions@gmail.com
+        send_form_notification_email(
+            form_type="quote",
+            form_title="Quotation Request",
+            form_data={
+                "Client Name": data.name,
+                "Email": str(data.email),
+                "Phone": data.phone,
+                "Company": data.company or "Not specified",
+                "Service Category": data.service_category,
+                "Budget Range": data.budget_range,
+                "Timeline": data.project_timeline,
+                "Requirements": data.requirements
+            },
+            user_email=str(data.email),
+            user_name=data.name
+        )
+
         await trigger_n8n_automation("new_quotation_request", {
             "id": quote_id,
             "name": data.name,

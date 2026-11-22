@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException
 from backend.database import get_db_connection
 from backend.schemas import ConsultationBookingCreate, ConsultationBookingOut
 from backend.services.notification_service import trigger_n8n_automation
+from backend.services.email_service import send_form_notification_email
 from typing import List
 
 router = APIRouter(prefix="/api/consultation", tags=["Consultation"])
@@ -19,6 +20,24 @@ async def book_consultation(data: ConsultationBookingCreate):
         conn.commit()
         booking_id = cursor.lastrowid
         
+        # Centralized Email Notification to nextechxsolutions@gmail.com
+        send_form_notification_email(
+            form_type="consultation",
+            form_title="Strategy Consultation Booking",
+            form_data={
+                "Client Name": data.name,
+                "Email": str(data.email),
+                "Phone": data.phone,
+                "Company": data.company or "Not specified",
+                "Topic": data.topic,
+                "Preferred Date": data.preferred_date,
+                "Preferred Time": data.preferred_time,
+                "Notes": data.notes or "None provided"
+            },
+            user_email=str(data.email),
+            user_name=data.name
+        )
+
         await trigger_n8n_automation("consultation_booked", {
             "id": booking_id,
             "name": data.name,

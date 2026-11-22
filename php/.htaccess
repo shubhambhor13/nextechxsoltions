@@ -25,6 +25,8 @@ DirectoryIndex index.php index.html
     RewriteRule ^api/chat/?$ api/chat.php [L,QSA]
     RewriteRule ^api/consultation/?$ api/consultation.php [L,QSA]
     RewriteRule ^api/contact/?$ api/contact.php [L,QSA]
+    RewriteRule ^api/submissions/?$ api/submissions.php [L,QSA]
+    RewriteRule ^submissions/?$ submissions.php [L,QSA]
 
     # Clean URL support: /about -> about.php, /services -> services.php
     RewriteCond %{REQUEST_FILENAME} !-d

@@ -11,19 +11,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/mailer.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $db = function_exists('get_db') ? get_db() : null;
-    if ($db) {
-        try {
-            $stmt = $db->query("SELECT * FROM contact_messages ORDER BY id DESC LIMIT 50");
-            echo json_encode($stmt->fetchAll());
-            exit;
-        } catch (Exception $e) {}
-    }
-    $fallback_file = dirname(DB_PATH) . '/fallback_contact_messages.json';
-    $data = file_exists($fallback_file) ? json_decode(file_get_contents($fallback_file), true) : [];
-    echo json_encode(is_array($data) ? $data : []);
+    $records = get_records('contact_messages', 100);
+    echo json_encode($records);
     exit;
 }
 
@@ -52,6 +44,8 @@ if (empty($name) || empty($email) || empty($message)) {
     exit;
 }
 
+$ref_id = 'NTX-CON-' . date('Ymd') . '-' . substr(md5(uniqid()), 0, 4);
+
 $record = [
     'name' => $name,
     'email' => $email,
@@ -59,15 +53,23 @@ $record = [
     'company' => $company,
     'service_interest' => $service_interest,
     'message' => $message,
-    'status' => 'new'
+    'status' => 'new',
+    'email_sent' => 0,
+    'admin_email_status' => 'pending',
+    'user_email_status' => 'pending',
+    'email_error' => null,
+    'created_at' => date('Y-m-d H:i:s')
 ];
 
+$record_id = null;
+$db = function_exists('get_db') ? get_db() : null;
+
+// 1. SAVE TO DATABASE FIRST (Zero Data Loss)
 try {
-    $db = function_exists('get_db') ? get_db() : null;
     if ($db) {
         $stmt = $db->prepare("
-            INSERT INTO contact_messages (name, email, phone, company, service_interest, message, status, created_at)
-            VALUES (:name, :email, :phone, :company, :service_interest, :message, 'new', datetime('now'))
+            INSERT INTO contact_messages (name, email, phone, company, service_interest, message, status, email_sent, admin_email_status, user_email_status, created_at)
+            VALUES (:name, :email, :phone, :company, :service_interest, :message, 'new', 0, 'pending', 'pending', datetime('now'))
         ");
         $stmt->execute([
             ':name' => $name,
@@ -77,20 +79,66 @@ try {
             ':service_interest' => $service_interest,
             ':message' => $message
         ]);
+        $record_id = (int)$db->lastInsertId();
     } else {
         save_record_fallback('contact_messages', $record);
     }
-
-    echo json_encode([
-        'status' => 'success',
-        'success' => true,
-        'message' => 'Thank you for reaching out! Your message has been routed to our team (' . SITE_EMAIL_CONTACT . '). We will respond shortly via email or phone.'
-    ]);
 } catch (Exception $e) {
     save_record_fallback('contact_messages', $record);
-    echo json_encode([
-        'status' => 'success',
-        'success' => true,
-        'message' => 'Thank you for reaching out! Your message has been routed to our team (' . SITE_EMAIL_CONTACT . '). We will respond shortly via email or phone.'
+}
+
+// 2. DISPATCH CENTRALIZED NOTIFICATION & CONFIRMATION EMAILS
+$fields = [
+    'Full Name' => $name,
+    'Email Address' => $email,
+    'Phone Number' => $phone ?: 'Not provided',
+    'Company / Organization' => $company ?: 'Not provided',
+    'Service Interest' => $service_interest,
+    'Message' => $message
+];
+
+$mailResult = NextTechXMailer::sendFormSubmission('contact', 'Contact Inquiry', $fields, $email, $name, [], $ref_id);
+
+$admin_sent = !empty($mailResult['company_email_sent']);
+$user_sent = !empty($mailResult['user_email_sent']);
+$overall_sent = ($admin_sent && $user_sent);
+$email_err = trim(($mailResult['company_error'] ?? '') . ' | ' . ($mailResult['user_error'] ?? ''), ' |');
+
+// 3. UPDATE DATABASE WITH EMAIL DELIVERY STATUS
+if ($db && $record_id) {
+    try {
+        $update = $db->prepare("
+            UPDATE contact_messages SET
+                email_sent = :sent,
+                admin_email_status = :adm_st,
+                user_email_status = :usr_st,
+                email_error = :err
+            WHERE id = :id
+        ");
+        $update->execute([
+            ':sent' => $overall_sent ? 1 : 0,
+            ':adm_st' => $admin_sent ? 'sent' : 'failed',
+            ':usr_st' => $user_sent ? 'sent' : 'failed',
+            ':err' => $email_err ?: null,
+            ':id' => $record_id
+        ]);
+    } catch (Exception $e) {}
+} elseif (function_exists('update_record_status')) {
+    update_record_status('contact_messages', $record_id ?: 1, 'new', [
+        'email_sent' => $overall_sent ? 1 : 0,
+        'admin_email_status' => $admin_sent ? 'sent' : 'failed',
+        'user_email_status' => $user_sent ? 'sent' : 'failed',
+        'email_error' => $email_err ?: null
     ]);
 }
+
+// 4. RETURN CLEAN STRUCTURED JSON
+echo json_encode([
+    'status' => 'success',
+    'success' => true,
+    'reference_id' => $ref_id,
+    'message' => 'Thank you for reaching out! Your message has been routed to our team (contact@nextechxsolutions.com). A confirmation email has also been sent to your email address.',
+    'email_sent' => $overall_sent,
+    'admin_notification_sent' => $admin_sent,
+    'user_confirmation_sent' => $user_sent
+]);

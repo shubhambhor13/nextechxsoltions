@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException
 from backend.database import get_db_connection
 from backend.schemas import StudentRegistrationCreate, StudentRegistrationOut
 from backend.services.notification_service import trigger_n8n_automation
+from backend.services.email_service import send_form_notification_email
 from typing import List
 
 router = APIRouter(prefix="/api/training", tags=["Training & Internship"])
@@ -164,6 +165,25 @@ async def register_student(data: StudentRegistrationCreate):
         conn.commit()
         reg_id = cursor.lastrowid
         
+        # Centralized Email Notification to nextechxsolutions@gmail.com
+        send_form_notification_email(
+            form_type="internship",
+            form_title="Internship & Mentorship Registration",
+            form_data={
+                "Candidate Name": data.full_name,
+                "Email": str(data.email),
+                "Phone": data.phone,
+                "Qualification": data.qualification,
+                "Academic Status": data.current_status,
+                "Selected Domain": data.course_selected,
+                "Batch Timing": data.batch_timing,
+                "Resume Link": data.resume_link or "Not provided",
+                "Statement": data.statement or "None provided"
+            },
+            user_email=str(data.email),
+            user_name=data.full_name
+        )
+
         await trigger_n8n_automation("new_student_registration", {
             "id": reg_id,
             "name": data.full_name,

@@ -45,9 +45,15 @@ cacert.pem
 # User Uploads (Resumes & Documents)
 backend/uploads/resumes/*
 php/uploads/resumes/*
+php/uploads/attachments/*
 uploads/resumes/*
+uploads/attachments/*
 !backend/uploads/resumes/.gitkeep
 !php/uploads/resumes/.gitkeep
+!php/uploads/attachments/.gitkeep
+
+# Local SQLite & Fallback Data Stores
+php/data/fallback_*.json
 
 # System & OS Files
 .DS_Store
