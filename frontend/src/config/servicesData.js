@@ -11,15 +11,40 @@ export const servicesData = [
     iconName: "Bot",
     heroGraphicType: "ai",
     theme: {
+      primaryColor: "cyan",
       gradient: "from-blue-600 via-indigo-600 to-cyan-500",
       accent: "text-cyan-600",
-      bgLight: "bg-cyan-50/60",
+      bgLight: "bg-cyan-50/70",
       border: "border-cyan-200",
-      badgeColor: "bg-blue-50 text-blue-700 border-blue-200",
+      badgeColor: "bg-cyan-50 text-cyan-800 border-cyan-200",
       btnClass: "bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700",
-      cardBorder: "border-cyan-100 hover:border-cyan-300",
-      glowBg: "bg-cyan-500/10"
+      cardBorder: "border-slate-200/90 hover:border-cyan-400",
+      cardHoverGlow: "hover:shadow-cyan-500/10",
+      cardHeaderGradient: "from-blue-600 via-indigo-600 to-cyan-500",
+      stepBadge: "bg-cyan-50 text-cyan-800 border-cyan-200",
+      deliverableBadge: "bg-cyan-50/90 text-cyan-900 border-cyan-200/80",
+      glowBg: "bg-cyan-500/15",
+      accentBg: "bg-cyan-50",
+      accentText: "text-cyan-700",
+      accentBorder: "border-cyan-200"
     },
+    strategicPillars: [
+      {
+        title: "Enterprise RAG & Guardrails",
+        desc: "Private vector embeddings and isolated document stores ensuring zero data leakage, hallucination shielding, and strict SOC 2 compliance.",
+        iconName: "ShieldCheck"
+      },
+      {
+        title: "Autonomous Event Pipelines",
+        desc: "Event-driven microservices connecting WhatsApp, ERPs, CRMs, and payment gateways with sub-second response telemetry.",
+        iconName: "Zap"
+      },
+      {
+        title: "Human-in-the-Loop Safeguards",
+        desc: "Automated confidence scoring that immediately flags ambiguous edge cases for human review while auto-executing high-confidence tasks.",
+        iconName: "Brain"
+      }
+    ],
     coreConcepts: [
       {
         title: "Artificial Intelligence (AI)",
@@ -55,27 +80,33 @@ export const servicesData = [
     offerings: [
       {
         title: "Custom RAG AI Chatbots",
-        desc: "Context-aware conversational assistants trained on private company documentation, SOPs, and knowledge repositories."
+        desc: "Context-aware conversational assistants trained on private company documentation, SOPs, and knowledge repositories.",
+        features: ["Private Vector Database Indexing", "Role-Based Knowledge Retrieval", "Multilingual Query Support"]
       },
       {
         title: "Autonomous AI Agents",
-        desc: "Goal-driven multi-step agents that proactively plan tasks, query databases, invoke APIs, and deliver verifiable outcomes."
+        desc: "Goal-driven multi-step agents that proactively plan tasks, query databases, invoke APIs, and deliver verifiable outcomes.",
+        features: ["Multi-Step Planning & Execution", "API & Tool Calling Functions", "Self-Correction & Fallbacks"]
       },
       {
         title: "Business Process Automation",
-        desc: "End-to-end digitisation of routine back-office approvals, customer triage, and transaction workflows."
+        desc: "End-to-end digitisation of routine back-office approvals, customer triage, and transaction workflows.",
+        features: ["ERP & CRM System Sync", "Approval Chains & Escalations", "Audit Trail & Compliance Logs"]
       },
       {
         title: "Workflow Automation (n8n & Webhooks)",
-        desc: "Multi-platform automated event pipelines synchronising CRMs, payment gateways, email systems, and messaging apps."
+        desc: "Multi-platform automated event pipelines synchronising CRMs, payment gateways, email systems, and messaging apps.",
+        features: ["Cross-Platform Event Triggers", "Payload Transformation & Parsing", "High-Volume Message Queues"]
       },
       {
         title: "Intelligent OCR Document Extraction",
-        desc: "Automated extraction and structured validation of data from invoices, purchase orders, identity cards, and receipts."
+        desc: "Automated extraction and structured validation of data from invoices, purchase orders, identity cards, and receipts.",
+        features: ["Key-Value Document Parsing", "Table & Line Item Recognition", "Multi-Format PDF/Image Support"]
       },
       {
         title: "Enterprise AI Integration",
-        desc: "Seamless embedding of AI microservices into your existing web, mobile, and legacy ERP infrastructure."
+        desc: "Seamless embedding of AI microservices into your existing web, mobile, and legacy ERP infrastructure.",
+        features: ["Microservice Architecture", "Low-Latency REST/gRPC Endpoints", "On-Premise & Cloud Hybrid Support"]
       }
     ],
     techStack: [
@@ -91,36 +122,42 @@ export const servicesData = [
     workflow: [
       {
         step: "01",
+        phase: "Phase 1: Discovery",
         title: "Requirement Analysis",
         desc: "We analyze manual friction points, existing data sources, and business objectives to define measurable automation KPIs.",
         deliverable: "Feasibility Assessment & Automation Blueprint"
       },
       {
         step: "02",
+        phase: "Phase 1: Discovery",
         title: "AI Solution Design",
         desc: "Architecting the prompt strategy, vector embedding pipeline, data schemas, security guardrails, and system integrations.",
         deliverable: "Architecture Schema & Security Guardrail Specs"
       },
       {
         step: "03",
+        phase: "Phase 2: Execution",
         title: "Development & Tuning",
         desc: "Engineering custom microservices, fine-tuning retrieval models, and building structured workflow triggers in Python.",
         deliverable: "Functional Agent Prototype & Retrieval Model"
       },
       {
         step: "04",
+        phase: "Phase 2: Execution",
         title: "API Integration",
         desc: "Connecting the AI engine directly with your operational tools (WhatsApp, CRM, databases, ERP, and payment platforms).",
         deliverable: "End-to-End API Webhooks & ERP Connections"
       },
       {
         step: "05",
+        phase: "Phase 3: Launch",
         title: "Rigorous Testing & QA",
         desc: "Validating model accuracy, latency thresholds, hallucinations, edge-case fallbacks, and data privacy security controls.",
         deliverable: "QA Validation Report & Accuracy Audit"
       },
       {
         step: "06",
+        phase: "Phase 3: Launch",
         title: "Deployment & Monitoring",
         desc: "Zero-downtime cloud release with continuous telemetry, prompt performance tracking, and automated failure retries.",
         deliverable: "Production Deployment & Live Telemetry"
@@ -164,15 +201,40 @@ export const servicesData = [
     iconName: "Code2",
     heroGraphicType: "software",
     theme: {
+      primaryColor: "purple",
       gradient: "from-indigo-600 via-purple-600 to-pink-500",
       accent: "text-purple-600",
-      bgLight: "bg-purple-50/60",
+      bgLight: "bg-purple-50/70",
       border: "border-purple-200",
-      badgeColor: "bg-purple-50 text-purple-700 border-purple-200",
+      badgeColor: "bg-purple-50 text-purple-800 border-purple-200",
       btnClass: "bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700",
-      cardBorder: "border-purple-100 hover:border-purple-300",
-      glowBg: "bg-purple-500/10"
+      cardBorder: "border-slate-200/90 hover:border-purple-400",
+      cardHoverGlow: "hover:shadow-purple-500/10",
+      cardHeaderGradient: "from-indigo-600 via-purple-600 to-pink-500",
+      stepBadge: "bg-purple-50 text-purple-800 border-purple-200",
+      deliverableBadge: "bg-purple-50/90 text-purple-900 border-purple-200/80",
+      glowBg: "bg-purple-500/15",
+      accentBg: "bg-purple-50",
+      accentText: "text-purple-700",
+      accentBorder: "border-purple-200"
     },
+    strategicPillars: [
+      {
+        title: "Domain-Driven Clean Code",
+        desc: "Strict TypeScript interfaces, decoupled service boundaries, and maintainable layered architectures free of technical debt.",
+        iconName: "Layers"
+      },
+      {
+        title: "Sub-Second Performance",
+        desc: "Core Web Vitals optimization, asynchronous message queues, distributed Redis caching, and indexed relational database queries.",
+        iconName: "Zap"
+      },
+      {
+        title: "Zero-Vulnerability DevSecOps",
+        desc: "Automated GitHub Actions CI/CD pipelines, automated dependency vulnerability scanners, and Docker containerized deployments.",
+        iconName: "ShieldCheck"
+      }
+    ],
     coreConcepts: [
       {
         title: "Frontend Engineering",
@@ -208,27 +270,33 @@ export const servicesData = [
     offerings: [
       {
         title: "Custom Web Applications",
-        desc: "Bespoke operational web systems, customer portals, and internal enterprise tools built with React and Tailwind CSS."
+        desc: "Bespoke operational web systems, customer portals, and internal enterprise tools built with React and Tailwind CSS.",
+        features: ["React & TypeScript Modern Stack", "Sub-Second LCP Performance", "Fully Responsive Design"]
       },
       {
         title: "Enterprise Backend Systems",
-        desc: "Resilient business logic engines, automated batch processors, and distributed event-driven microservices."
+        desc: "Resilient business logic engines, automated batch processors, and distributed event-driven microservices.",
+        features: ["Microservices Architecture", "Asynchronous Event Queues", "High-Throughput Load Balancing"]
       },
       {
         title: "API Development & Integration",
-        desc: "High-performance API gateways connecting third-party services, payment providers, and legacy software."
+        desc: "High-performance API gateways connecting third-party services, payment providers, and legacy software.",
+        features: ["Strict OpenAPI / Swagger Specs", "JWT / OAuth2 Security Layers", "Rate Limiting & Threat Shielding"]
       },
       {
         title: "Database Engineering & Optimization",
-        desc: "Schema design, index tuning, automated backups, and database clustering for zero-data-loss resilience."
+        desc: "Schema design, index tuning, automated backups, and database clustering for zero-data-loss resilience.",
+        features: ["ACID-Compliant Relational Schemas", "Redis In-Memory Caching", "Automated Replication & Backups"]
       },
       {
         title: "Cross-Platform Mobile Apps",
-        desc: "High-performance iOS and Android applications built with unified React Native codebases and offline sync."
+        desc: "High-performance iOS and Android applications built with unified React Native codebases and offline sync.",
+        features: ["Unified React Native Codebase", "Offline Data Sync & Caching", "Native Biometric Authentication"]
       },
       {
         title: "Cloud Infrastructure & DevOps",
-        desc: "Automated GitHub Actions CI/CD pipelines, Docker containerization, and AWS/GCP cloud configurations."
+        desc: "Automated GitHub Actions CI/CD pipelines, Docker containerization, and AWS/GCP cloud configurations.",
+        features: ["Automated GitHub Actions CI/CD", "Docker Containerization", "AWS / Cloudflare Infrastructure"]
       }
     ],
     techStack: [
@@ -244,36 +312,42 @@ export const servicesData = [
     workflow: [
       {
         step: "01",
+        phase: "Phase 1: Discovery",
         title: "Requirement Gathering",
         desc: "Deep-dive workshops to analyze business goals, functional user stories, system dependencies, and technical criteria.",
         deliverable: "Product Requirements Document (PRD) & User Stories"
       },
       {
         step: "02",
+        phase: "Phase 1: Discovery",
         title: "UI/UX & System Architecture",
         desc: "Creating wireframes, interactive user flows, database entity-relationship models, and modular architecture blueprints.",
         deliverable: "Figma UI/UX Prototypes & Architecture Blueprints"
       },
       {
         step: "03",
+        phase: "Phase 2: Execution",
         title: "Agile Development Sprints",
         desc: "Iterative two-week sprint cycles with clean modular code, automated linting, unit test coverage, and transparent demo reviews.",
         deliverable: "Production-Grade Codebase with 85%+ Test Coverage"
       },
       {
         step: "04",
+        phase: "Phase 2: Execution",
         title: "Quality Assurance & Security",
         desc: "End-to-end integration testing, cross-browser validation, performance profiling, and vulnerability security audits.",
         deliverable: "Security Audit, Load Testing & Penetration Report"
       },
       {
         step: "05",
+        phase: "Phase 3: Launch",
         title: "Production Deployment",
         desc: "Zero-downtime deployment through automated CI/CD pipelines with rollback mechanisms, CDN caching, and SSL security.",
         deliverable: "Automated CI/CD Pipeline & Multi-Region Launch"
       },
       {
         step: "06",
+        phase: "Phase 3: Launch",
         title: "Maintenance & Evolution",
         desc: "Proactive uptime monitoring, security patching, database optimization, and continuous feature enhancements.",
         deliverable: "99.9% Uptime SLA & Quarterly Feature Enhancements"
@@ -317,15 +391,40 @@ export const servicesData = [
     iconName: "Layers",
     heroGraphicType: "saas",
     theme: {
+      primaryColor: "sky",
       gradient: "from-sky-500 via-blue-600 to-indigo-700",
-      accent: "text-blue-600",
-      bgLight: "bg-blue-50/60",
-      border: "border-blue-200",
-      badgeColor: "bg-sky-50 text-sky-700 border-sky-200",
+      accent: "text-sky-600",
+      bgLight: "bg-sky-50/70",
+      border: "border-sky-200",
+      badgeColor: "bg-sky-50 text-sky-800 border-sky-200",
       btnClass: "bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-700 hover:to-blue-700",
-      cardBorder: "border-sky-100 hover:border-sky-300",
-      glowBg: "bg-sky-500/10"
+      cardBorder: "border-slate-200/90 hover:border-sky-400",
+      cardHoverGlow: "hover:shadow-sky-500/10",
+      cardHeaderGradient: "from-sky-500 via-blue-600 to-indigo-700",
+      stepBadge: "bg-sky-50 text-sky-800 border-sky-200",
+      deliverableBadge: "bg-sky-50/90 text-sky-900 border-sky-200/80",
+      glowBg: "bg-sky-500/15",
+      accentBg: "bg-sky-50",
+      accentText: "text-sky-700",
+      accentBorder: "border-sky-200"
     },
+    strategicPillars: [
+      {
+        title: "Row-Level Security Tenancy",
+        desc: "Guaranteed database tenant data isolation, custom workspace partition schemas, and strict cross-tenant leakage prevention.",
+        iconName: "Lock"
+      },
+      {
+        title: "Turnkey Subscription Engine",
+        desc: "Native Stripe and Razorpay integrations handling recurring monthly/annual plans, automated invoicing, usage metering, and dunning.",
+        iconName: "CreditCard"
+      },
+      {
+        title: "Multi-AZ 99.99% Availability",
+        desc: "Cloud-native containerized architecture on AWS ECS with auto-scaling compute, failover read-replicas, and CloudFront edge delivery.",
+        iconName: "Cloud"
+      }
+    ],
     coreConcepts: [
       {
         title: "Cloud-Native Computing",
@@ -361,27 +460,33 @@ export const servicesData = [
     offerings: [
       {
         title: "Custom SaaS Platform Engineering",
-        desc: "Complete conception and implementation of subscription-based B2B or B2C web and mobile cloud platforms."
+        desc: "Complete conception and implementation of subscription-based B2B or B2C web and mobile cloud platforms.",
+        features: ["Scalable Modular Architecture", "Tenant-Aware State Management", "Clean Code & Automated Tests"]
       },
       {
         title: "Multi-Tenant Cloud Architecture",
-        desc: "High-security tenant isolation schemas designed for enterprise data privacy and rapid horizontal scaling."
+        desc: "High-security tenant isolation schemas designed for enterprise data privacy and rapid horizontal scaling.",
+        features: ["Row-Level Data Isolation (RLS)", "Shared Compute & Storage Efficiency", "Zero Cross-Tenant Leakage"]
       },
       {
         title: "Subscription Billing & Gateways",
-        desc: "Turnkey integration with Stripe, Razorpay, and PayPal supporting recurring billing, pro-rata calculations, and invoices."
+        desc: "Turnkey integration with Stripe, Razorpay, and PayPal supporting recurring billing, pro-rata calculations, and invoices.",
+        features: ["Stripe / Razorpay Integration", "Tiered & Usage-Based Pricing", "Automated Invoicing & Proration"]
       },
       {
         title: "Admin & Executive Dashboards",
-        desc: "Granular administrative control panels for user management, MRR/ARR analytics, churn tracking, and audit trails."
+        desc: "Granular administrative control panels for user management, MRR/ARR analytics, churn tracking, and audit trails.",
+        features: ["MRR / ARR Financial Telemetry", "User Churn & Retention Analytics", "Granular Tenant Control Panel"]
       },
       {
         title: "Role-Based Access Control (RBAC)",
-        desc: "Configurable workspace hierarchies allowing tenant admins to define custom permissions and member roles."
+        desc: "Configurable workspace hierarchies allowing tenant admins to define custom permissions and member roles.",
+        features: ["Custom Permissions Engine", "SSO & SAML 2.0 Integration", "Comprehensive Audit Logging"]
       },
       {
         title: "Public API & Webhook Gateways",
-        desc: "Developer-friendly RESTful APIs and outbound webhooks enabling customer developers to build ecosystem integrations."
+        desc: "Developer-friendly RESTful APIs and outbound webhooks enabling customer developers to build ecosystem integrations.",
+        features: ["Developer Portal & Sandbox", "Outbound Event Webhooks", "Tokenized API Key Management"]
       }
     ],
     techStack: [
@@ -397,36 +502,42 @@ export const servicesData = [
     workflow: [
       {
         step: "01",
+        phase: "Phase 1: Discovery",
         title: "Product Strategy & Planning",
         desc: "Defining monetization models, feature matrices, user personas, tenancy architecture, and technical release milestones.",
         deliverable: "SaaS Product Roadmap & Monetization Framework"
       },
       {
         step: "02",
+        phase: "Phase 1: Discovery",
         title: "Multi-Tenant Architecture",
         desc: "Designing the database tenancy model, authorization guardrails, billing webhooks, and scalable infrastructure topology.",
         deliverable: "Multi-Tenant Schema & Isolation Strategy"
       },
       {
         step: "03",
+        phase: "Phase 2: Execution",
         title: "UI/UX & User Journey Design",
         desc: "Crafting friction-free sign-up funnels, workspace onboarding tours, administrative dashboards, and billing settings.",
         deliverable: "High-Fidelity Dashboard & Onboarding Flows"
       },
       {
         step: "04",
+        phase: "Phase 2: Execution",
         title: "Platform Development",
         desc: "Building the core SaaS features, payment integration, email notification pipelines, and multi-tenant logic in agile sprints.",
         deliverable: "Core SaaS Engine & Recurring Billing Integration"
       },
       {
         step: "05",
+        phase: "Phase 3: Launch",
         title: "Security & Load Testing",
         desc: "Stress-testing concurrency limits, validating tenant data boundary isolation, and auditing billing edge cases.",
         deliverable: "Tenant Isolation Security Audit & Load Benchmarks"
       },
       {
         step: "06",
+        phase: "Phase 3: Launch",
         title: "Cloud Launch & Continuous Delivery",
         desc: "Automated zero-downtime deployment, staging-to-production CI/CD, and 24/7 infrastructure health telemetry.",
         deliverable: "Zero-Downtime AWS ECS Multi-Tenant Release"
@@ -470,15 +581,40 @@ export const servicesData = [
     iconName: "CheckSquare",
     heroGraphicType: "annotation",
     theme: {
+      primaryColor: "emerald",
       gradient: "from-teal-600 via-emerald-600 to-cyan-600",
       accent: "text-emerald-600",
-      bgLight: "bg-emerald-50/60",
+      bgLight: "bg-emerald-50/70",
       border: "border-emerald-200",
-      badgeColor: "bg-emerald-50 text-emerald-700 border-emerald-200",
+      badgeColor: "bg-emerald-50 text-emerald-800 border-emerald-200",
       btnClass: "bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700",
-      cardBorder: "border-emerald-100 hover:border-emerald-300",
-      glowBg: "bg-emerald-500/10"
+      cardBorder: "border-slate-200/90 hover:border-emerald-400",
+      cardHoverGlow: "hover:shadow-emerald-500/10",
+      cardHeaderGradient: "from-teal-600 via-emerald-600 to-cyan-600",
+      stepBadge: "bg-emerald-50 text-emerald-800 border-emerald-200",
+      deliverableBadge: "bg-emerald-50/90 text-emerald-900 border-emerald-200/80",
+      glowBg: "bg-emerald-500/15",
+      accentBg: "bg-emerald-50",
+      accentText: "text-emerald-700",
+      accentBorder: "border-emerald-200"
     },
+    strategicPillars: [
+      {
+        title: "Multi-Tier Consensus QA",
+        desc: "Automated schema validators and secondary blind human reviews guaranteeing >99% labeling accuracy and strict inter-annotator agreement.",
+        iconName: "Award"
+      },
+      {
+        title: "Native Format Compatibility",
+        desc: "Turnkey delivery directly formatted for YOLOv8, MS COCO, Pascal VOC, CSV, and custom client JSON schema definitions.",
+        iconName: "CheckSquare"
+      },
+      {
+        title: "Zero-Leakage Air-Gapped Security",
+        desc: "Encrypted data staging, strict mutual non-disclosure agreements, and restricted-access operator terminals protecting client intellectual property.",
+        iconName: "ShieldCheck"
+      }
+    ],
     coreConcepts: [
       {
         title: "Ground-Truth Data Labeling",
@@ -514,27 +650,33 @@ export const servicesData = [
     offerings: [
       {
         title: "2D & 3D Bounding Boxes",
-        desc: "Precision rectangular and cuboid boundary labeling for object detection and spatial orientation models."
+        desc: "Precision rectangular and cuboid boundary labeling for object detection and spatial orientation models.",
+        features: ["Sub-Pixel Edge Alignment", "Cuboid Spatial 3D Orientation", "Strict Occlusion & Truncation Tags"]
       },
       {
         title: "Polygon & Semantic Segmentation",
-        desc: "Pixel-perfect multi-point polygon tracing for irregular objects, geographic terrain, and biomedical imaging."
+        desc: "Pixel-perfect multi-point polygon tracing for irregular objects, geographic terrain, and biomedical imaging.",
+        features: ["Complex Contour Delineation", "Class-Wise Color Masking", "Multi-Class Biomedical Labeling"]
       },
       {
         title: "Image Classification & Tagging",
-        desc: "Single-label and multi-label categorization across large volumes of visual assets based on strict ontologies."
+        desc: "Single-label and multi-label categorization across large volumes of visual assets based on strict ontologies.",
+        features: ["Hierarchical Taxonomy Mapping", "Multi-Label Attribute Tagging", "Rigorous Outlier Flagging"]
       },
       {
         title: "Text Annotation & NER",
-        desc: "Token-level tagging of entities (people, organizations, locations, dates) and text sentiment classifications."
+        desc: "Token-level tagging of entities (people, organizations, locations, dates) and text sentiment classifications.",
+        features: ["Named Entity Recognition (NER)", "Intent & Sentiment Classification", "Multilingual Token Level Tagging"]
       },
       {
         title: "Video Object Tracking",
-        desc: "Continuous trajectory tracking across high-framerate video clips with persistent object IDs and re-identification."
+        desc: "Continuous trajectory tracking across high-framerate video clips with persistent object IDs and re-identification.",
+        features: ["Persistent Object Re-Identification", "Trajectory & Velocity Estimation", "Temporal Frame Interpolation"]
       },
       {
         title: "Custom Formats (COCO, YOLO, VOC)",
-        desc: "Delivering annotated datasets directly in your model's required format (JSON, XML, YOLO txt, Pascal VOC, CSV)."
+        desc: "Delivering annotated datasets directly in your model's required format (JSON, XML, YOLO txt, Pascal VOC, CSV).",
+        features: ["Standard JSON & TXT Annotations", "Dataset Splitting (Train/Val/Test)", "Automated Schema Verification"]
       }
     ],
     techStack: [
@@ -566,36 +708,42 @@ export const servicesData = [
     workflow: [
       {
         step: "01",
+        phase: "Phase 1: Discovery",
         title: "Data Collection & Ingestion",
         desc: "Secure transfer and staging of raw images, video streams, or text documents into encrypted enterprise storage.",
         deliverable: "Encrypted Data Ingestion & Sanitization Log"
       },
       {
         step: "02",
+        phase: "Phase 1: Discovery",
         title: "Guideline & Taxonomy Calibration",
         desc: "Creating detailed annotation instructions, class ontologies, and edge-case resolution rules.",
         deliverable: "Calibrated Annotation Playbook & Taxonomy"
       },
       {
         step: "03",
+        phase: "Phase 2: Execution",
         title: "Precision Annotation Execution",
         desc: "Specialist annotators perform high-precision labeling following calibrated guidelines.",
         deliverable: "High-Throughput Ground-Truth Labeled Batches"
       },
       {
         step: "04",
+        phase: "Phase 2: Execution",
         title: "Quality Review & Consensus",
         desc: "Multi-tier review passes, inter-annotator agreement calculations, and supervisor spot checks.",
         deliverable: "Consensus Audit & Inter-Annotator Agreement Index"
       },
       {
         step: "05",
+        phase: "Phase 3: Launch",
         title: "Validation & Schema Formatting",
         desc: "Automated syntax and coordinate checks converting results into standard YOLO, COCO, or custom JSON formats.",
         deliverable: "Formatted Datasets in YOLO, COCO & Custom JSON"
       },
       {
         step: "06",
+        phase: "Phase 3: Launch",
         title: "Secure Dataset Delivery",
         desc: "Encrypted dataset package delivery with comprehensive QA audit certificates and summary reporting.",
         deliverable: "Signed QA Precision Certificate & Secure Delivery"
@@ -639,15 +787,40 @@ export const servicesData = [
     iconName: "Headphones",
     heroGraphicType: "bpo",
     theme: {
+      primaryColor: "blue",
       gradient: "from-blue-700 via-slate-800 to-indigo-900",
       accent: "text-blue-700",
-      bgLight: "bg-slate-50/80",
-      border: "border-slate-200",
-      badgeColor: "bg-slate-100 text-slate-800 border-slate-300",
+      bgLight: "bg-blue-50/70",
+      border: "border-blue-200",
+      badgeColor: "bg-blue-50 text-blue-800 border-blue-200",
       btnClass: "bg-gradient-to-r from-blue-700 to-indigo-800 hover:from-blue-800 hover:to-indigo-900",
-      cardBorder: "border-slate-200 hover:border-blue-400",
-      glowBg: "bg-blue-600/10"
+      cardBorder: "border-slate-200/90 hover:border-blue-500",
+      cardHoverGlow: "hover:shadow-blue-500/10",
+      cardHeaderGradient: "from-blue-700 via-slate-800 to-indigo-900",
+      stepBadge: "bg-blue-50 text-blue-800 border-blue-200",
+      deliverableBadge: "bg-blue-50/90 text-blue-900 border-blue-200/80",
+      glowBg: "bg-blue-600/15",
+      accentBg: "bg-blue-50",
+      accentText: "text-blue-800",
+      accentBorder: "border-blue-200"
     },
+    strategicPillars: [
+      {
+        title: "Guaranteed SLA Governance",
+        desc: "Contractually committed turnaround timeframes, >99% operational precision benchmarks, and daily transparent KPI metric reports.",
+        iconName: "CheckCircle"
+      },
+      {
+        title: "24/7 Redundant Operations",
+        desc: "Seamless global shift coverage, automated ticket escalations, and 45-second first-response times across high-volume queues.",
+        iconName: "Headphones"
+      },
+      {
+        title: "Enterprise Information Security",
+        desc: "Dedicated secure VPN terminals, strict role-based tool authorization, and mutual NDAs ensuring absolute client confidentiality.",
+        iconName: "Shield"
+      }
+    ],
     coreConcepts: [
       {
         title: "Business Process Management (BPM)",
@@ -683,27 +856,33 @@ export const servicesData = [
     offerings: [
       {
         title: "High-Volume Data Entry & Cleansing",
-        desc: "Accurate digitization, database de-duplication, format standardisation, and validation of corporate records."
+        desc: "Accurate digitization, database de-duplication, format standardisation, and validation of corporate records.",
+        features: ["Double-Key Entry Verification", "Automated Deduplication Passes", "Strict Data Integrity Benchmarks"]
       },
       {
         title: "Back-Office Operational Support",
-        desc: "Routine administrative operations, invoice verification, transaction logging, and reconciliation tasks."
+        desc: "Routine administrative operations, invoice verification, transaction logging, and reconciliation tasks.",
+        features: ["Transaction Verification & Auditing", "Vendor Invoice Reconciliation", "Daily Exception Resolution"]
       },
       {
         title: "Multichannel Customer Support",
-        desc: "Dedicated tier-1 and tier-2 customer support covering email, live web chat, and Zendesk/Freshdesk ticketing."
+        desc: "Dedicated tier-1 and tier-2 customer support covering email, live web chat, and Zendesk/Freshdesk ticketing.",
+        features: ["24/7 Web Chat & Email Coverage", "Zendesk & Freshdesk Mastery", "Tier-1 & Tier-2 Technical Escalation"]
       },
       {
         title: "eCommerce Catalog Management",
-        desc: "Product listings, SKU attribute population, inventory level updates, and marketplace catalog maintenance."
+        desc: "Product listings, SKU attribute population, inventory level updates, and marketplace catalog maintenance.",
+        features: ["Product Attribute Standardization", "Inventory & Stock Synchronisation", "Marketplace Policy Adherence"]
       },
       {
         title: "Document Indexing & Archiving",
-        desc: "Digital filing, metadata tagging, categorization, and secure archiving of corporate contracts and forms."
+        desc: "Digital filing, metadata tagging, categorization, and secure archiving of corporate contracts and forms.",
+        features: ["High-Security Digital Filing", "Metadata & OCR Tagging", "Encrypted Cloud Repository"]
       },
       {
         title: "Quality Assurance & Compliance Auditing",
-        desc: "Independent secondary audits of operational outputs to ensure full regulatory and corporate standard adherence."
+        desc: "Independent secondary audits of operational outputs to ensure full regulatory and corporate standard adherence.",
+        features: ["Randomized Secondary Sampling", "ISO 9001-Aligned Audits", "Detailed Daily Quality Reporting"]
       }
     ],
     techStack: [
@@ -717,36 +896,42 @@ export const servicesData = [
     workflow: [
       {
         step: "01",
+        phase: "Phase 1: Discovery",
         title: "Requirement Analysis & Scoping",
         desc: "Auditing current operational processes, volume volumes, turnaround requirements, and defining strict SLA benchmarks.",
         deliverable: "Operational Process Audit & Baseline SLA Benchmarks"
       },
       {
         step: "02",
+        phase: "Phase 1: Discovery",
         title: "Process Planning & SOP Formulation",
         desc: "Authoring comprehensive Standard Operating Procedures (SOPs), quality checklists, and escalation matrix protocols.",
         deliverable: "Standard Operating Procedures (SOPs) & Checklists"
       },
       {
         step: "03",
+        phase: "Phase 2: Execution",
         title: "Team Training & Pilot Trial",
         desc: "Rigorous training of dedicated operators on client tooling, followed by a controlled pilot execution run.",
         deliverable: "Trained Dedicated Pod & Pilot Validation Report"
       },
       {
         step: "04",
+        phase: "Phase 2: Execution",
         title: "Full-Scale Production Execution",
         desc: "Day-to-day operational execution under dedicated team leads with continuous process adherence.",
         deliverable: "Full Operational Transition & Live Ticket Routing"
       },
       {
         step: "05",
+        phase: "Phase 3: Launch",
         title: "Quality Checking & Auditing",
         desc: "Randomized secondary auditing of processed batches to maintain >99% operational accuracy SLAs.",
         deliverable: "Randomized Daily QA Audits (>99% Accuracy)"
       },
       {
         step: "06",
+        phase: "Phase 3: Launch",
         title: "Daily Reporting & KPI Delivery",
         desc: "Real-time productivity dashboards, daily throughput metrics, and monthly strategic review presentations.",
         deliverable: "Real-Time Productivity KPI Dashboard & Monthly Review"
