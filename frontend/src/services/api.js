@@ -150,6 +150,34 @@ export const api = {
     return handleResponse(res, 'Failed to communicate with AI');
   },
 
+  // Admin Authentication
+  async adminLogin(username, password) {
+    const res = await fetch(`${BASE_URL}/admin_auth.php?action=login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+    return res.json();
+  },
+
+  async adminCheckAuth() {
+    try {
+      const res = await fetch(`${BASE_URL}/admin_auth.php?action=check`);
+      return await res.json();
+    } catch {
+      return { authenticated: false };
+    }
+  },
+
+  async adminLogout() {
+    try {
+      const res = await fetch(`${BASE_URL}/admin_auth.php?action=logout`, { method: 'POST' });
+      return await res.json();
+    } catch {
+      return { success: true };
+    }
+  },
+
   // Admin
   async getAdminStats() {
     const res = await fetch(`${BASE_URL}/admin/stats`);

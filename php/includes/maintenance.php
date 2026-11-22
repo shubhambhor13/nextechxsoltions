@@ -71,9 +71,9 @@ $cms_phone = cms_get_setting('phone_contact', SITE_PHONE);
 
         <!-- Admin Access Link -->
         <div class="pt-2">
-            <a href="admin.php" class="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-300 transition-colors font-mono">
+            <a href="admin-login.php" class="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-300 transition-colors font-mono">
                 <i data-lucide="lock" class="w-3.5 h-3.5"></i>
-                <span>Administrator Sign In</span>
+                <span>Admin Access</span>
             </a>
         </div>
     </div>

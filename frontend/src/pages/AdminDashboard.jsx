@@ -24,6 +24,7 @@ export default function AdminDashboard() {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     return sessionStorage.getItem('app_admin_auth') === 'true';
   });
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [authError, setAuthError] = useState('');
 
@@ -40,20 +41,40 @@ export default function AdminDashboard() {
   const [courseFilter, setCourseFilter] = useState('all');
   const [selectedItemModal, setSelectedItemModal] = useState(null);
 
+  useEffect(() => {
+    // Check server session on mount
+    api.adminCheckAuth().then(res => {
+      if (res && res.authenticated) {
+        setIsAuthenticated(true);
+        sessionStorage.setItem('app_admin_auth', 'true');
+        loadAllData();
+      }
+    }).catch(() => {});
+  }, []);
+
   // Authentication check
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if (password === 'admin123') {
-      setIsAuthenticated(true);
-      sessionStorage.setItem('app_admin_auth', 'true');
-      setAuthError('');
-      loadAllData();
-    } else {
-      setAuthError('Invalid Admin Passcode. Hint: admin123');
+    setAuthError('');
+    try {
+      const res = await api.adminLogin(username, password);
+      if (res && res.success) {
+        setIsAuthenticated(true);
+        sessionStorage.setItem('app_admin_auth', 'true');
+        setAuthError('');
+        loadAllData();
+      } else {
+        setAuthError(res?.message || 'Invalid administrator credentials.');
+      }
+    } catch (err) {
+      setAuthError(err.message || 'Authentication error. Please verify server connectivity.');
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await api.adminLogout();
+    } catch {}
     setIsAuthenticated(false);
     sessionStorage.removeItem('app_admin_auth');
   };
@@ -177,14 +198,28 @@ export default function AdminDashboard() {
 
             <div>
               <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                Admin Passcode
+                Admin Username or Email
+              </label>
+              <input
+                type="text"
+                required
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Enter username or email"
+                className="w-full bg-slate-50/60 border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:bg-white transition-colors"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                Admin Password
               </label>
               <input
                 type="password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter passcode (default: admin123)"
+                placeholder="Enter password"
                 className="w-full bg-slate-50/60 border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:bg-white transition-colors"
               />
             </div>

@@ -5,7 +5,7 @@ require_once __DIR__ . '/cms.php';
 // Check Maintenance Mode
 $current_script = basename($_SERVER['PHP_SELF'] ?? '');
 $req_uri = $_SERVER['REQUEST_URI'] ?? '';
-$is_admin = $current_script === 'admin.php' || strpos($req_uri, 'admin.php') !== false || strpos($req_uri, '/api/') !== false;
+$is_admin = in_array($current_script, ['admin.php', 'admin-login.php']) || strpos($req_uri, 'admin') !== false || strpos($req_uri, '/api/') !== false;
 if (!$is_admin && function_exists('cms_is_maintenance_mode') && cms_is_maintenance_mode()) {
     http_response_code(503);
     include __DIR__ . '/maintenance.php';
