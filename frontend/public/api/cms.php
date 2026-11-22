@@ -31,31 +31,6 @@ $json_input = json_decode($raw_input, true) ?: [];
 $action = $_GET['action'] ?? $json_input['action'] ?? $_POST['action'] ?? '';
 
 switch ($action) {
-    case 'initial_setup':
-        $existing = cms_get_admin_users();
-        if (!empty($existing)) {
-            http_response_code(403);
-            echo json_encode(['success' => false, 'message' => 'Initial setup is locked because an administrator already exists.']);
-            exit;
-        }
-        $u = trim($_POST['username'] ?? $json_input['username'] ?? '');
-        $em = trim($_POST['email'] ?? $json_input['email'] ?? '');
-        $pw = (string)($_POST['password'] ?? $json_input['password'] ?? '');
-        if (strlen($u) < 3 || !filter_var($em, FILTER_VALIDATE_EMAIL) || strlen($pw) < 8) {
-            http_response_code(400);
-            echo json_encode(['success' => false, 'message' => 'Username (>=3 chars), valid email, and password (>=8 chars) required.']);
-            exit;
-        }
-        $res = cms_create_admin_user([
-            'username' => $u,
-            'email' => $em,
-            'full_name' => 'Master Administrator',
-            'role' => 'super_admin',
-            'password' => $pw
-        ]);
-        echo json_encode($res);
-        exit;
-
     // ==========================================
     // 1. PUBLIC READ ENDPOINTS
     // ==========================================

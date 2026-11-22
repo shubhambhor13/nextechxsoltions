@@ -11,7 +11,6 @@ from backend.routers import (
     training,
     portfolio,
     ai_chat,
-    admin,
     careers,
     cms
 )
@@ -53,7 +52,6 @@ app.include_router(consultation.router)
 app.include_router(training.router)
 app.include_router(portfolio.router)
 app.include_router(ai_chat.router)
-app.include_router(admin.router)
 app.include_router(careers.router)
 app.include_router(cms.router)
 

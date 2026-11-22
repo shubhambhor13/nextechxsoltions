@@ -2,16 +2,6 @@
 require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/cms.php';
 
-// Check Maintenance Mode
-$current_script = basename($_SERVER['PHP_SELF'] ?? '');
-$req_uri = $_SERVER['REQUEST_URI'] ?? '';
-$is_admin = in_array($current_script, ['admin.php', 'admin-login.php']) || strpos($req_uri, 'admin') !== false || strpos($req_uri, '/api/') !== false;
-if (!$is_admin && function_exists('cms_is_maintenance_mode') && cms_is_maintenance_mode()) {
-    http_response_code(503);
-    include __DIR__ . '/maintenance.php';
-    exit;
-}
-
 $cms_company_name = cms_get_setting('company_name', SITE_NAME);
 $cms_tagline = cms_get_setting('tagline', SITE_TAGLINE);
 $cms_email = cms_get_setting('email_contact', SITE_EMAIL_CONTACT);

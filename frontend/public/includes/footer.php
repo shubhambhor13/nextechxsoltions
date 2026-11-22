@@ -82,7 +82,6 @@
                         <li><a href="javascript:void(0)" onclick="alert('Client Confidentiality Agreement (NDA): All client intellectual property, databases, and proprietary workflows are protected under bilateral non-disclosure.')" class="hover:text-slate-200 transition-colors">Confidentiality & NDA</a></li>
                         <li><a href="javascript:void(0)" onclick="alert('Data Privacy Policy: We do not store or sell client data. Enterprise data pipelines operate with AES-256 in-transit and at-rest encryption.')" class="hover:text-slate-200 transition-colors">Data Privacy Policy</a></li>
                         <li><a href="javascript:void(0)" onclick="alert('Terms of Service: Distributed online IT solutions delivered strictly in accordance with approved milestone-based scopes of work.')" class="hover:text-slate-200 transition-colors">Terms of Service</a></li>
-                        <li><a href="admin.php" class="hover:text-blue-400 transition-colors flex items-center gap-1.5"><i data-lucide="lock" class="w-3.5 h-3.5 text-slate-400"></i> <span>Operations Console</span></a></li>
                     </ul>
                     <div class="mt-6">
                         <button onclick="openQuoteModal()" class="w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-xs font-bold transition-all shadow-md flex items-center justify-center gap-1.5 font-heading">

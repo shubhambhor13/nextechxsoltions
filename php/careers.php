@@ -78,6 +78,7 @@ $internship_roles = [
         "liveProject" => "Vulnerability Assessment & Threat Defense Simulation Lab"
     ]
 ];
+}
 ?>
 
 <!-- 1. Hero Section -->

@@ -296,13 +296,6 @@ export default function Footer({ onOpenQuote }) {
             >
               Mutual NDA Agreement
             </button>
-            <a 
-              href="admin-login.php" 
-              className="text-slate-600 hover:text-slate-400 transition-colors text-[11px] font-mono"
-              title="Restricted Staff Access"
-            >
-              Admin Access
-            </a>
           </div>
         </div>
 

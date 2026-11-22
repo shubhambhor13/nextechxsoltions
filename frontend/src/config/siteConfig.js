@@ -20,7 +20,6 @@ export const siteConfig = {
   deliveryModel: "Online-First Global Delivery",
   operatingModel: "Distributed Online IT Solutions & Services",
   botName: "AI Assistant",
-  storagePrefix: "app_admin_auth",
 };
 
 export default siteConfig;

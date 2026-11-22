@@ -150,68 +150,6 @@ export const api = {
     return handleResponse(res, 'Failed to communicate with AI');
   },
 
-  // Admin Authentication
-  async adminLogin(username, password) {
-    const res = await fetch(`${BASE_URL}/admin_auth.php?action=login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password })
-    });
-    return res.json();
-  },
-
-  async adminCheckAuth() {
-    try {
-      const res = await fetch(`${BASE_URL}/admin_auth.php?action=check`);
-      return await res.json();
-    } catch {
-      return { authenticated: false };
-    }
-  },
-
-  async adminLogout() {
-    try {
-      const res = await fetch(`${BASE_URL}/admin_auth.php?action=logout`, { method: 'POST' });
-      return await res.json();
-    } catch {
-      return { success: true };
-    }
-  },
-
-  // Admin
-  async getAdminStats() {
-    const res = await fetch(`${BASE_URL}/admin/stats`);
-    if (!res.ok) throw new Error('Failed to fetch admin stats');
-    return res.json();
-  },
-
-  async updateContactStatus(id, status) {
-    const res = await fetch(`${BASE_URL}/admin/contact/${id}/status`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ status }),
-    });
-    return res.json();
-  },
-
-  async updateQuotationStatus(id, status) {
-    const res = await fetch(`${BASE_URL}/admin/quotation/${id}/status`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ status }),
-    });
-    return res.json();
-  },
-
-  async updateStudentStatus(id, status) {
-    const res = await fetch(`${BASE_URL}/admin/student/${id}/status`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ status }),
-    });
-    return res.json();
-  },
-
   // Careers & Applications
   async getVacancies() {
     try {
@@ -517,33 +455,5 @@ export const api = {
       body: JSON.stringify({ controls })
     });
     return res.json();
-  },
-
-  // Admin Users & Activity Logs
-  async getAdminUsers() {
-    try {
-      const res = await fetch(`${BASE_URL}/cms/admin-users`);
-      return await res.json();
-    } catch {
-      return { success: false, users: [] };
-    }
-  },
-
-  async saveAdminUser(userData) {
-    const res = await fetch(`${BASE_URL}/cms/save-admin-user`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ user: userData })
-    });
-    return res.json();
-  },
-
-  async getActivityLogs(limit = 100) {
-    try {
-      const res = await fetch(`${BASE_URL}/cms/activity-logs?limit=${limit}`);
-      return await res.json();
-    } catch {
-      return { success: false, logs: [] };
-    }
   }
 };

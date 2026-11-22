@@ -25,7 +25,6 @@ const HowWeWork = lazy(() => import('./pages/HowWeWork'));
 const FAQs = lazy(() => import('./pages/FAQs'));
 const ContactUs = lazy(() => import('./pages/ContactUs'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
-const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
 
 // Ultra-lightweight Route Loading Skeleton
 function PageLoading() {
@@ -461,12 +460,6 @@ function AnimatedRoutes({
           <Route 
             path="/linkedin-company" 
             element={<ExternalRedirect to={siteConfig.linkedinUrl || "https://www.linkedin.com/company/nextechx-solutions/"} />} 
-          />
-
-          {/* Admin Management Portal */}
-          <Route 
-            path="/admin" 
-            element={<AdminDashboard />} 
           />
 
           {/* Fallback 404 */}

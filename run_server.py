@@ -7,7 +7,6 @@ if __name__ == "__main__":
     print(" NextTechX Solutions - Production Server (Unified Web & API)")
     print(" Tagline: Your Vision Our Technology")
     print(" Serving on: http://127.0.0.1:8000")
-    print(" Admin Console: http://127.0.0.1:8000/admin")
     print(" API Documentation: http://127.0.0.1:8000/docs")
     print("=" * 60)
     

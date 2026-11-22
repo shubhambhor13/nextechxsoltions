@@ -111,10 +111,6 @@
                         <i data-lucide="linkedin" class="w-3.5 h-3.5 text-blue-400"></i>
                         <span>LinkedIn</span>
                     </a>
-                    <span>•</span>
-                    <a href="admin-login.php" class="text-slate-600 hover:text-slate-400 transition-colors text-[11px] font-mono">
-                        Admin Access
-                    </a>
                 </div>
             </div>
         </div>
