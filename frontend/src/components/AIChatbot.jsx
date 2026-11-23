@@ -254,9 +254,11 @@ export default function AIChatbot({ onOpenQuote, onOpenConsultation, onOpenRegis
           <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 text-white border-b border-slate-800">
             <div className="flex items-center gap-2.5">
               <div className="relative">
-                <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center text-white shadow-xs">
-                  <Bot className="w-4.5 h-4.5 text-cyan-200" />
-                </div>
+                <img 
+                  src="/images/nextechx-badge.webp" 
+                  alt="NexTechX Emblem" 
+                  className="w-8 h-8 rounded-full object-contain border border-cyan-400/40 shadow-xs" 
+                />
                 <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-400 border-2 border-slate-900 rounded-full animate-pulse"></span>
               </div>
               <div>
@@ -296,9 +298,7 @@ export default function AIChatbot({ onOpenQuote, onOpenConsultation, onOpenRegis
                 className={`flex gap-2.5 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 {msg.role === 'assistant' && (
-                  <div className="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center shrink-0 mt-0.5 shadow-xs">
-                    <Bot className="w-4 h-4 text-cyan-200" />
-                  </div>
+                  <img src="/images/nextechx-badge.webp" alt="AI" className="w-7 h-7 rounded-full object-contain shrink-0 mt-0.5 shadow-xs" />
                 )}
 
                 <div className="max-w-[88%] space-y-2">
@@ -339,9 +339,7 @@ export default function AIChatbot({ onOpenQuote, onOpenConsultation, onOpenRegis
 
             {loading && (
               <div className="flex gap-2.5 justify-start">
-                <div className="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-xs">
-                  <Bot className="w-4 h-4 text-cyan-200" />
-                </div>
+                <img src="/images/nextechx-badge.webp" alt="AI" className="w-7 h-7 rounded-full object-contain shrink-0 shadow-xs" />
                 <div className="p-3 rounded-2xl bg-white border border-slate-200 rounded-tl-none flex items-center gap-1.5 text-slate-500 text-xs shadow-xs">
                   <span className="w-1.5 h-1.5 rounded-full bg-blue-600 animate-bounce"></span>
                   <span className="w-1.5 h-1.5 rounded-full bg-blue-600 animate-bounce [animation-delay:0.2s]"></span>

@@ -45,7 +45,7 @@ $page_title = "Submissions & Applications Management – NEXTECHX SOLUTIONS";
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <a href="index.php" class="flex items-center gap-2 group">
-                    <img src="favicon.png" width="32" height="32" alt="Logo" class="rounded-lg shadow-xs">
+                    <img src="assets/images/nextechx-badge.webp" width="36" height="36" alt="NexTechX Solutions Logo" class="rounded-full shadow-xs object-contain">
                     <div class="flex flex-col">
                         <span class="text-base font-extrabold tracking-tight text-slate-900 flex items-center">
                             NEXTECH<span class="text-sky-500">X</span>

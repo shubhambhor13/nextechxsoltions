@@ -1,4 +1,4 @@
-﻿import os
+import os
 import smtplib
 import logging
 from email.mime.multipart import MIMEMultipart
@@ -59,9 +59,12 @@ https://nextechxsolutions.com
     <head><meta charset="utf-8"></head>
     <body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,sans-serif;color:#1e293b;background-color:#f8fafc;margin:0;padding:24px;">
       <div style="max-width:600px;margin:0 auto;background:#fff;border-radius:12px;border:1px solid #e2e8f0;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.05);">
-        <div style="background:#0f172a;color:#fff;padding:24px;border-bottom:1px solid #e2e8f0;">
-          <h2 style="margin:0;font-size:20px;font-weight:800;color:#fff;">NEXTECHX <span style="color:#38bdf8;">SOLUTIONS</span></h2>
-          <p style="margin:4px 0 0 0;font-size:13px;color:#94a3b8;">New {form_title} Received</p>
+        <div style="background:#0f172a;color:#fff;padding:24px;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;">
+          <img src="https://nextechxsolutions.com/images/nextechx-badge.png" width="44" height="44" alt="NEXTECHX SOLUTIONS Logo" style="display:inline-block;vertical-align:middle;border:0;border-radius:50%;margin-right:12px;">
+          <div style="display:inline-block;vertical-align:middle;">
+            <h2 style="margin:0;font-size:20px;font-weight:800;color:#fff;">NEXTECHX <span style="color:#38bdf8;">SOLUTIONS</span></h2>
+            <p style="margin:4px 0 0 0;font-size:13px;color:#94a3b8;">New {form_title} Received</p>
+          </div>
         </div>
         <div style="padding:28px;">
           <div style="border:1px solid #e2e8f0;border-radius:8px;background:#f8fafc;padding:16px 20px;margin-bottom:20px;">

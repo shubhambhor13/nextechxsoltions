@@ -298,22 +298,22 @@ function render_logo($is_dark = false, $size = 'md', $show_tagline = true) {
     $tagline_color = $is_dark ? 'text-cyan-400/90' : 'text-slate-500';
     
     // Size scales
-    $badge_sz = 'w-8 h-8 sm:w-9 sm:h-9 xl:w-10 xl:h-10';
+    $badge_sz = 'w-9 h-9 sm:w-10 sm:h-10 xl:w-10.5 xl:h-10.5';
     $brand_text = 'text-[15px] sm:text-base xl:text-lg';
     $tagline_text = 'text-[8px] sm:text-[8.5px] xl:text-[9.5px]';
 
     if ($size === 'sm') {
-        $badge_sz = 'w-7 h-7 sm:w-8 sm:h-8';
+        $badge_sz = 'w-8 h-8 sm:w-8.5 sm:h-8.5';
         $brand_text = 'text-sm sm:text-base';
         $tagline_text = 'text-[7.5px] sm:text-[8px]';
     } elseif ($size === 'lg') {
-        $badge_sz = 'w-11 h-11 sm:w-13 sm:h-13';
+        $badge_sz = 'w-12 h-12 sm:w-13 sm:h-13';
         $brand_text = 'text-lg sm:text-xl xl:text-2xl';
         $tagline_text = 'text-[10px] sm:text-xs';
     }
 
     $html = '<div class="inline-flex items-center gap-2 sm:gap-2.5 select-none transition-transform duration-200 group-hover:scale-[1.02]">';
-    $html .= '<img src="' . htmlspecialchars($badge_src) . '" alt="NexTechX Solutions Emblem" class="' . $badge_sz . ' object-contain shrink-0 drop-shadow-sm rounded-full" loading="eager">';
+    $html .= '<img src="' . htmlspecialchars($badge_src) . '" alt="NexTechX Solutions Emblem" class="' . $badge_sz . ' object-contain shrink-0 drop-shadow-[0_0_8px_rgba(6,182,212,0.3)] rounded-full" loading="eager">';
     $html .= '<div class="text-left flex flex-col justify-center">';
     $html .= '<div class="flex items-center font-heading font-black tracking-tight leading-none whitespace-nowrap ' . $brand_text . '">';
     $html .= '<span class="' . $name_color . '">NexTech</span>';

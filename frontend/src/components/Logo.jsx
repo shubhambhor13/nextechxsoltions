@@ -12,10 +12,10 @@ export default function Logo({
 
   // Responsive sizing presets for the official circular badge
   const badgeSizeClasses = {
-    sm: 'w-7 h-7 sm:w-8 sm:h-8',
-    md: 'w-8 h-8 sm:w-9 sm:h-9 xl:w-10 xl:h-10',
-    lg: 'w-11 h-11 sm:w-13 sm:h-13',
-    xl: 'w-14 h-14 sm:w-16 sm:h-16'
+    sm: 'w-8 h-8 sm:w-8.5 sm:h-8.5',
+    md: 'w-9 h-9 sm:w-10 sm:h-10 xl:w-10.5 xl:h-10.5',
+    lg: 'w-12 h-12 sm:w-13 sm:h-13',
+    xl: 'w-16 h-16 sm:w-20 sm:h-20'
   };
 
   const textSizes = {
@@ -51,7 +51,7 @@ export default function Logo({
       <img 
         src={badgeSrc} 
         alt={`${siteConfig.companyName} Emblem`}
-        className={`${currentBadgeSize} object-contain shrink-0 drop-shadow-sm rounded-full`}
+        className={`${currentBadgeSize} object-contain shrink-0 drop-shadow-[0_0_8px_rgba(6,182,212,0.3)] rounded-full`}
         loading="eager"
         decoding="async"
         width="40"

@@ -11,8 +11,8 @@
         <!-- Header -->
         <div class="bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 p-4 text-white flex items-center justify-between border-b border-slate-800">
             <div class="flex items-center gap-3">
-                <div class="relative w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center shadow-md">
-                    <i data-lucide="bot" class="w-5 h-5 text-cyan-300"></i>
+                <div class="relative w-9 h-9 rounded-full bg-slate-900 flex items-center justify-center shadow-md">
+                    <img src="assets/images/nextechx-badge.webp" alt="NexTechX" class="w-9 h-9 rounded-full object-contain">
                     <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-slate-900 animate-pulse"></span>
                 </div>
                 <div>
@@ -35,9 +35,7 @@
         <!-- Messages Area -->
         <div id="chatMessages" class="flex-1 p-4 overflow-y-auto space-y-3 bg-slate-50 text-xs sm:text-sm">
             <div class="flex items-start gap-2.5">
-                <div class="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center shrink-0 text-xs shadow-xs">
-                    <i data-lucide="bot" class="w-3.5 h-3.5 text-cyan-300"></i>
-                </div>
+                <img src="assets/images/nextechx-badge.webp" alt="AI" class="w-7 h-7 rounded-full object-contain shrink-0 shadow-xs">
                 <div class="bg-white p-3.5 rounded-2xl rounded-tl-sm border border-slate-200 shadow-xs max-w-[85%] text-slate-800 leading-relaxed space-y-2">
                     <p>Hello! 👋 I'm your **NexTechX AI Assistant**.</p>
                     <p class="text-xs text-slate-600">I can answer questions about our **AI Automation Solutions**, **IT & Software Engineering**, **Research Publication Advisory**, or guide you through applying for our **Technology Internships**.</p>

@@ -666,7 +666,7 @@ class NexTechXMailer {
                 <table cellpadding="0" cellspacing="0" border="0">
                   <tr>
                     <td style="vertical-align: middle; padding-right: 12px;">
-                      <img src="https://nextechxsolutions.com/favicon.png" width="34" height="34" alt="NEXTECHX SOLUTIONS Logo" style="display: block; border: 0; outline: none; border-radius: 6px;">
+                      <img src="https://nextechxsolutions.com/images/nextechx-badge.png" width="44" height="44" alt="NEXTECHX SOLUTIONS Logo" style="display: block; border: 0; outline: none; border-radius: 50%; max-width: 44px; height: auto;">
                     </td>
                     <td style="vertical-align: middle;">
                       <span style="font-size: 17px; font-weight: 800; color: #0f172a; letter-spacing: -0.3px;">
@@ -783,7 +783,7 @@ HTML;
           <table cellpadding="0" cellspacing="0" border="0">
             <tr>
               <td style="vertical-align: middle; padding-right: 12px;">
-                <img src="https://nextechxsolutions.com/favicon.png" width="32" height="32" alt="NEXTECHX SOLUTIONS Logo" style="display: block; border: 0; outline: none; border-radius: 4px;">
+                <img src="https://nextechxsolutions.com/images/nextechx-badge.png" width="44" height="44" alt="NEXTECHX SOLUTIONS Logo" style="display: block; border: 0; outline: none; border-radius: 50%; max-width: 44px; height: auto;">
               </td>
               <td style="vertical-align: middle;">
                 <span style="font-size: 16px; font-weight: 800; color: #0f2b5c; letter-spacing: 0.4px;">
@@ -1232,7 +1232,7 @@ HTML;
           <table cellpadding="0" cellspacing="0" border="0">
             <tr>
               <td style="vertical-align: middle; padding-right: 12px;">
-                <img src="https://nextechxsolutions.com/favicon.png" width="32" height="32" alt="NEXTECHX SOLUTIONS Logo" style="display: block; border: 0; outline: none; border-radius: 4px;">
+                <img src="https://nextechxsolutions.com/images/nextechx-badge.png" width="44" height="44" alt="NEXTECHX SOLUTIONS Logo" style="display: block; border: 0; outline: none; border-radius: 50%; max-width: 44px; height: auto;">
               </td>
               <td style="vertical-align: middle;">
                 <span style="font-size: 16px; font-weight: 800; color: #0f2b5c; letter-spacing: 0.4px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
@@ -1444,7 +1444,7 @@ HTML;
                 <table cellpadding="0" cellspacing="0" border="0">
                   <tr>
                     <td style="vertical-align: middle; padding-right: 12px;">
-                      <img src="https://nextechxsolutions.com/favicon.png" width="34" height="34" alt="NEXTECHX SOLUTIONS Logo" style="display: block; border: 0; outline: none; border-radius: 6px;">
+                      <img src="https://nextechxsolutions.com/images/nextechx-badge.png" width="44" height="44" alt="NEXTECHX SOLUTIONS Logo" style="display: block; border: 0; outline: none; border-radius: 50%; max-width: 44px; height: auto;">
                     </td>
                     <td style="vertical-align: middle;">
                       <span style="font-size: 17px; font-weight: 800; color: #0f172a; letter-spacing: -0.3px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
