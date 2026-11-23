@@ -1,6 +1,6 @@
 <?php
 $page_title = "About Us — Enterprise IT & AI Engineering";
-$page_desc = "Learn about NextTechX Solutions, our online-first global delivery model, engineering capability pods, and corporate values.";
+$page_desc = "Learn about NexTechX Solutions, our online-first global delivery model, engineering capability pods, and corporate values.";
 require_once __DIR__ . '/includes/header.php';
 ?>
 
@@ -13,7 +13,7 @@ require_once __DIR__ . '/includes/header.php';
             <span>Engineering Excellence • Global Standards</span>
         </div>
         <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold font-heading text-white tracking-tight">
-            About NextTechX Solutions
+            About NexTechX Solutions
         </h1>
         <p class="text-lg sm:text-xl text-slate-300 max-w-3xl mx-auto mt-6 leading-relaxed">
             An online-first enterprise IT solutions and artificial intelligence engineering company dedicated to transforming business ideas into high-throughput digital reality.

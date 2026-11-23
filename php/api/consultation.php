@@ -1,5 +1,5 @@
 <?php
-// NextTechX Solutions - Strategy Consultations API
+// NexTechX Solutions - Strategy Consultations API
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
@@ -104,7 +104,7 @@ $fields = [
     'Discussion Notes / Focus' => $notes ?: 'General strategy discussion'
 ];
 
-$mailResult = NextTechXMailer::sendFormSubmission('consultation', 'Strategy Consultation Booking', $fields, $email, $name, [], $ref_id);
+$mailResult = NexTechXMailer::sendFormSubmission('consultation', 'Strategy Consultation Booking', $fields, $email, $name, [], $ref_id);
 
 $admin_sent = !empty($mailResult['company_email_sent']);
 $user_sent = !empty($mailResult['user_email_sent']);

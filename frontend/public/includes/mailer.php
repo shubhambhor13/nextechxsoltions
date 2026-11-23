@@ -1,5 +1,5 @@
 <?php
-// NextTechX Solutions - Automated Application Email & SMTP Notification System
+// NexTechX Solutions - Automated Application Email & SMTP Notification System
 // Powered by PHPMailer & Gmail SMTP with StartTLS security
 
 // Autoload PHPMailer via Composer from available vendor locations
@@ -27,7 +27,7 @@ if (file_exists(__DIR__ . '/cms.php')) {
     require_once __DIR__ . '/cms.php';
 }
 
-class NextTechXMailer {
+class NexTechXMailer {
 
     public static $last_password_source = null;
     public static $last_smtp_debug = [];
@@ -1537,4 +1537,9 @@ HTML;
 </html>
 HTML;
     }
+}
+
+// Backward-compatibility alias
+if (!class_exists('NextTechXMailer', false)) {
+    class_alias('NexTechXMailer', 'NextTechXMailer');
 }

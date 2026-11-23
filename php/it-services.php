@@ -1,6 +1,6 @@
 <?php
 $page_title = "IT & Custom Software Solutions";
-$page_desc = "Enterprise web development, custom software engineering, mobile apps, and cloud infrastructure from NextTechX Solutions.";
+$page_desc = "Enterprise web development, custom software engineering, mobile apps, and cloud infrastructure from NexTechX Solutions.";
 require_once __DIR__ . '/includes/header.php';
 ?>
 

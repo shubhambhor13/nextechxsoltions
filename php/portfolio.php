@@ -1,6 +1,6 @@
 <?php
 $page_title = "Portfolio & Client Deployments";
-$page_desc = "Explore our verified enterprise projects, AI chatbots, web systems, and analytics dashboards delivered by NextTechX Solutions.";
+$page_desc = "Explore our verified enterprise projects, AI chatbots, web systems, and analytics dashboards delivered by NexTechX Solutions.";
 require_once __DIR__ . '/includes/header.php';
 
 $projects = [

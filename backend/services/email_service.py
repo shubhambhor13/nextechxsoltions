@@ -1,4 +1,4 @@
-import os
+﻿import os
 import smtplib
 import logging
 from email.mime.multipart import MIMEMultipart
@@ -46,7 +46,7 @@ SUBMITTED DETAILS:
 
     body_text += f"""
 ============================================================
-NextTechX Solutions Form Notification System
+NexTechX Solutions Form Notification System
 https://nextechxsolutions.com
 """
 
@@ -174,7 +174,7 @@ def send_career_application_email(app_data: dict, resume_path: str, resume_filen
     # Build Plaintext body
     body_text = f"""
 ============================================================
-NEW CAREER APPLICATION RECEIVED - NEXTTECHX SOLUTIONS
+NEW CAREER APPLICATION RECEIVED - NEXTECHX SOLUTIONS
 ============================================================
 
 Type:           {applying_for}
@@ -193,7 +193,7 @@ Cover Note / Candidate Message:
 Attached Resume: {resume_filename}
 Stored on Server: {resume_path}
 ============================================================
-NextTechX Solutions Talent Acquisition Portal
+NexTechX Solutions Talent Acquisition Portal
 Website: https://nextechxsolutions.com
 HR Contact: {HR_EMAIL}
 """
@@ -223,7 +223,7 @@ HR Contact: {HR_EMAIL}
         <div class="header">
           <span class="badge">{applying_for} Application</span>
           <h1 style="margin: 0; font-size: 22px; font-weight: 800; color: #ffffff;">{position}</h1>
-          <p style="margin: 6px 0 0 0; font-size: 13px; color: #93c5fd;">NextTechX Solutions Career Portal</p>
+          <p style="margin: 6px 0 0 0; font-size: 13px; color: #93c5fd;">NexTechX Solutions Career Portal</p>
         </div>
         <div class="content">
           <div class="field-group">
@@ -254,7 +254,7 @@ HR Contact: {HR_EMAIL}
           </div>
         </div>
         <div class="footer">
-          Submitted on {submitted_at} via NextTechX Careers Portal<br/>
+          Submitted on {submitted_at} via NexTechX Careers Portal<br/>
           HR Inquiries: <a href="mailto:{HR_EMAIL}" style="color: #64748b;">{HR_EMAIL}</a>
         </div>
       </div>

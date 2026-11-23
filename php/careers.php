@@ -4,7 +4,7 @@ require_once __DIR__ . '/includes/cms.php';
 
 $page_seo = cms_get_page_seo('careers');
 $page_title = $page_seo['meta_title'] ?? ("Careers & Internships — " . SITE_NAME);
-$page_desc = $page_seo['meta_description'] ?? "Explore interview-based technical internships and student programs with NextTechX Solutions. Apply online.";
+$page_desc = $page_seo['meta_description'] ?? "Explore interview-based technical internships and student programs with NexTechX Solutions. Apply online.";
 require_once __DIR__ . '/includes/header.php';
 
 $cms_opps = cms_get_career_opportunities(true);
@@ -86,7 +86,7 @@ $internship_roles = [
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 relative z-10">
         <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-blue-200 text-xs sm:text-sm font-bold text-blue-700 shadow-xs font-heading">
             <i data-lucide="graduation-cap" class="w-4 h-4 text-blue-600"></i>
-            <span>Careers & Internships • NextTechX Solutions</span>
+            <span>Careers & Internships • NexTechX Solutions</span>
         </div>
 
         <h1 class="text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-tight max-w-4xl mx-auto font-heading">

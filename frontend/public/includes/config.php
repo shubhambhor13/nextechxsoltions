@@ -1,9 +1,9 @@
 <?php
-// NextTechX Solutions - Global Configuration & Database Setup
+// NexTechX Solutions - Global Configuration & Database Setup
 error_reporting(E_ALL);
 ini_set('display_errors', '0');
 
-define('SITE_NAME', 'NextTechX Solutions');
+define('SITE_NAME', 'NexTechX Solutions');
 define('SITE_TAGLINE', 'Your Vision Our Technology');
 define('SITE_EMAIL', 'contact@nextechxsolutions.com');
 define('SITE_EMAIL_CONTACT', 'contact@nextechxsolutions.com');
@@ -12,7 +12,7 @@ define('SITE_EMAIL_HR_ALT', 'hr@nextechxsolutions.com');
 define('SITE_EMAIL_GENERAL', 'nextechxsolutions@gmail.com');
 define('SITE_PHONE', '+91 93098 35085');
 define('SITE_PHONE_TEL', '+919309835085');
-define('SITE_WHATSAPP_URL', 'https://wa.me/919309835085?text=Hello%20NextTechX%20Solutions,%20I%20would%20like%20to%20inquire%20about%20your%20services%20and%20programs.');
+define('SITE_WHATSAPP_URL', 'https://wa.me/919309835085?text=Hello%20NexTechX%20Solutions,%20I%20would%20like%20to%20inquire%20about%20your%20services%20and%20programs.');
 define('SITE_LINKEDIN_URL', 'https://www.linkedin.com/company/nextechx-solutions/');
 define('SITE_DELIVERY_MODEL', 'Online-First Global Delivery');
 function get_persistent_db_path() {
@@ -290,10 +290,10 @@ function is_active($page) {
 }
 
 /**
- * Render the official NextTechX logo with circular 3D emblem & tagline
+ * Render the official NexTechX logo with circular 3D emblem & tagline
  */
 function render_logo($is_dark = false, $size = 'md', $show_tagline = true) {
-    $badge_src = $is_dark ? 'assets/images/nexttechx-badge-dark.webp' : 'assets/images/nexttechx-badge.webp';
+    $badge_src = $is_dark ? 'assets/images/nextechx-badge-dark.webp' : 'assets/images/nextechx-badge.webp';
     $name_color = $is_dark ? 'text-white' : 'text-slate-900';
     $tagline_color = $is_dark ? 'text-cyan-400/90' : 'text-slate-500';
     
@@ -313,10 +313,10 @@ function render_logo($is_dark = false, $size = 'md', $show_tagline = true) {
     }
 
     $html = '<div class="inline-flex items-center gap-2 sm:gap-2.5 select-none transition-transform duration-200 group-hover:scale-[1.02]">';
-    $html .= '<img src="' . htmlspecialchars($badge_src) . '" alt="NextTechX Solutions Emblem" class="' . $badge_sz . ' object-contain shrink-0 drop-shadow-sm rounded-full" loading="eager">';
+    $html .= '<img src="' . htmlspecialchars($badge_src) . '" alt="NexTechX Solutions Emblem" class="' . $badge_sz . ' object-contain shrink-0 drop-shadow-sm rounded-full" loading="eager">';
     $html .= '<div class="text-left flex flex-col justify-center">';
     $html .= '<div class="flex items-center font-heading font-black tracking-tight leading-none whitespace-nowrap ' . $brand_text . '">';
-    $html .= '<span class="' . $name_color . '">NextTech</span>';
+    $html .= '<span class="' . $name_color . '">NexTech</span>';
     $html .= '<span class="text-cyan-500 ml-0.5">X</span>';
     $html .= '<span class="ml-1 font-bold ' . ($is_dark ? 'text-cyan-400' : 'text-blue-600') . '">Solutions</span>';
     $html .= '</div>';

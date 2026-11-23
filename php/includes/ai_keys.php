@@ -1,5 +1,5 @@
 <?php
-// NextTechX Solutions - Secure Server-Side AI API Configuration
+// NexTechX Solutions - Secure Server-Side AI API Configuration
 // Keys are read from server environment variables for maximum security.
 // NEVER commit actual API keys to GitHub or expose them in client-side code.
 

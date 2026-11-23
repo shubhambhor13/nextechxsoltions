@@ -1,4 +1,4 @@
-[
+﻿[
   {
     "page_slug": "home",
     "section_key": "hero",
@@ -10,7 +10,7 @@
     "content": {
       "badge": "Enterprise Engineering & Digital Innovation",
       "heading": "Engineering Scalable Software & Intelligent Automation",
-      "subheading": "NextTechX Solutions delivers enterprise-grade software engineering, autonomous AI workflows, SaaS platforms, precision data labeling, and dedicated business process outsourcing.",
+      "subheading": "NexTechX Solutions delivers enterprise-grade software engineering, autonomous AI workflows, SaaS platforms, precision data labeling, and dedicated business process outsourcing.",
       "primary_btn_text": "Explore Our Services",
       "primary_btn_url": "services.php",
       "secondary_btn_text": "Request Quotation",
@@ -134,7 +134,7 @@
     "status": "published",
     "content": {
       "eyebrow": "Guiding Principles",
-      "heading": "The Values That Define NextTechX",
+      "heading": "The Values That Define NexTechX",
       "values": [
         {
           "title": "Engineering Excellence",

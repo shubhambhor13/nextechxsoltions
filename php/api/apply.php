@@ -1,5 +1,5 @@
 <?php
-// NextTechX Solutions - Student & Internship Registration API
+// NexTechX Solutions - Student & Internship Registration API
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
@@ -150,7 +150,7 @@ $fields = [
     'Statement / Motivation' => $statement
 ];
 
-$mailResult = NextTechXMailer::sendFormSubmission('internship', 'Internship & Mentorship Registration', $fields, $email, $full_name, $email_attachments, $ref_id);
+$mailResult = NexTechXMailer::sendFormSubmission('internship', 'Internship & Mentorship Registration', $fields, $email, $full_name, $email_attachments, $ref_id);
 
 $admin_sent = !empty($mailResult['company_email_sent']);
 $user_sent = !empty($mailResult['user_email_sent']);

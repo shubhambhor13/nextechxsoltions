@@ -282,7 +282,7 @@ export default function Internship({ onOpenRegister, onSelectCourseForRegister }
           <div className="pt-1 flex items-center justify-center gap-2 text-xs text-slate-600 font-mono">
             <Mail className="w-4 h-4 text-emerald-600" />
             <span>Direct HR Desk:</span>
-            <a href={`mailto:${siteConfig.emailHr}?subject=Internship%20Inquiry%20-%20NextTechX`} className="text-emerald-700 hover:text-emerald-800 font-bold underline">
+            <a href={`mailto:${siteConfig.emailHr}?subject=Internship%20Inquiry%20-%20NexTechX`} className="text-emerald-700 hover:text-emerald-800 font-bold underline">
               {siteConfig.emailHr}
             </a>
           </div>

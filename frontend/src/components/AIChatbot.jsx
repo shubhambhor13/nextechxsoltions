@@ -24,7 +24,7 @@ export default function AIChatbot({ onOpenQuote, onOpenConsultation, onOpenRegis
     {
       id: 'welcome-1',
       role: 'assistant',
-      content: "Hello! 👋 I'm your **NextTechX AI Assistant**.\n\nI can answer questions about our **AI Automation Solutions**, **IT & Software Engineering**, **Research Publication Advisory**, or guide you through applying for our **Technology Internships**.\n\nHow can I assist your business or career journey today?",
+      content: "Hello! 👋 I'm your **NexTechX AI Assistant**.\n\nI can answer questions about our **AI Automation Solutions**, **IT & Software Engineering**, **Research Publication Advisory**, or guide you through applying for our **Technology Internships**.\n\nHow can I assist your business or career journey today?",
       suggested_actions: [
         "What services does your company provide?",
         "How can I apply for an internship?",
@@ -261,7 +261,7 @@ export default function AIChatbot({ onOpenQuote, onOpenConsultation, onOpenRegis
               </div>
               <div>
                 <div className="flex items-center gap-1.5">
-                  <h4 className="text-xs font-bold text-white font-heading">NextTechX AI Assistant</h4>
+                  <h4 className="text-xs font-bold text-white font-heading">NexTechX AI Assistant</h4>
                   <span className="px-1.5 py-0.2 text-[9px] font-semibold bg-cyan-500/20 text-cyan-300 border border-cyan-400/30 rounded">Active</span>
                 </div>
                 <p className="text-[10px] text-slate-300">Enterprise IT • AI Solutions • Careers</p>
@@ -383,7 +383,7 @@ export default function AIChatbot({ onOpenQuote, onOpenConsultation, onOpenRegis
             <div className="flex items-center justify-between pt-2 px-1 text-[10px] text-slate-500">
               <span className="flex items-center gap-1">
                 <Sparkles className="w-2.5 h-2.5 text-blue-500" />
-                <span>NextTechX Knowledge AI</span>
+                <span>NexTechX Knowledge AI</span>
               </span>
               <button
                 onClick={onOpenQuote}

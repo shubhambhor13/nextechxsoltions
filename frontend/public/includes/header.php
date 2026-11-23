@@ -7,7 +7,7 @@ $cms_tagline = cms_get_setting('tagline', SITE_TAGLINE);
 $cms_email = cms_get_setting('email_contact', SITE_EMAIL_CONTACT);
 
 $page_title = isset($page_title) ? $page_title : ($cms_company_name . ' — Enterprise IT Solutions, AI Automation & Technology Internships');
-$page_desc = isset($page_desc) ? $page_desc : ('NextTechX Solutions delivers enterprise IT solutions, autonomous AI workflows, cloud infrastructure, and technology internship programs. ' . $cms_tagline . '.');
+$page_desc = isset($page_desc) ? $page_desc : ('NexTechX Solutions delivers enterprise IT solutions, autonomous AI workflows, cloud infrastructure, and technology internship programs. ' . $cms_tagline . '.');
 ?>
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth scroll-pt-28 overflow-x-clip">

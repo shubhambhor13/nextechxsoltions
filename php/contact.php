@@ -1,6 +1,6 @@
 <?php
 $page_title = "Contact Us & Global Technical Inquiries";
-$page_desc = "Get in touch with NextTechX Solutions. Fast 24-hour turnaround on project inquiries, price quotes, and technical consultations.";
+$page_desc = "Get in touch with NexTechX Solutions. Fast 24-hour turnaround on project inquiries, price quotes, and technical consultations.";
 require_once __DIR__ . '/includes/header.php';
 ?>
 
@@ -13,7 +13,7 @@ require_once __DIR__ . '/includes/header.php';
             <span>Direct Technical Access • Fast Response</span>
         </div>
         <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold font-heading text-white tracking-tight">
-            Contact NextTechX Solutions
+            Contact NexTechX Solutions
         </h1>
         <p class="text-lg sm:text-xl text-slate-300 max-w-3xl mx-auto mt-6 leading-relaxed">
             Have a project in mind or need technical guidance? Send us a message or connect directly on WhatsApp. We provide upfront scopes and honest technical guidance.
@@ -75,7 +75,7 @@ require_once __DIR__ . '/includes/header.php';
                         <div>
                             <div class="text-xs font-mono uppercase text-slate-400">Internship & Student Careers (HR)</div>
                             <div class="text-base font-bold text-slate-900 mt-0.5"><?= SITE_EMAIL_HR ?></div>
-                            <a href="mailto:<?= SITE_EMAIL_HR ?>?subject=Internship%20Inquiry%20-%20NextTechX%20Solutions" class="text-xs font-semibold text-purple-600 hover:text-purple-700 mt-1 inline-flex items-center gap-1">
+                            <a href="mailto:<?= SITE_EMAIL_HR ?>?subject=Internship%20Inquiry%20-%20NexTechX%20Solutions" class="text-xs font-semibold text-purple-600 hover:text-purple-700 mt-1 inline-flex items-center gap-1">
                                 <span>Email HR Desk</span>
                                 <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                             </a>

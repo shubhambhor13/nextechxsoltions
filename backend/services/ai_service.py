@@ -1,10 +1,10 @@
-import os
+﻿import os
 import re
 
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 
 SYSTEM_KNOWLEDGE = {
-    "company": "NextTechX Solutions",
+    "company": "NexTechX Solutions",
     "tagline": "Your Vision Our Technology — Enterprise IT Solutions, AI Automation & Research Publications",
     "domains": [
         "IT Solutions & Custom Software Development",
@@ -45,7 +45,7 @@ def generate_smart_fallback(user_text: str) -> dict:
     if any(k in text for k in ["quote", "price", "pricing", "cost", "budget", "estimate", "how much", "rate", "rupee", "inr"]):
         reply = (
             "💼 **Get a Tailored Quotation in Indian Rupees (₹)**\n\n"
-            "At NextTechX Solutions, all quotations are provided in Indian Rupees (INR ₹) tailored to your exact scope:\n"
+            "At NexTechX Solutions, all quotations are provided in Indian Rupees (INR ₹) tailored to your exact scope:\n"
             "• **Custom Software & Web/Mobile Apps**: High-quality MVPs to full enterprise systems (from ₹50,000).\n"
             "• **AI & n8n Automation Workflows**: WhatsApp chatbots, CRM automation, & auto-invoice processors.\n"
             "• **Research Paper Writing & Publication**: Scopus, IEEE, Springer & UGC-CARE advisory.\n"
@@ -122,7 +122,7 @@ async def generate_ai_response(user_text: str) -> dict:
                         "messages": [
                             {
                                 "role": "system",
-                                "content": "You are the professional AI representative of NextTechX Solutions (an online-first IT Solutions, AI Automation, and Research Paper Publication company). The company operates entirely online with global delivery and does not have physical offices. Tagline: 'Your Vision Our Technology'. Be concise, helpful, and encourage users to book a consultation, request a quotation, or connect via WhatsApp or Email."
+                                "content": "You are the professional AI representative of NexTechX Solutions (an online-first IT Solutions, AI Automation, and Research Paper Publication company). The company operates entirely online with global delivery and does not have physical offices. Tagline: 'Your Vision Our Technology'. Be concise, helpful, and encourage users to book a consultation, request a quotation, or connect via WhatsApp or Email."
                             },
                             {"role": "user", "content": user_text}
                         ],

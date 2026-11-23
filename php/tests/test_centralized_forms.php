@@ -21,13 +21,13 @@ if ($db) {
     echo "  -> Using JSON fallback store in php/data/ (PDO SQLite extension not loaded in CLI).\n";
 }
 
-// 2. Test NextTechXMailer Environment Configuration
-echo "\n[TEST 2] Verifying NextTechXMailer Configuration...\n";
-$smtp_host = NextTechXMailer::getEnv('SMTP_HOST', 'smtp.hostinger.com');
-$smtp_port = (int)NextTechXMailer::getEnv('SMTP_PORT', 465);
-$smtp_user = NextTechXMailer::getEnv('SMTP_USERNAME', 'hr@nextechxsolutions.com');
-$smtp_from = NextTechXMailer::getEnv('SMTP_FROM_EMAIL', 'hr@nextechxsolutions.com');
-$smtp_pass = NextTechXMailer::getEnv('SMTP_PASSWORD', '');
+// 2. Test NexTechXMailer Environment Configuration
+echo "\n[TEST 2] Verifying NexTechXMailer Configuration...\n";
+$smtp_host = NexTechXMailer::getEnv('SMTP_HOST', 'smtp.hostinger.com');
+$smtp_port = (int)NexTechXMailer::getEnv('SMTP_PORT', 465);
+$smtp_user = NexTechXMailer::getEnv('SMTP_USERNAME', 'hr@nextechxsolutions.com');
+$smtp_from = NexTechXMailer::getEnv('SMTP_FROM_EMAIL', 'hr@nextechxsolutions.com');
+$smtp_pass = NexTechXMailer::getEnv('SMTP_PASSWORD', '');
 
 echo "  -> SMTP Host:     $smtp_host\n";
 echo "  -> SMTP Port:     $smtp_port (SSL/TLS)\n";
@@ -48,7 +48,7 @@ $test_fields = [
     'Requirements' => 'Automated document processing and multi-channel notification engine.'
 ];
 
-$res = NextTechXMailer::sendFormSubmission(
+$res = NexTechXMailer::sendFormSubmission(
     'quote',
     'Quotation Request',
     $test_fields,

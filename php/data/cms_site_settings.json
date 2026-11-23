@@ -1,4 +1,4 @@
-{
+﻿{
   "company_name": "NEXTECHX SOLUTIONS",
   "tagline": "Your Vision Our Technology",
   "website_url": "https://nextechxsolutions.com",
@@ -6,16 +6,16 @@
   "email_hr": "hr@nextechxsolutions.com",
   "phone_number": "+91 93098 35085",
   "whatsapp_number": "+91 93098 35085",
-  "whatsapp_url": "https://wa.me/919309835085?text=Hello%20NextTechX%20Solutions,%20I%20would%20like%20to%20inquire%20about%20your%20services%20and%20programs.",
+  "whatsapp_url": "https://wa.me/919309835085?text=Hello%20NexTechX%20Solutions,%20I%20would%20like%20to%20inquire%20about%20your%20services%20and%20programs.",
   "linkedin_url": "https://www.linkedin.com/company/nextechx-solutions/",
   "copyright_text": "© 2026 NEXTECHX SOLUTIONS. All rights reserved.",
   "maintenance_mode": "0",
   "default_meta_title": "NEXTECHX SOLUTIONS — Enterprise IT & AI Software Engineering",
-  "default_meta_desc": "NextTechX Solutions delivers enterprise IT services, AI automation, custom software, SaaS cloud architectures, data annotation, and business process outsourcing.",
+  "default_meta_desc": "NexTechX Solutions delivers enterprise IT services, AI automation, custom software, SaaS cloud architectures, data annotation, and business process outsourcing.",
   "chatbot_enabled": "1",
-  "chatbot_name": "NextTechX AI Assistant",
-  "chatbot_welcome_message": "Hello! Welcome to NextTechX Solutions. How can I assist you with our AI, Software, SaaS, Data Annotation, or BPO engineering services today?",
-  "chatbot_system_prompt": "You are NextTechX AI Assistant, the professional solutions consultant for NEXTECHX SOLUTIONS. Guide clients through our 5 core services (AI & Automation, Software Development, SaaS Development, Data Annotation, BPO Services). Provide clear, concise, technically sound information. Keep responses professional, warm, and encourage booking a consultation or requesting a quote.",
+  "chatbot_name": "NexTechX AI Assistant",
+  "chatbot_welcome_message": "Hello! Welcome to NexTechX Solutions. How can I assist you with our AI, Software, SaaS, Data Annotation, or BPO engineering services today?",
+  "chatbot_system_prompt": "You are NexTechX AI Assistant, the professional solutions consultant for NEXTECHX SOLUTIONS. Guide clients through our 5 core services (AI & Automation, Software Development, SaaS Development, Data Annotation, BPO Services). Provide clear, concise, technically sound information. Keep responses professional, warm, and encourage booking a consultation or requesting a quote.",
   "chatbot_languages": "English, Hindi, Marathi, Spanish, German, French",
   "chatbot_theme_color": "#2563eb",
   "chatbot_knowledge_sources": "Website Services, Company FAQs, Internship Details, Case Studies",
@@ -28,7 +28,7 @@
   "cookie_notice_text": "We utilize security and telemetry cookies to ensure optimal browsing performance and protect client submissions.",
   "github_url": "https://github.com/nextechx-solutions",
   "twitter_url": "https://twitter.com/nextechx",
-  "default_meta_keywords": "NextTechX Solutions, AI Automation, Software Development, SaaS Architecture, Data Annotation, BPO Services, Enterprise IT",
+  "default_meta_keywords": "NexTechX Solutions, AI Automation, Software Development, SaaS Architecture, Data Annotation, BPO Services, Enterprise IT",
   "default_og_image": "https://nextechxsolutions.com/favicon.png",
   "enable_blog_module": "0"
 }

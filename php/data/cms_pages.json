@@ -1,4 +1,4 @@
-[
+﻿[
   {
     "slug": "home",
     "title": "Home",
@@ -107,7 +107,7 @@
     "slug": "privacy",
     "title": "Privacy Policy",
     "meta_title": "Privacy Policy \u2014 NEXTECHX SOLUTIONS",
-    "meta_description": "NextTechX Solutions data protection, client confidentiality, and privacy terms.",
+    "meta_description": "NexTechX Solutions data protection, client confidentiality, and privacy terms.",
     "status": "published",
     "template": "default"
   }

@@ -1,5 +1,5 @@
 <?php
-// NextTechX Solutions - Automated Email Notification & Application Test Suite
+// NexTechX Solutions - Automated Email Notification & Application Test Suite
 // Run via CLI: php php/tests/test_email_system.php
 
 echo "========================================================\n";
@@ -35,12 +35,12 @@ assert_test("PHPMailer Exception class exists", class_exists('PHPMailer\PHPMaile
 // TEST 2: Environment Variable Loader
 // ---------------------------------------------------------
 echo "\n--- Test Group 2: Environment Variable Configuration ---\n";
-$host = NextTechXMailer::getEnv('SMTP_HOST', 'smtp.hostinger.com');
-$port = NextTechXMailer::getEnv('SMTP_PORT', 465);
-$encryption = NextTechXMailer::getEnv('SMTP_ENCRYPTION', 'ssl');
-$user = NextTechXMailer::getEnv('SMTP_USERNAME', 'hr@nextechxsolutions.com');
-$from_email = NextTechXMailer::getEnv('SMTP_FROM_EMAIL', 'hr@nextechxsolutions.com');
-$from_name = NextTechXMailer::getEnv('SMTP_FROM_NAME', 'NEXTECHX SOLUTIONS');
+$host = NexTechXMailer::getEnv('SMTP_HOST', 'smtp.hostinger.com');
+$port = NexTechXMailer::getEnv('SMTP_PORT', 465);
+$encryption = NexTechXMailer::getEnv('SMTP_ENCRYPTION', 'ssl');
+$user = NexTechXMailer::getEnv('SMTP_USERNAME', 'hr@nextechxsolutions.com');
+$from_email = NexTechXMailer::getEnv('SMTP_FROM_EMAIL', 'hr@nextechxsolutions.com');
+$from_name = NexTechXMailer::getEnv('SMTP_FROM_NAME', 'NEXTECHX SOLUTIONS');
 
 assert_test("SMTP_HOST defaults to smtp.hostinger.com", $host === 'smtp.hostinger.com');
 assert_test("SMTP_PORT defaults to 465", (int)$port === 465);
@@ -63,7 +63,7 @@ $dummy_applicant = [
     'id' => 'NTX-TEST-2026-001'
 ];
 
-$method = new ReflectionMethod('NextTechXMailer', 'buildApplicantEmailHtml');
+$method = new ReflectionMethod('NexTechXMailer', 'buildApplicantEmailHtml');
 $method->setAccessible(true);
 $htmlApplicant = $method->invoke(null, [
     'full_name' => $dummy_applicant['full_name'],
@@ -86,7 +86,7 @@ assert_test("Applicant email includes footer website link", strpos($htmlApplican
 // TEST 4: Company Notification Email Content & Template
 // ---------------------------------------------------------
 echo "\n--- Test Group 4: Company Notification Template ---\n";
-$methodComp = new ReflectionMethod('NextTechXMailer', 'buildCompanyEmailHtml');
+$methodComp = new ReflectionMethod('NexTechXMailer', 'buildCompanyEmailHtml');
 $methodComp->setAccessible(true);
 $htmlCompany = $methodComp->invoke(null, [
     'full_name' => $dummy_applicant['full_name'],

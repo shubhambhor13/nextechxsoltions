@@ -1,5 +1,5 @@
 <?php
-// NextTechX Solutions - Contact Inquiries API
+// NexTechX Solutions - Contact Inquiries API
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
@@ -97,7 +97,7 @@ $fields = [
     'Message' => $message
 ];
 
-$mailResult = NextTechXMailer::sendFormSubmission('contact', 'Contact Inquiry', $fields, $email, $name, [], $ref_id);
+$mailResult = NexTechXMailer::sendFormSubmission('contact', 'Contact Inquiry', $fields, $email, $name, [], $ref_id);
 
 $admin_sent = !empty($mailResult['company_email_sent']);
 $user_sent = !empty($mailResult['user_email_sent']);

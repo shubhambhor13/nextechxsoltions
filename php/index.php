@@ -1,6 +1,6 @@
 <?php
 $page_title = "Enterprise IT Solutions, AI Automation & Technology Internships";
-$page_desc = "NextTechX Solutions engineers high-impact artificial intelligence, autonomous workflow pipelines, modern IT software, and scalable enterprise cloud solutions. Your Vision Our Technology.";
+$page_desc = "NexTechX Solutions engineers high-impact artificial intelligence, autonomous workflow pipelines, modern IT software, and scalable enterprise cloud solutions. Your Vision Our Technology.";
 require_once __DIR__ . '/includes/header.php';
 ?>
 

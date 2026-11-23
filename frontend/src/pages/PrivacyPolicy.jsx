@@ -207,7 +207,7 @@ export default function PrivacyPolicy({ onOpenQuote, onOpenConsultation }) {
                   <h2 className="text-xl sm:text-2xl font-bold text-slate-900 font-heading">
                     Overview & Commitment
                   </h2>
-                  <p className="text-xs text-slate-500 font-mono">Applicable across all NextTechX digital touchpoints</p>
+                  <p className="text-xs text-slate-500 font-mono">Applicable across all NexTechX digital touchpoints</p>
                 </div>
               </div>
 

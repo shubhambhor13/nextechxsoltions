@@ -1,5 +1,5 @@
 <?php
-// NextTechX Solutions - Intelligent AI Assistant API
+// NexTechX Solutions - Intelligent AI Assistant API
 // Supports real AI (Google Gemini / OpenAI) with secure server-side integration
 // and an intelligent centralized corporate knowledge engine for 100% reliable responses.
 
@@ -33,7 +33,7 @@ $history = is_array($payload['history'] ?? null) ? $payload['history'] : [];
 if (empty($message)) {
     echo json_encode([
         'status' => 'success',
-        'reply' => "Hello! 👋 I'm your **NextTechX AI Assistant**. How can I help power your enterprise solutions, AI automation, or internship journey today?",
+        'reply' => "Hello! 👋 I'm your **NexTechX AI Assistant**. How can I help power your enterprise solutions, AI automation, or internship journey today?",
         'suggested_actions' => [
             "Explore AI Automation",
             "View Internship Opportunities",
@@ -254,7 +254,7 @@ Your role is to guide visitors, clients, and students by providing accurate, hel
 
 CRITICAL RULES:
 1. COMPANY SCOPE: Answer questions using the verified company knowledge provided below. Never invent services, prices, team members, or claims.
-2. INTERNSHIPS ONLY: Currently, NextTechX Solutions offers INTERNSHIP OPPORTUNITIES ONLY. Do not claim there are job vacancies. If asked about jobs or hiring, politely explain that currently only internship opportunities are available.
+2. INTERNSHIPS ONLY: Currently, NexTechX Solutions offers INTERNSHIP OPPORTUNITIES ONLY. Do not claim there are job vacancies. If asked about jobs or hiring, politely explain that currently only internship opportunities are available.
 3. HR CONTACT: For HR and internship queries, always state the official email: {$ct['hr_email']}.
 4. CLIENT CONTACT: For client proposals and services, state: {$ct['client_email']} and WhatsApp: {$ct['phone']}.
 5. MULTILINGUAL: Understand English, Hindi, and Marathi naturally. If a user asks in Marathi or Hindi, reply respectfully in that language or simple English as appropriate.
@@ -264,7 +264,7 @@ CRITICAL RULES:
    - IT Services: [IT & Software Solutions](/it-services)
    - Research Publication: [Research Publication](/research-publication)
    - Contact Us: [Contact Us](#contact)
-7. GENERAL TECH: You are knowledgeable in technology (AI, ML, React, Python, n8n, Cloud, Docker, Kubernetes, etc.). Explain concepts clearly and connect them to how NextTechX Solutions implements them.
+7. GENERAL TECH: You are knowledgeable in technology (AI, ML, React, Python, n8n, Cloud, Docker, Kubernetes, etc.). Explain concepts clearly and connect them to how NexTechX Solutions implements them.
 8. HONESTY: If specific requested info (e.g., exact custom price for a complex private project) is not public, say so clearly and direct the visitor to request a quotation or contact the team.
 
 COMPANY INFORMATION:
@@ -310,7 +310,7 @@ function generate_intelligent_response($message, $history, $kb) {
                . "• **Zero Hallucinations**: Responses are strictly grounded in your company's actual data.\n"
                . "• **100% Data Privacy**: Private corporate data is never used to train public foundation models.\n"
                . "• **Dynamic Updates**: Knowledge updates instantly when you add new documents without costly model retraining.\n\n"
-               . "👉 Learn how NextTechX Solutions deploys custom RAG assistants on our [AI Automation Solutions](/ai-automation) page, or [Contact Us](#contact) for an architecture blueprint.";
+               . "👉 Learn how NexTechX Solutions deploys custom RAG assistants on our [AI Automation Solutions](/ai-automation) page, or [Contact Us](#contact) for an architecture blueprint.";
         return [
             'reply' => $reply,
             'suggested_actions' => ["Explore AI Automation", "Request Quotation", "View Services"]
@@ -322,7 +322,7 @@ function generate_intelligent_response($message, $history, $kb) {
         $reply = "💡 **What is n8n?**\n\n"
                . "n8n is an enterprise-grade workflow automation platform that connects your business software, databases, CRMs, and messaging channels through visual node-based execution and custom scripts.\n\n"
                . "Unlike cloud-only automation services like Zapier, n8n can be **self-hosted on your own private cloud/servers**, guaranteeing total data confidentiality with zero third-party data retention.\n\n"
-               . "**How NextTechX Solutions Leverages n8n**:\n"
+               . "**How NexTechX Solutions Leverages n8n**:\n"
                . "• Connecting CRM (HubSpot/Salesforce) with ERP and payment databases in real-time.\n"
                . "• Automated WhatsApp notification dispatches and invoice generation.\n"
                . "• Multi-step data validation and webhook trigger pipelines.\n\n"
@@ -339,7 +339,7 @@ function generate_intelligent_response($message, $history, $kb) {
     if (preg_match('/(नमस्ते|कैसे|करें|नौकरी|सेवाएं|संपर्क|कॉल|व्हाट्सएप|बारे में|बताएं|चाहिए|दीजिए)/u', $text) ||
         preg_match('/(kaise|kya hai|kare|sampark|batao|chahiye|jankari|naukri)/i', $text)) {
         if (preg_match('/(internship|training|apply|apply kare|seekhna|student|batch)/i', $text) || preg_match('/(इंटर्नशिप|विद्यार्थी)/u', $text)) {
-            $reply = "नमस्ते! 🙏 **NextTechX Solutions** में वर्तमान में विशेष रूप से **इंटर्नशिप के अवसर** उपलब्ध हैं:\n\n"
+            $reply = "नमस्ते! 🙏 **NexTechX Solutions** में वर्तमान में विशेष रूप से **इंटर्नशिप के अवसर** उपलब्ध हैं:\n\n"
                    . "• **AI & Machine Learning Research Intern**\n"
                    . "• **Full Stack Web Engineering Intern** (React, FastAPI, Node.js)\n"
                    . "• **Data Analytics & Power BI Intern**\n"
@@ -354,7 +354,7 @@ function generate_intelligent_response($message, $history, $kb) {
                 'suggested_actions' => ["Apply for Internship", "All Services", "Contact Us"]
             ];
         } elseif (preg_match('/(job|jobs|vacancy|naukri|experienced)/i', $text) || preg_match('/(नौकरी)/u', $text)) {
-            $reply = "वर्तमान में **NextTechX Solutions** में केवल **इंटर्नशिप अवसर (Internships)** उपलब्ध हैं। इस समय अनुभवी पदों के लिए कोई जॉब वैकेंसी उपलब्ध नहीं है।\n\n"
+            $reply = "वर्तमान में **NexTechX Solutions** में केवल **इंटर्नशिप अवसर (Internships)** उपलब्ध हैं। इस समय अनुभवी पदों के लिए कोई जॉब वैकेंसी उपलब्ध नहीं है।\n\n"
                    . "*\"Currently, we are offering internship opportunities. Stay connected for future updates.\"*\n\n"
                    . "यदि आप छात्र या नए ग्रेजुएट हैं और व्यावहारिक प्रोजेक्ट्स पर काम करना चाहते हैं, तो कृपया [Careers & Internships](/careers) पेज देखें या **hr@nextechxsolutions.com** पर संपर्क करें।";
             return [
@@ -362,7 +362,7 @@ function generate_intelligent_response($message, $history, $kb) {
                 'suggested_actions' => ["View Internships", "Explore Services", "Contact HR"]
             ];
         } elseif (preg_match('/(contact|sampark|call|email|whatsapp)/i', $text) || preg_match('/(संपर्क|कॉल)/u', $text)) {
-            $reply = "नमस्ते! 🙏 आप **NextTechX Solutions** से निम्नलिखित माध्यमों से संपर्क कर सकते हैं:\n\n"
+            $reply = "नमस्ते! 🙏 आप **NexTechX Solutions** से निम्नलिखित माध्यमों से संपर्क कर सकते हैं:\n\n"
                    . "• 💼 क्लाइंट प्रस्ताव व पूछताछ: **contact@nextechxsolutions.com**\n"
                    . "• 🎓 HR व इंटर्नशिप पूछताछ: **hr@nextechxsolutions.com**\n"
                    . "• 📱 फोन / व्हाट्सएप: **+91 93098 35085**\n"
@@ -373,7 +373,7 @@ function generate_intelligent_response($message, $history, $kb) {
                 'suggested_actions' => ["Request Quotation", "Schedule Free Call", "Explore Services"]
             ];
         } else {
-            $reply = "नमस्ते! 👋 मैं **NextTechX Solutions AI Assistant** हूँ।\n\n"
+            $reply = "नमस्ते! 👋 मैं **NexTechX Solutions AI Assistant** हूँ।\n\n"
                    . "हम मुख्य रूप से निम्नलिखित सेवाएं प्रदान करते हैं:\n"
                    . "1. **[AI Automation Solutions](/ai-automation)**: स्मार्ट AI चैटबॉट्स, n8n ऑटोमेशन और डॉक्यूमेंट प्रोसेसिंग।\n"
                    . "2. **[IT & Software Solutions](/it-services)**: वेब व मोबाइल ऐप्स, क्लाउड सिस्टम्स और बैकएंड डेवलपमेंट।\n"
@@ -394,7 +394,7 @@ function generate_intelligent_response($message, $history, $kb) {
     // ---------------------------------------------------------
     if (preg_match('/(माहिती|नमस्कार|कसे|करावे|द्या|प्रकल्प|अर्ज|पत्ता|सांगा|काय|कोणत्या|आहेत|उपलब्ध|कंपनीमध्ये|तुमच्या|आम्हाला)/u', $text)) {
         if (preg_match('/(इंटर्नशिप|शिकणे|विद्यार्थी|करिअर|अर्ज)/u', $text)) {
-            $reply = "नमस्कार! 🙏 **NextTechX Solutions** मध्ये सध्या खालील तंत्रज्ञान क्षेत्रांत **इंटर्नशिपच्या संधी** उपलब्ध आहेत:\n\n"
+            $reply = "नमस्कार! 🙏 **NexTechX Solutions** मध्ये सध्या खालील तंत्रज्ञान क्षेत्रांत **इंटर्नशिपच्या संधी** उपलब्ध आहेत:\n\n"
                    . "• **AI & Machine Learning Research Intern**\n"
                    . "• **Full Stack Web Engineering Intern** (React, FastAPI, Node.js)\n"
                    . "• **Data Analytics & Power BI Intern**\n"
@@ -409,7 +409,7 @@ function generate_intelligent_response($message, $history, $kb) {
                 'suggested_actions' => ["Apply for Internship", "View All Services", "Contact Us"]
             ];
         } elseif (preg_match('/(सेवा|काम|सर्व्हिसेस|प्रकल्प)/u', $text)) {
-            $reply = "NextTechX Solutions द्वारे खालील प्रमुख सेवा पुरविल्या जातात:\n\n"
+            $reply = "NexTechX Solutions द्वारे खालील प्रमुख सेवा पुरविल्या जातात:\n\n"
                    . "1. **[AI Automation Solutions](/ai-automation)**: स्मार्ट AI चॅटबॉट्स, व्हॉट्सअॅप ऑटोमेशन, n8n वर्कफ्लो आणि डॉक्युमेंट प्रोसेसिंग.\n"
                    . "2. **[IT & Software Solutions](/it-services)**: वेब ॲप्स (React/Next.js), कस्टम सॉफ्टवेअर, मोबाईल ॲप्स आणि क्लाउड इन्फ्रास्ट्रक्चर.\n"
                    . "3. **[Research Publication](/research-publication)**: IEEE, Scopus आणि Springer जर्नल्ससाठी संशोधन पेपर मार्गदर्शन व पब्लिकेशन सल्ला.\n"
@@ -420,7 +420,7 @@ function generate_intelligent_response($message, $history, $kb) {
                 'suggested_actions' => ["Explore AI Services", "Request Quotation", "View Internships"]
             ];
         } else {
-            $reply = "नमस्कार! 🙏 मी **NextTechX Solutions AI Assistant** आहे.\n\n"
+            $reply = "नमस्कार! 🙏 मी **NexTechX Solutions AI Assistant** आहे.\n\n"
                    . "आम्ही AI ऑटोमेशन, कस्टम सॉफ्टवेअर डेव्हलपमेंट, रिसर्च पब्लिकेशन सल्ला आणि विद्यार्थी इंटर्नशिप प्रदान करतो.\n\n"
                    . "तुम्हाला कोणत्या विषयाबद्दल अधिक माहिती हवी आहे?\n"
                    . "• ईमेल: **contact@nextechxsolutions.com**\n"
@@ -437,7 +437,7 @@ function generate_intelligent_response($message, $history, $kb) {
     // ---------------------------------------------------------
     if (preg_match('/(job vacancy|job vacancies|job openings|jobs available|full-time job|experienced job|hiring for job|current openings|career openings)/i', $text) && 
         !preg_match('/(intern|internship)/i', $text)) {
-        $reply = "Currently, **NextTechX Solutions** is offering **internship opportunities only**. We do not have open experienced job vacancies at this time.\n\n"
+        $reply = "Currently, **NexTechX Solutions** is offering **internship opportunities only**. We do not have open experienced job vacancies at this time.\n\n"
                . "*\"Currently, we are offering internship opportunities. Stay connected for future updates.\"*\n\n"
                . "If you are a student, recent graduate, or aspiring engineer seeking hands-on industry experience, you can explore our available internship tracks on the [Careers & Internships](/careers) page.\n\n"
                . "For any talent inquiries, you may reach our HR desk at [hr@nextechxsolutions.com](mailto:hr@nextechxsolutions.com).";
@@ -451,7 +451,7 @@ function generate_intelligent_response($message, $history, $kb) {
     // D. INTERNSHIPS & APPLICATION PROCESS
     // ---------------------------------------------------------
     if (preg_match('/(intern|internship|training|course|learn|apply.*intern|how to apply|eligibility|stipend|mentor|certificate)/i', $text)) {
-        $reply = "🎓 **NextTechX Solutions Technology Internship Program**\n\n"
+        $reply = "🎓 **NexTechX Solutions Technology Internship Program**\n\n"
                . "We provide immersive, project-driven corporate internships designed to transition students into industry-ready software engineers.\n\n"
                . "**Available Internship Tracks**:\n"
                . "1. **AI & Machine Learning Research Intern**: PyTorch, YOLO, Computer Vision & RAG Agents.\n"
@@ -476,7 +476,7 @@ function generate_intelligent_response($message, $history, $kb) {
     // E. AI AUTOMATION SOLUTIONS
     // ---------------------------------------------------------
     if (preg_match('/(ai automation|what is ai automation|chatbot|whatsapp bot|n8n|autonomous agent|rag|document processing|idp|vector|ocr)/i', $text)) {
-        $reply = "🤖 **AI Automation Solutions at NextTechX Solutions**\n\n"
+        $reply = "🤖 **AI Automation Solutions at NexTechX Solutions**\n\n"
                . "AI Automation combines artificial intelligence, machine learning, and autonomous workflows to eliminate repetitive operational bottlenecks and empower teams with instant intelligence.\n\n"
                . "**Our Core Capabilities**:\n"
                . "• **Custom AI Chatbots & RAG Agents**: Enterprise generative AI trained securely on your company's proprietary documents, FAQs, and product catalogs with zero hallucination protocols and hybrid vector search.\n"
@@ -496,7 +496,7 @@ function generate_intelligent_response($message, $history, $kb) {
     // ---------------------------------------------------------
     if (preg_match('/(it services|software|web development|mobile app|cloud|devops|react|fastapi|spring boot|docker|kubernetes|bpo|bi dashboard|data analytics)/i', $text)) {
         $reply = "💻 **Enterprise IT & Software Engineering Solutions**\n\n"
-               . "NextTechX Solutions architects production-grade software engineered for performance, security, and enterprise scale:\n\n"
+               . "NexTechX Solutions architects production-grade software engineered for performance, security, and enterprise scale:\n\n"
                . "• **Enterprise Web Applications**: Engineered with React 18, Next.js, and Tailwind CSS for sub-second Core Web Vitals and multi-tenant SaaS architectures.\n"
                . "• **Custom Backend Software**: High-throughput microservices in Python FastAPI and Java Spring Boot featuring Apache Kafka event streams and 99%+ test coverage.\n"
                . "• **Cross-Platform Mobile Apps**: Native-performance iOS & Android mobile applications built using React Native and Flutter with offline-first synchronization.\n"
@@ -515,7 +515,7 @@ function generate_intelligent_response($message, $history, $kb) {
     // ---------------------------------------------------------
     if (preg_match('/(research|paper|publish|scopus|ieee|springer|ugc|turnitin|plagiarism|journal|conference|thesis)/i', $text)) {
         $reply = "📚 **Research Paper Writing & Publication Advisory**\n\n"
-               . "NextTechX Solutions provides end-to-end academic advisory for engineering students, faculty members, and PhD scholars:\n\n"
+               . "NexTechX Solutions provides end-to-end academic advisory for engineering students, faculty members, and PhD scholars:\n\n"
                . "**Our 8-Step Advisory Services**:\n"
                . "1. **Novel Topic Selection**: Identifying high-impact research areas across AI/ML, Cloud, IoT, and Cyber Security.\n"
                . "2. **Theoretical & Mathematical Guidance**: Formulating problem statements, simulation models, and baseline comparisons.\n"
@@ -536,7 +536,7 @@ function generate_intelligent_response($message, $history, $kb) {
     // H. CONTACT DETAILS & CONSULTATION
     // ---------------------------------------------------------
     if (preg_match('/(contact|phone|call|email|whatsapp|address|location|reach|office|consultation|talk to)/i', $text)) {
-        $reply = "📞 **Connect With NextTechX Solutions**\n\n"
+        $reply = "📞 **Connect With NexTechX Solutions**\n\n"
                . "We operate an **Online-First Global Remote Delivery Model**, serving clients and partners worldwide with 24/7 responsiveness:\n\n"
                . "• 💼 **Client Inquiries & Project Proposals**: [contact@nextechxsolutions.com](mailto:contact@nextechxsolutions.com)\n"
                . "• 🎓 **HR Desk & Student Internships**: [hr@nextechxsolutions.com](mailto:hr@nextechxsolutions.com)\n"
@@ -555,7 +555,7 @@ function generate_intelligent_response($message, $history, $kb) {
     // ---------------------------------------------------------
     if (preg_match('/(price|pricing|cost|quote|quotation|estimate|budget|how much|charges|rate|inr|rupee)/i', $text)) {
         $reply = "💼 **Transparent Milestone-Based Pricing in INR (₹) & USD**\n\n"
-               . "At NextTechX Solutions, all quotations are transparently scoped to your milestone requirements with zero hidden fees:\n\n"
+               . "At NexTechX Solutions, all quotations are transparently scoped to your milestone requirements with zero hidden fees:\n\n"
                . "• **Custom Software & Web/Mobile MVPs**: Tailored packages starting from ₹50,000 for verified production builds.\n"
                . "• **AI Chatbots & n8n Workflow Automation**: Scoped based on vector store requirements, integration endpoints, and bot channels.\n"
                . "• **Research Paper Advisory**: Scaled according to manuscript depth, mathematical modeling, and target journal index (Scopus Q1/Q2/IEEE).\n"
@@ -571,8 +571,8 @@ function generate_intelligent_response($message, $history, $kb) {
     // J. ABOUT US / COMPANY BACKGROUND
     // ---------------------------------------------------------
     if (preg_match('/(about us|who are you|about nextechx|company background|who is nextech|what is nextechx)/i', $text)) {
-        $reply = "🏢 **About NextTechX Solutions**\n\n"
-               . "NextTechX Solutions (*\"Your Vision Our Technology\"*) is an enterprise IT solutions and artificial intelligence company. We build custom AI assistants, automated business workflows, and mission-critical cloud software platforms worldwide.\n\n"
+        $reply = "🏢 **About NexTechX Solutions**\n\n"
+               . "NexTechX Solutions (*\"Your Vision Our Technology\"*) is an enterprise IT solutions and artificial intelligence company. We build custom AI assistants, automated business workflows, and mission-critical cloud software platforms worldwide.\n\n"
                . "**Our Core Delivery Pillars**:\n"
                . "• **99.9% Uptime Reliability SLA**: Enterprise cloud architectures with zero-downtime CI/CD.\n"
                . "• **100% Signed NDAs & Zero-Trust**: Complete IP ownership and data protection for all clients.\n"
@@ -590,7 +590,7 @@ function generate_intelligent_response($message, $history, $kb) {
     // ---------------------------------------------------------
     if (preg_match('/(portfolio|case study|projects|past work|clients|track record)/i', $text)) {
         $reply = "🏆 **Proven Enterprise Case Studies & Track Record**\n\n"
-               . "Here are a few flagship production platforms engineered by NextTechX Solutions:\n\n"
+               . "Here are a few flagship production platforms engineered by NexTechX Solutions:\n\n"
                . "• **Multi-Tenant Healthcare Cloud Portal**: HIPAA-compliant EHR synchronization, telehealth video consultations, and automated clinical workflows.\n"
                . "• **AI Autonomous Support Agent**: RAG-powered customer agent integrated with Zendesk & WhatsApp, reducing support ticket volume by 68%.\n"
                . "• **FinTech High-Throughput Settlement Engine**: Microservices architecture processing high-volume transactions with automated ledger reconciliation.\n"
@@ -628,7 +628,7 @@ function generate_intelligent_response($message, $history, $kb) {
             $reply = "💡 **What is RAG (Retrieval-Augmented Generation)?**\n\n"
                    . "RAG is an AI framework that connects a Large Language Model (like GPT or Gemini) to external corporate knowledge bases and private documents.\n\n"
                    . "Instead of relying solely on general public training data, a RAG system first searches your company's proprietary documents using **Vector Databases** (such as Pinecone or pgvector) and feeds the exact factual context into the model.\n\n"
-                   . "**Why NextTechX Solutions implements RAG**:\n"
+                   . "**Why NexTechX Solutions implements RAG**:\n"
                    . "• **Zero Hallucinations**: Responses are strictly grounded in your verified company data.\n"
                    . "• **Data Privacy**: Your proprietary information is not used to train public models.\n"
                    . "• **Instant Updates**: Simply update your documents without expensive model retraining.\n\n"
@@ -641,7 +641,7 @@ function generate_intelligent_response($message, $history, $kb) {
         if (preg_match('/(machine learning|deep learning)/i', $text)) {
             $reply = "💡 **What is Machine Learning?**\n\n"
                    . "Machine Learning (ML) is a branch of artificial intelligence where algorithms learn patterns and make predictions from data without being explicitly programmed.\n\n"
-                   . "At **NextTechX Solutions**, we build production ML solutions including:\n"
+                   . "At **NexTechX Solutions**, we build production ML solutions including:\n"
                    . "• Predictive analytics (customer churn, sales forecasting)\n"
                    . "• Computer Vision (object detection, quality inspection using YOLO)\n"
                    . "• Natural Language Processing (sentiment analysis, intent classification)\n\n"
@@ -655,7 +655,7 @@ function generate_intelligent_response($message, $history, $kb) {
             $reply = "💡 **What is n8n?**\n\n"
                    . "n8n is a powerful, self-hostable workflow automation tool that lets businesses connect disparate applications (like CRMs, databases, email, and messaging apps) through visual node-based workflows and custom code.\n\n"
                    . "Unlike cloud-only alternatives like Zapier, n8n can be **self-hosted on your own secure servers**, ensuring 100% data privacy and zero data leakage to third parties.\n\n"
-                   . "NextTechX Solutions specializes in deploying self-hosted enterprise n8n workflows for automated lead routing, invoice processing, and database synchronization. Learn more on our [AI Automation](/ai-automation) page!";
+                   . "NexTechX Solutions specializes in deploying self-hosted enterprise n8n workflows for automated lead routing, invoice processing, and database synchronization. Learn more on our [AI Automation](/ai-automation) page!";
             return [
                 'reply' => $reply,
                 'suggested_actions' => ["Explore AI Automation", "Request Quotation", "Contact Us"]
@@ -667,7 +667,7 @@ function generate_intelligent_response($message, $history, $kb) {
     // N. CONTEXTUAL FOLLOW-UP CHECK FROM PREVIOUS CHAT HISTORY
     // ---------------------------------------------------------
     if (preg_match('/(internship|intern)/i', $prev_context) && preg_match('/(apply|form|how|where|resume|qualification|duration)/i', $text)) {
-        $reply = "To apply for an internship at NextTechX Solutions:\n\n"
+        $reply = "To apply for an internship at NexTechX Solutions:\n\n"
                . "1. Go directly to our [Careers & Internships](/careers) page.\n"
                . "2. Review the 6 available tracks (AI/ML, Web Dev, Data Analytics, Python, Java, Cyber Security).\n"
                . "3. Fill out the application form with your contact details and academic background.\n"
@@ -682,7 +682,7 @@ function generate_intelligent_response($message, $history, $kb) {
     // ---------------------------------------------------------
     // O. DEFAULT COMPREHENSIVE OVERVIEW (Friendly, Structured)
     // ---------------------------------------------------------
-    $reply = "Hello! 👋 I'm your **NextTechX AI Assistant**, your interactive guide to our enterprise IT solutions and programs.\n\n"
+    $reply = "Hello! 👋 I'm your **NexTechX AI Assistant**, your interactive guide to our enterprise IT solutions and programs.\n\n"
            . "Here is how I can assist you today:\n"
            . "• **[AI Automation Solutions](/ai-automation)**: AI chatbots, WhatsApp bots, n8n workflows & document processing.\n"
            . "• **[IT & Software Solutions](/it-services)**: Enterprise React web apps, Python/Java backends, mobile apps & cloud DevOps.\n"

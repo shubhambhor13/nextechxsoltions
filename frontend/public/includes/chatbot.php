@@ -17,7 +17,7 @@
                 </div>
                 <div>
                     <h4 class="font-bold text-sm font-heading leading-tight flex items-center gap-1.5">
-                        <span>NextTechX AI Assistant</span>
+                        <span>NexTechX AI Assistant</span>
                     </h4>
                     <span class="text-[11px] text-cyan-300 font-mono">Enterprise Solutions Guide</span>
                 </div>
@@ -39,7 +39,7 @@
                     <i data-lucide="bot" class="w-3.5 h-3.5 text-cyan-300"></i>
                 </div>
                 <div class="bg-white p-3.5 rounded-2xl rounded-tl-sm border border-slate-200 shadow-xs max-w-[85%] text-slate-800 leading-relaxed space-y-2">
-                    <p>Hello! 👋 I'm your **NextTechX AI Assistant**.</p>
+                    <p>Hello! 👋 I'm your **NexTechX AI Assistant**.</p>
                     <p class="text-xs text-slate-600">I can answer questions about our **AI Automation Solutions**, **IT & Software Engineering**, **Research Publication Advisory**, or guide you through applying for our **Technology Internships**.</p>
                 </div>
             </div>

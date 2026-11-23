@@ -1,4 +1,4 @@
-// API Service Client for NextTechX Solutions
+// API Service Client for NexTechX Solutions
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
 
 async function handleResponse(res, defaultError = 'Request failed') {

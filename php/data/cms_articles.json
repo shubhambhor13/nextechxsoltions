@@ -1,4 +1,4 @@
-[
+﻿[
   {
     "slug": "enterprise-rag-best-practices",
     "title": "Architecting Zero-Hallucination Enterprise RAG Pipelines with Vector Memory",
@@ -7,7 +7,7 @@
     "category": "AI Trends",
     "tags": "AI, RAG, Enterprise Architecture, Vector DBs, LLMs",
     "featured_image": "",
-    "author": "NextTechX Solutions Research Team",
+    "author": "NexTechX Solutions Research Team",
     "status": "published",
     "meta_title": "Enterprise RAG Best Practices — NEXTECHX SOLUTIONS",
     "meta_description": "Explore proven strategies for architecting zero-hallucination enterprise RAG vector pipelines.",

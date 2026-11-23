@@ -57,7 +57,7 @@ $faqs = [
     [
         "category" => "Internship Program",
         "q" => "Do we get an official corporate certificate upon completion?",
-        "a" => "Yes. Every student who completes their assigned project deliverables receives an official, verifiable corporate internship completion certificate and project letter from NextTechX Solutions."
+        "a" => "Yes. Every student who completes their assigned project deliverables receives an official, verifiable corporate internship completion certificate and project letter from NexTechX Solutions."
     ]
 ];
 ?>

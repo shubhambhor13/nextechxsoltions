@@ -249,8 +249,8 @@ export default function Footer({ onOpenQuote }) {
               target="_blank" 
               rel="noopener noreferrer" 
               className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700/60 hover:bg-blue-600 hover:text-white transition-colors"
-              aria-label="NextTechX Solutions on LinkedIn"
-              title="NextTechX Solutions on LinkedIn"
+              aria-label="NexTechX Solutions on LinkedIn"
+              title="NexTechX Solutions on LinkedIn"
             >
               <Linkedin className="w-4 h-4" />
             </a>

@@ -1,5 +1,5 @@
 <?php
-// NextTechX Solutions - Career & Internship Applications API
+// NexTechX Solutions - Career & Internship Applications API
 // Enterprise Application Workflow & Automated Multi-Recipient SMTP Notifications
 
 header('Access-Control-Allow-Origin: *');
@@ -100,8 +100,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             exit;
         }
 
-        $res_applicant = NextTechXMailer::sendApplicantConfirmation($app);
-        $res_company = NextTechXMailer::sendCompanyNotification($app, $app['resume_filepath'] ?? null, $app['resume_filename'] ?? null);
+        $res_applicant = NexTechXMailer::sendApplicantConfirmation($app);
+        $res_company = NexTechXMailer::sendCompanyNotification($app, $app['resume_filepath'] ?? null, $app['resume_filename'] ?? null);
 
         $app_sent = !empty($res_applicant['success']);
         $comp_sent = !empty($res_company['success']);
@@ -342,7 +342,7 @@ if (!$saved) {
     }
     if (!$saved) {
         // Fallback: system temp directory if uploads has restrictive file permissions
-        $fallback_dir = sys_get_temp_dir() . '/nexttechx_resumes/';
+        $fallback_dir = sys_get_temp_dir() . '/nextechx_resumes/';
         @mkdir($fallback_dir, 0755, true);
         $target_filepath = $fallback_dir . $stored_filename;
         if (file_exists($file['tmp_name'])) {
@@ -441,10 +441,10 @@ $record['id'] = $application_id ?: ('NTX-' . date('Ymd') . '-' . rand(1000, 9999
 // 5. DISPATCH AUTOMATIC SMTP NOTIFICATIONS VIA PHPMAILER
 // ---------------------------------------------------------
 // 5A. Send Applicant Confirmation Email
-$applicant_result = NextTechXMailer::sendApplicantConfirmation($record);
+$applicant_result = NexTechXMailer::sendApplicantConfirmation($record);
 
 // 5B. Send Company Notification Email (with attached resume)
-$company_result = NextTechXMailer::sendCompanyNotification($record, $target_filepath, $original_filename);
+$company_result = NexTechXMailer::sendCompanyNotification($record, $target_filepath, $original_filename);
 
 $applicant_sent = !empty($applicant_result['success']);
 $company_sent = !empty($company_result['success']);

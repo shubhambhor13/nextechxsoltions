@@ -1,6 +1,6 @@
 <?php
 $page_title = "Technology Internship & Corporate Mentorship Academy";
-$page_desc = "Hands-on technology internship tracks in AI/ML, Data Analytics, Full Stack, Python, Java Enterprise, and Cyber Security with NextTechX Solutions.";
+$page_desc = "Hands-on technology internship tracks in AI/ML, Data Analytics, Full Stack, Python, Java Enterprise, and Cyber Security with NexTechX Solutions.";
 require_once __DIR__ . '/includes/header.php';
 
 $tracks = [
@@ -74,7 +74,7 @@ $tracks = [
         <div class="mt-6 flex items-center justify-center gap-2 text-xs text-slate-400 font-mono">
             <i data-lucide="mail" class="w-4 h-4 text-emerald-400"></i>
             <span>Direct HR Desk:</span>
-            <a href="mailto:<?= SITE_EMAIL_HR ?>?subject=Internship%20Inquiry%20-%20NextTechX%20Solutions" class="text-emerald-400 hover:text-emerald-300 font-bold underline transition-colors"><?= SITE_EMAIL_HR ?></a>
+            <a href="mailto:<?= SITE_EMAIL_HR ?>?subject=Internship%20Inquiry%20-%20NexTechX%20Solutions" class="text-emerald-400 hover:text-emerald-300 font-bold underline transition-colors"><?= SITE_EMAIL_HR ?></a>
         </div>
     </div>
 </section>

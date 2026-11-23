@@ -1,11 +1,11 @@
-[
+﻿[
   {
     "client_name": "Marcus Vance",
     "client_title": "VP of Engineering",
     "client_company": "Nexus Telecom IO",
     "client_image": "",
     "rating": 5,
-    "review_text": "NextTechX Solutions re-architected our legacy billing infrastructure into a high-concurrency microservices stack. Their engineering discipline, zero-downtime cutover, and transparent communication exceeded our high expectations.",
+    "review_text": "NexTechX Solutions re-architected our legacy billing infrastructure into a high-concurrency microservices stack. Their engineering discipline, zero-downtime cutover, and transparent communication exceeded our high expectations.",
     "project_type": "Cloud Microservices & BillingRevamp",
     "display_location": "all",
     "sort_order": 1,
@@ -17,7 +17,7 @@
     "client_company": "Apex Logistics AG",
     "client_image": "",
     "rating": 5,
-    "review_text": "The autonomous n8n workflows and OCR pipeline delivered by NextTechX cut our freight invoice processing time by 85%. What previously took hours of tedious manual data entry is now reconciled in minutes.",
+    "review_text": "The autonomous n8n workflows and OCR pipeline delivered by NexTechX cut our freight invoice processing time by 85%. What previously took hours of tedious manual data entry is now reconciled in minutes.",
     "project_type": "AI Document Automation & n8n",
     "display_location": "all",
     "sort_order": 2,
@@ -41,7 +41,7 @@
     "client_company": "FlowMetric SaaS",
     "client_image": "",
     "rating": 5,
-    "review_text": "From day one, the NextTechX team understood our multi-tenant SaaS requirements. They built our subscription metering engine and customer portal ahead of schedule, enabling our team to hit our launch milestone smoothly.",
+    "review_text": "From day one, the NexTechX team understood our multi-tenant SaaS requirements. They built our subscription metering engine and customer portal ahead of schedule, enabling our team to hit our launch milestone smoothly.",
     "project_type": "Multi-Tenant SaaS Engineering",
     "display_location": "all",
     "sort_order": 4,

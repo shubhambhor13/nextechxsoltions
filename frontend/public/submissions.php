@@ -1,5 +1,5 @@
 <?php
-// NextTechX Solutions - Centralized Submissions & Applications Portal
+// NexTechX Solutions - Centralized Submissions & Applications Portal
 require_once __DIR__ . '/includes/config.php';
 require_once __DIR__ . '/includes/mailer.php';
 

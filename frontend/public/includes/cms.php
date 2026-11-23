@@ -1,5 +1,5 @@
 <?php
-// NextTechX Solutions - Centralized Website CMS Foundation & Database Engine
+// NexTechX Solutions - Centralized Website CMS Foundation & Database Engine
 require_once __DIR__ . '/config.php';
 
 /**
@@ -1253,7 +1253,7 @@ function cms_save_article($data) {
     $category = $data['category'] ?? 'Technology';
     $tags = $data['tags'] ?? '';
     $img = $data['featured_image'] ?? '';
-    $author = $data['author'] ?? 'NextTechX Editorial Team';
+    $author = $data['author'] ?? 'NexTechX Editorial Team';
     $status = $data['status'] ?? 'draft';
     $meta_title = $data['meta_title'] ?? ($title . ' — NEXTECHX SOLUTIONS');
     $meta_desc = $data['meta_description'] ?? $summary;
@@ -1433,8 +1433,8 @@ function cms_generate_sitemap_xml() {
 function cms_get_chatbot_config() {
     return [
         'enabled' => cms_get_setting('chatbot_enabled', '1') === '1',
-        'name' => cms_get_setting('chatbot_name', 'NextTechX AI Assistant'),
-        'welcome_message' => cms_get_setting('chatbot_welcome_message', 'Hello! Welcome to NextTechX Solutions. How can I assist you with our AI, Software, SaaS, Data Annotation, or BPO engineering services today?'),
+        'name' => cms_get_setting('chatbot_name', 'NexTechX AI Assistant'),
+        'welcome_message' => cms_get_setting('chatbot_welcome_message', 'Hello! Welcome to NexTechX Solutions. How can I assist you with our AI, Software, SaaS, Data Annotation, or BPO engineering services today?'),
         'system_prompt' => cms_get_setting('chatbot_system_prompt', ''),
         'languages' => cms_get_setting('chatbot_languages', 'English, Hindi, Marathi, Spanish, German, French'),
         'theme_color' => cms_get_setting('chatbot_theme_color', '#2563eb'),
@@ -1445,7 +1445,7 @@ function cms_get_chatbot_config() {
 function cms_save_chatbot_config($data) {
     $settings = [
         'chatbot_enabled' => !empty($data['enabled']) ? '1' : '0',
-        'chatbot_name' => $data['name'] ?? 'NextTechX AI Assistant',
+        'chatbot_name' => $data['name'] ?? 'NexTechX AI Assistant',
         'chatbot_welcome_message' => $data['welcome_message'] ?? '',
         'chatbot_system_prompt' => $data['system_prompt'] ?? '',
         'chatbot_languages' => $data['languages'] ?? '',

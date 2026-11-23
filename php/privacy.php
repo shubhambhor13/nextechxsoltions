@@ -1,6 +1,6 @@
 <?php
-$page_title = "Privacy & Data Protection Policy — NextTechX Solutions";
-$page_desc = "Enterprise-grade confidentiality, zero-retention defaults, and privacy compliance standards for NextTechX Solutions.";
+$page_title = "Privacy & Data Protection Policy — NexTechX Solutions";
+$page_desc = "Enterprise-grade confidentiality, zero-retention defaults, and privacy compliance standards for NexTechX Solutions.";
 require_once __DIR__ . '/includes/header.php';
 ?>
 

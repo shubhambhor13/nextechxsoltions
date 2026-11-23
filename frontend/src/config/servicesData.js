@@ -1,4 +1,4 @@
-// Complete Data Model for the 5 Core Services of NextTechX Solutions
+// Complete Data Model for the 5 Core Services of NexTechX Solutions
 export const servicesData = [
   {
     id: "ai-automation",

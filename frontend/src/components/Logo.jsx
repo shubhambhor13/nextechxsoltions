@@ -40,14 +40,14 @@ export default function Logo({
   const currentBadgeSize = badgeSizeClasses[size] || badgeSizeClasses.md;
   const currentTextSize = textSizes[size] || textSizes.md;
 
-  // Use the optimized NextTechX emblem badge
+  // Use the optimized NexTechX emblem badge
   const badgeSrc = isDark 
-    ? '/images/nexttechx-badge-dark.webp' 
-    : '/images/nexttechx-badge.webp';
+    ? '/images/nextechx-badge-dark.webp' 
+    : '/images/nextechx-badge.webp';
 
   return (
     <div className={`inline-flex items-center gap-2 sm:gap-2.5 select-none transition-transform duration-200 group-hover:scale-[1.02] ${className}`}>
-      {/* Official NextTechX 3D Emblem Badge */}
+      {/* Official NexTechX 3D Emblem Badge */}
       <img 
         src={badgeSrc} 
         alt={`${siteConfig.companyName} Emblem`}
@@ -63,7 +63,7 @@ export default function Logo({
         <div className="text-left flex flex-col justify-center min-w-0">
           <div className={`flex items-center font-heading font-black tracking-tight leading-none whitespace-nowrap ${currentTextSize.brand}`}>
             <span className={isDark ? 'text-white' : 'text-slate-900'}>
-              NextTech
+              NexTech
             </span>
             <span className="text-cyan-500 ml-0.5">
               X

@@ -1,5 +1,5 @@
 <?php
-// NextTechX Solutions - Secure Media Upload Handler
+// NexTechX Solutions - Secure Media Upload Handler
 session_start();
 header('Content-Type: application/json; charset=utf-8');
 header('X-Content-Type-Options: nosniff');

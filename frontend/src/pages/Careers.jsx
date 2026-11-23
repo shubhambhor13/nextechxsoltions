@@ -252,7 +252,7 @@ export default function Careers({ onOpenQuote, onOpenConsultation }) {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-blue-200 text-xs sm:text-sm font-bold text-blue-700 shadow-xs font-heading"
           >
             <GraduationCap className="w-4 h-4 text-blue-600" />
-            <span>Careers & Internships â€¢ NextTechX Solutions</span>
+            <span>Careers & Internships • NexTechX Solutions</span>
           </motion.div>
 
           <motion.h1 
@@ -478,7 +478,7 @@ export default function Careers({ onOpenQuote, onOpenConsultation }) {
               </div>
               <h3 className="text-lg font-bold text-slate-900 font-heading">Offer Letter & Team Onboarding</h3>
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
-                Receive your official NextTechX onboarding credentials, repository access, project milestone schedule, and dedicated technical mentor.
+                Receive your official NexTechX onboarding credentials, repository access, project milestone schedule, and dedicated technical mentor.
               </p>
             </div>
           </div>

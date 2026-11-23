@@ -1,9 +1,9 @@
-[
+﻿[
   {
     "id": 1,
-    "original_name": "nexttechx-badge.webp",
-    "file_name": "nexttechx-badge.webp",
-    "file_path": "assets/images/nexttechx-badge.webp",
+    "original_name": "nextechx-badge.webp",
+    "file_name": "nextechx-badge.webp",
+    "file_path": "assets/images/nextechx-badge.webp",
     "file_size": 18450,
     "file_type": "image/webp",
     "alt_text": "NEXTECHX SOLUTIONS Official 3D Emblem",
@@ -11,9 +11,9 @@
   },
   {
     "id": 2,
-    "original_name": "nexttechx-badge-dark.webp",
-    "file_name": "nexttechx-badge-dark.webp",
-    "file_path": "assets/images/nexttechx-badge-dark.webp",
+    "original_name": "nextechx-badge-dark.webp",
+    "file_name": "nextechx-badge-dark.webp",
+    "file_path": "assets/images/nextechx-badge-dark.webp",
     "file_size": 19200,
     "file_type": "image/webp",
     "alt_text": "NEXTECHX SOLUTIONS Dark Emblem",

@@ -1,5 +1,5 @@
 <?php
-// NextTechX Solutions - Centralized Website CMS REST API (Part 1 & 2)
+// NexTechX Solutions - Centralized Website CMS REST API (Part 1 & 2)
 session_start();
 header('Content-Type: application/json; charset=utf-8');
 header('X-Content-Type-Options: nosniff');

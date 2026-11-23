@@ -64,7 +64,7 @@
                         Company & Career
                     </h4>
                     <ul class="space-y-2.5 text-sm text-slate-400">
-                        <li><a href="about.php" class="hover:text-blue-400 transition-colors">About NextTechX</a></li>
+                        <li><a href="about.php" class="hover:text-blue-400 transition-colors">About NexTechX</a></li>
                         <li><a href="portfolio.php" class="hover:text-blue-400 transition-colors">Client Portfolio / Work</a></li>
                         <li><a href="industries.php" class="hover:text-blue-400 transition-colors">Industries We Serve</a></li>
                         <li><a href="how-we-work.php" class="hover:text-blue-400 transition-colors">How We Work (Timeline)</a></li>
@@ -95,7 +95,7 @@
 
             <!-- Bottom Copyright -->
             <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-                <p>&copy; <?= date('Y') ?> NextTechX Solutions. All rights reserved. <?= SITE_TAGLINE ?>.</p>
+                <p>&copy; <?= date('Y') ?> NexTechX Solutions. All rights reserved. <?= SITE_TAGLINE ?>.</p>
                 <div class="flex items-center gap-4 text-slate-400">
                     <span class="inline-flex items-center gap-1.5 text-[11px] font-mono text-emerald-400">
                         <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
@@ -331,7 +331,7 @@
             const typingDiv = document.createElement('div');
             typingDiv.id = typingId;
             typingDiv.className = 'flex items-center gap-2 text-xs text-slate-400 italic';
-            typingDiv.innerHTML = '<span class="inline-block w-2 h-2 rounded-full bg-blue-500 animate-bounce"></span> NextTechX Assistant is thinking...';
+            typingDiv.innerHTML = '<span class="inline-block w-2 h-2 rounded-full bg-blue-500 animate-bounce"></span> NexTechX Assistant is thinking...';
             box.appendChild(typingDiv);
             box.scrollTop = box.scrollHeight;
 

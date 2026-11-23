@@ -1,4 +1,4 @@
-import sqlite3
+﻿import sqlite3
 import json
 from fastapi import APIRouter, HTTPException, Depends, Request
 from backend.database import get_db_connection
@@ -435,7 +435,7 @@ def save_article(payload: Dict[str, Any]):
     cat = data.get("category", "Technology")
     tags = data.get("tags", "")
     img = data.get("featured_image", "")
-    author = data.get("author", "NextTechX Editorial Team")
+    author = data.get("author", "NexTechX Editorial Team")
     status = data.get("status", "draft")
     meta_title = data.get("meta_title", title)
     meta_desc = data.get("meta_description", summary)

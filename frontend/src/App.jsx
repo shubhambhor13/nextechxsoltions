@@ -32,7 +32,7 @@ function PageLoading() {
     <div className="min-h-[55vh] flex items-center justify-center py-20 bg-white" aria-label="Loading page">
       <div className="flex flex-col items-center gap-3">
         <div className="w-9 h-9 border-3 border-blue-600/20 border-t-blue-600 rounded-full animate-spin" />
-        <span className="text-xs font-semibold text-slate-500 font-mono tracking-wider uppercase">Loading NextTechX...</span>
+        <span className="text-xs font-semibold text-slate-500 font-mono tracking-wider uppercase">Loading NexTechX...</span>
       </div>
     </div>
   );
@@ -109,7 +109,7 @@ function ExternalRedirect({ to }) {
       <div className="w-9 h-9 border-3 border-blue-600/20 border-t-blue-600 rounded-full animate-spin mb-4" />
       <h2 className="text-lg font-bold text-slate-900 font-heading">Redirecting to LinkedIn...</h2>
       <p className="text-xs text-slate-500 mt-1 max-w-sm">
-        Taking you to the official NextTechX Solutions company profile.
+        Taking you to the official NexTechX Solutions company profile.
       </p>
       <a 
         href={to} 

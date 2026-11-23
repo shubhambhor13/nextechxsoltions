@@ -580,7 +580,7 @@ export default function Home({ onOpenQuote, onOpenConsultation, onOpenRegister }
           <div className="text-center max-w-3xl mx-auto space-y-3 sm:space-y-4">
             <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full bg-blue-500/20 border border-blue-400/40 text-cyan-300 text-[11px] sm:text-xs font-bold uppercase tracking-wider font-heading shadow-xs">
               <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-300" />
-              <span>We Are Hiring • Join NextTechX</span>
+              <span>We Are Hiring • Join NexTechX</span>
             </div>
             <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black text-white font-heading tracking-tight leading-tight">
               Technology Internship Opportunities
@@ -618,7 +618,7 @@ export default function Home({ onOpenQuote, onOpenConsultation, onOpenRegister }
                   </div>
 
                   <h3 className="text-xl sm:text-3xl lg:text-4xl font-black text-white group-hover:text-cyan-300 transition-colors font-heading tracking-tight">
-                    Build Practical Production Experience with NextTechX
+                    Build Practical Production Experience with NexTechX
                   </h3>
                   <p className="text-xs sm:text-base text-slate-300 max-w-2xl leading-relaxed">
                     Currently, we are offering internship opportunities across AI/ML, Full-Stack Web, Cloud DevOps, and Data Analytics. Stay connected for future updates.

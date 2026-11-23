@@ -1,13 +1,13 @@
 <?php
-// NextTechX Solutions - Centralized Corporate Knowledge Base
+// NexTechX Solutions - Centralized Corporate Knowledge Base
 // Contains verified, public company information across all services, practices, internships, and operations.
 
 function get_company_knowledge_base() {
     return [
         "company" => [
-            "name" => "NextTechX Solutions",
+            "name" => "NexTechX Solutions",
             "tagline" => "Your Vision Our Technology",
-            "overview" => "NextTechX Solutions is an enterprise IT solutions and artificial intelligence company. We build custom AI assistants, automated business workflows, full-stack web and mobile platforms, cloud infrastructure, and provide research publication advisory worldwide.",
+            "overview" => "NexTechX Solutions is an enterprise IT solutions and artificial intelligence company. We build custom AI assistants, automated business workflows, full-stack web and mobile platforms, cloud infrastructure, and provide research publication advisory worldwide.",
             "delivery_model" => "Online-First Global Delivery. We operate a distributed, remote-first model serving clients across India and internationally with 24/7 responsiveness.",
             "sla_and_metrics" => [
                 "uptime" => "99.9% Uptime Reliability SLA",
@@ -28,7 +28,7 @@ function get_company_knowledge_base() {
             "general_email" => "nextechxsolutions@gmail.com",
             "phone" => "+91 93098 35085",
             "phone_tel" => "+919309835085",
-            "whatsapp_url" => "https://wa.me/919309835085?text=Hello%20NextTechX%20Solutions,%20I%20would%20like%20to%20inquire%20about%20your%20services%20and%20programs.",
+            "whatsapp_url" => "https://wa.me/919309835085?text=Hello%20NexTechX%20Solutions,%20I%20would%20like%20to%20inquire%20about%20your%20services%20and%20programs.",
             "linkedin_url" => "https://www.linkedin.com/company/nextechx-solutions/",
             "contact_page" => "/#contact"
         ],
@@ -77,7 +77,7 @@ function get_company_knowledge_base() {
             ]
         ],
         "careers_and_internships" => [
-            "policy" => "NextTechX Solutions is currently offering INTERNSHIP OPPORTUNITIES ONLY. There are no active experienced job vacancies at this time.",
+            "policy" => "NexTechX Solutions is currently offering INTERNSHIP OPPORTUNITIES ONLY. There are no active experienced job vacancies at this time.",
             "status_message" => "Currently, we are offering internship opportunities. Stay connected for future updates.",
             "hr_email" => "hr@nextechxsolutions.com",
             "page_url" => "/careers",
@@ -160,9 +160,9 @@ function get_company_knowledge_base() {
         ],
         "privacy_policy" => [
             "url" => "/privacy-policy",
-            "ip_ownership" => "100% of all custom source code, models, datasets, and technical deliverables belong to the client under signed bilateral NDAs. NextTechX never claims ownership.",
-            "zero_ai_training" => "NextTechX strictly pledges NEVER to feed client code, private databases, or proprietary information into public AI models for training.",
-            "data_monetization" => "NextTechX never sells, rents, brokers, or monetizes client or candidate data.",
+            "ip_ownership" => "100% of all custom source code, models, datasets, and technical deliverables belong to the client under signed bilateral NDAs. NexTechX never claims ownership.",
+            "zero_ai_training" => "NexTechX strictly pledges NEVER to feed client code, private databases, or proprietary information into public AI models for training.",
+            "data_monetization" => "NexTechX never sells, rents, brokers, or monetizes client or candidate data.",
             "security" => "TLS 1.3 in-transit and AES-256 at-rest encryption, aligned with enterprise zero-trust standards.",
             "internship_resumes" => "Internship resumes are reviewed exclusively by authorized HR (hr@nextechxsolutions.com) and are never shared with external headhunters or marketing lists.",
             "compliance_email" => "contact@nextechxsolutions.com"

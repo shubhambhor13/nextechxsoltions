@@ -1,5 +1,5 @@
 <?php
-// NextTechX Solutions - Centralized Submissions & Applications Management API
+// NexTechX Solutions - Centralized Submissions & Applications Management API
 if (!headers_sent()) {
     header('Access-Control-Allow-Origin: *');
     header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
@@ -263,7 +263,7 @@ if ($action === 'resend_email') {
     }
 
     $ref_id = 'NTX-' . strtoupper(substr($normalized['form_type'], 0, 3)) . '-' . date('Ymd') . '-' . str_pad($id, 4, '0', STR_PAD_LEFT);
-    $res = NextTechXMailer::sendFormSubmission(
+    $res = NexTechXMailer::sendFormSubmission(
         $normalized['form_type'],
         $normalized['form_title'],
         $fields,
@@ -300,7 +300,7 @@ if ($action === 'resend_email') {
         'overall_sent' => $overall_sent,
         'admin_error' => $res['company_error'] ?? null,
         'user_error' => $res['user_error'] ?? null,
-        'smtp_meta' => NextTechXMailer::$last_smtp_meta ?? null
+        'smtp_meta' => NexTechXMailer::$last_smtp_meta ?? null
     ]);
     exit;
 }
@@ -355,7 +355,7 @@ if ($action === 'test_smtp') {
         $recipient = 'nextechxsolutions@gmail.com';
     }
 
-    $result = NextTechXMailer::testSmtpDelivery($recipient);
+    $result = NexTechXMailer::testSmtpDelivery($recipient);
     echo json_encode($result);
     exit;
 }

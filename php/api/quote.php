@@ -1,5 +1,5 @@
 <?php
-// NextTechX Solutions - Quotations API
+// NexTechX Solutions - Quotations API
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
@@ -134,7 +134,7 @@ $fields = [
     'Requirements & Scope' => $requirements
 ];
 
-$mailResult = NextTechXMailer::sendFormSubmission('quote', 'Quotation Request', $fields, $email, $name, $email_attachments, $ref_id);
+$mailResult = NexTechXMailer::sendFormSubmission('quote', 'Quotation Request', $fields, $email, $name, $email_attachments, $ref_id);
 
 $admin_sent = !empty($mailResult['company_email_sent']);
 $user_sent = !empty($mailResult['user_email_sent']);
